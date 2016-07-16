@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D098494BED6B8F35B72E1D5770E965659A902674",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A107FF7BCB99FF99C2B67132DFBE913E3CBFAFE8" : 0,
+    "D098494BED6B8F35B72E1D5770E965659A902674" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "76C114C0-159E-4488-9518-1FEDC4692E27",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A107FF7BCB99FF99C2B67132DFBE913E3CBFAFE8" : "",
+    "D098494BED6B8F35B72E1D5770E965659A902674" : "GDDataDrivenView\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "GDDataDrivenView",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Example\/GDDataDrivenView.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/gerrit.oa.com\/video\/QQLiveBroadcast",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A107FF7BCB99FF99C2B67132DFBE913E3CBFAFE8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/goodow\/GDDataDrivenView.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D098494BED6B8F35B72E1D5770E965659A902674"
+    }
+  ]
+}

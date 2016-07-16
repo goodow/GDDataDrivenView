@@ -1,15 +1,13 @@
-use_frameworks!
-
 target 'GDDataDrivenView_Example' do
   pod 'GDDataDrivenView', :path => '../'
   pod 'GDChannel', :git => 'https://github.com/goodow/GDChannel.git', :branch => 'mqtt'
-
+  # pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
   target 'GDDataDrivenView_Tests' do
     inherit! :search_paths
 
     pod 'Specta'
   pod 'Expecta'
-  pod 'FBSnapshotTestCase'
+  # pod 'FBSnapshotTestCase'
   pod 'Expecta+Snapshots'
   end
 end

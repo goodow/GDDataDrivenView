@@ -5,17 +5,13 @@ PODS:
     - Expecta (~> 1.0)
     - FBSnapshotTestCase/Core (~> 2.0)
     - Specta (~> 1.0)
-  - FBSnapshotTestCase (2.1.2):
-    - FBSnapshotTestCase/SwiftSupport (= 2.1.2)
   - FBSnapshotTestCase/Core (2.1.2)
-  - FBSnapshotTestCase/SwiftSupport (2.1.2):
-    - FBSnapshotTestCase/Core
   - GDChannel (0.6.0):
-    - Aspects (~> 1.4.1)
     - Mantle (~> 2.0.6)
     - MQTTKit (~> 0.1.0)
     - Protobuf (~> 3.0.0-beta-3.1)
   - GDDataDrivenView (0.1.0):
+    - Aspects (~> 1.4)
     - GDChannel (~> 0.6)
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
@@ -27,7 +23,6 @@ PODS:
 DEPENDENCIES:
   - Expecta
   - Expecta+Snapshots
-  - FBSnapshotTestCase
   - GDChannel (from `https://github.com/goodow/GDChannel.git`, branch `mqtt`)
   - GDDataDrivenView (from `../`)
   - Specta
@@ -41,7 +36,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GDChannel:
-    :commit: 03560b6e58ecdbc1587c387dae7422d961165418
+    :commit: bb9032051aa2c57728bf447fbee9c4cced684356
     :git: https://github.com/goodow/GDChannel.git
 
 SPEC CHECKSUMS:
@@ -49,13 +44,13 @@ SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
-  GDChannel: 0ddbe8d9a1c8a7ae2e63197f69b50c848bdf7fa7
-  GDDataDrivenView: 6ab7bb72a10e1ee6218c8fa92ab4ecbe5ca81618
+  GDChannel: 400f6e092bb498434e49e2c5a1d9786a82fb0084
+  GDDataDrivenView: 2f5e6e3b85330f3855fc8fe3883247b58c8af82c
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
   Protobuf: 93350904b8872d186f9b25d850d8aa6ceb1e68ea
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
 
-PODFILE CHECKSUM: 68386f7159f7b63ad0655ee92cc981e7dca567d0
+PODFILE CHECKSUM: 4d5753cec3e29b0097551e151c866fc153764d63
 
 COCOAPODS: 1.0.1

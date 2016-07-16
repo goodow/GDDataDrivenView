@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24D3A39526AAB52A6B200EB9 /* Pods_GDDataDrivenView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866E24C6EC2D67131809E5E /* Pods_GDDataDrivenView_Tests.framework */; };
-		3EEC29EB7E9FD0A28770C5C9 /* Pods_GDDataDrivenView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B2FD5119BBB64DD33F7F2C /* Pods_GDDataDrivenView_Example.framework */; };
+		464D97071D35100C00BF44DE /* GDDTableViewCellRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 464D97051D35100C00BF44DE /* GDDTableViewCellRender.m */; };
+		464D97081D35100C00BF44DE /* GDDTableViewCellRender.xib in Resources */ = {isa = PBXBuildFile; fileRef = 464D97061D35100C00BF44DE /* GDDTableViewCellRender.xib */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -22,7 +22,10 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		61FBCA5AED5F2B29978B9653 /* test_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 61FBC87E2BA28B9D962635CE /* test_data.json */; };
+		7F539AB82A3BC98429683550 /* libPods-GDDataDrivenView_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB40A2142DD937158E07F5B1 /* libPods-GDDataDrivenView_Example.a */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		E41339FC30FF232894F40D5F /* libPods-GDDataDrivenView_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D484E5084A8A022BC3057D02 /* libPods-GDDataDrivenView_Tests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +40,11 @@
 
 /* Begin PBXFileReference section */
 		37B29A292DA8D48C6B96ACDF /* Pods-GDDataDrivenView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDDataDrivenView_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GDDataDrivenView_Example/Pods-GDDataDrivenView_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		3866E24C6EC2D67131809E5E /* Pods_GDDataDrivenView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDDataDrivenView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		41024419D7127042FE0A5F9C /* Pods-GDDataDrivenView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDDataDrivenView_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-GDDataDrivenView_Tests/Pods-GDDataDrivenView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		44D768ACBB7BB0E43E587D85 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		464D97041D35100C00BF44DE /* GDDTableViewCellRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDTableViewCellRender.h; sourceTree = "<group>"; };
+		464D97051D35100C00BF44DE /* GDDTableViewCellRender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDTableViewCellRender.m; sourceTree = "<group>"; };
+		464D97061D35100C00BF44DE /* GDDTableViewCellRender.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GDDTableViewCellRender.xib; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* GDDataDrivenView_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDDataDrivenView_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,11 +64,12 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		61FBC87E2BA28B9D962635CE /* test_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_data.json; sourceTree = "<group>"; };
 		664CAFEA054EFF8889C6B45B /* Pods-GDDataDrivenView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDDataDrivenView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-GDDataDrivenView_Example/Pods-GDDataDrivenView_Example.release.xcconfig"; sourceTree = "<group>"; };
-		787870B14D1841A87F5D2FA0 /* GDDataDrivenView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = GDDataDrivenView.podspec; path = ../GDDataDrivenView.podspec; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		88B2FD5119BBB64DD33F7F2C /* Pods_GDDataDrivenView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDDataDrivenView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB40A2142DD937158E07F5B1 /* libPods-GDDataDrivenView_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GDDataDrivenView_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD72C4ABABD972F67F76E463 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D484E5084A8A022BC3057D02 /* libPods-GDDataDrivenView_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GDDataDrivenView_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C31FF2880A5A607D3C2BE6 /* Pods-GDDataDrivenView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDDataDrivenView_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GDDataDrivenView_Tests/Pods-GDDataDrivenView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,7 +81,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				3EEC29EB7E9FD0A28770C5C9 /* Pods_GDDataDrivenView_Example.framework in Frameworks */,
+				7F539AB82A3BC98429683550 /* libPods-GDDataDrivenView_Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +92,7 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				24D3A39526AAB52A6B200EB9 /* Pods_GDDataDrivenView_Tests.framework in Frameworks */,
+				E41339FC30FF232894F40D5F /* libPods-GDDataDrivenView_Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +127,8 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				88B2FD5119BBB64DD33F7F2C /* Pods_GDDataDrivenView_Example.framework */,
-				3866E24C6EC2D67131809E5E /* Pods_GDDataDrivenView_Tests.framework */,
+				BB40A2142DD937158E07F5B1 /* libPods-GDDataDrivenView_Example.a */,
+				D484E5084A8A022BC3057D02 /* libPods-GDDataDrivenView_Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -137,6 +143,10 @@
 				6003F5A6195388D20070C39A /* GDDViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				61FBC87E2BA28B9D962635CE /* test_data.json */,
+				464D97041D35100C00BF44DE /* GDDTableViewCellRender.h */,
+				464D97051D35100C00BF44DE /* GDDTableViewCellRender.m */,
+				464D97061D35100C00BF44DE /* GDDTableViewCellRender.xib */,
 			);
 			name = "Example for GDDataDrivenView";
 			path = GDDataDrivenView;
@@ -175,7 +185,6 @@
 		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				787870B14D1841A87F5D2FA0 /* GDDataDrivenView.podspec */,
 				CD72C4ABABD972F67F76E463 /* README.md */,
 				44D768ACBB7BB0E43E587D85 /* LICENSE */,
 			);
@@ -279,6 +288,8 @@
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				61FBCA5AED5F2B29978B9653 /* test_data.json in Resources */,
+				464D97081D35100C00BF44DE /* GDDTableViewCellRender.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +404,7 @@
 				6003F59E195388D20070C39A /* GDDAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* GDDViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				464D97071D35100C00BF44DE /* GDDTableViewCellRender.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
