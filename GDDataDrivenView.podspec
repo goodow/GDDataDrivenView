@@ -39,4 +39,5 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'GDChannel', '~> 0.6'
+  s.dependency 'Aspects', '~> 1.4'
 end

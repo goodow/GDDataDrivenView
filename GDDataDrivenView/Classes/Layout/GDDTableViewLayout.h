@@ -7,7 +7,9 @@
 @class GDDTableViewDataSource;
 
 @interface GDDTableViewLayout : NSObject
-- (instancetype)initWithTableView:(UITableView *)tableView;
 
-@property(nonatomic) NSString *topic;
+- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)topic;
+
+@property(nonatomic, readonly) NSString *topic;
+
 @end
