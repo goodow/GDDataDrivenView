@@ -9,7 +9,8 @@
 
 - (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic;
 
-@property(nonatomic, readonly) NSString *layoutTopic;
+- (NSString *)topicForSection:(NSInteger)section;
+
 @property(nonatomic, copy) void (^tapHandler)(GDDModel *model, UITapGestureRecognizer *sender);
 @property(nonatomic, copy) void (^infiniteScrollingHandler)(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL hasMore));
 

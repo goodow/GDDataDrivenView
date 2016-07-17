@@ -35,7 +35,7 @@
 
   [self requestJsonModels:^(NSArray<NSDictionary *> *array) {
       NSArray *models = [GDDViewController createModelsFromJsonArray:array];
-      [NSObject.bus publishLocal:xyzLayoutTopic payload:models];
+      [NSObject.bus publishLocal:[weakSelf.layout topicForSection:0] payload:models];
   }];
 
   [super viewDidLoad];
@@ -46,7 +46,7 @@
   opt.patch = YES;
   opt.type = @"GDDModel";
   GDDModel *copy = [[GDDModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
-  [NSObject.bus publishLocal:xyzLayoutTopic payload:@[copy] options:opt];
+  [NSObject.bus publishLocal:[self.layout topicForSection:0] payload:@[copy] options:opt];
 }
 
 - (void)requestJsonModels:(void (^)(NSArray<NSDictionary *> *))callback {

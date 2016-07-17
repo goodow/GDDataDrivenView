@@ -9,23 +9,27 @@
 #import "SVPullToRefresh.h"
 
 static NSString *const modelsPath = @"models";
+static NSString *const sectionsPath = @"sections";
 
 @interface GDDTableViewLayout () <UITableViewDelegate>
 @property(nonatomic) GDDTableViewDataSource *dataSource;
 @property(nonatomic) GDDTableViewDelegate *delegate;
 @property(nonatomic, weak) UITableView *tableView;
 @property(nonatomic) NSString *modelsTopic;
+@property(nonatomic) NSString *sectionsTopic;
 @property(nonatomic) NSMutableArray<GDDModel *> *models;
 @end
 
 @implementation GDDTableViewLayout {
   id <GDCMessageConsumer> _consumer;
+  NSString *_layoutTopic;
 }
 - (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic {
   self = [super init];
   if (self) {
     _tableView = tableView;
     _modelsTopic = [[layoutTopic stringByAppendingPathComponent:modelsPath] stringByAppendingString:@"/"];
+    _sectionsTopic = [[layoutTopic stringByAppendingPathComponent:sectionsPath] stringByAppendingString:@"/"];
     _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView withLayout:self];
     _delegate = [[GDDTableViewDelegate alloc] initWithDataSource:_dataSource];
 
@@ -53,17 +57,23 @@ static NSString *const modelsPath = @"models";
   NSString *wildcardTopic = [layoutTopic stringByAppendingPathComponent:@"#"];
   _consumer = [self.bus subscribeLocal:wildcardTopic handler:^(id <GDCMessage> message) {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          if ([message.topic isEqualToString:weakSelf.layoutTopic]) {
-            [weakSelf reloadModels:message.payload];
+          NSString *topic = message.topic;
+          if ([topic hasPrefix:weakSelf.sectionsTopic]) {
+            NSInteger section = [topic substringFromIndex:weakSelf.sectionsTopic.length].integerValue;
+            [weakSelf reloadModels:message.payload forSection:section];
             return;
           }
-          if ([message.topic hasPrefix:weakSelf.modelsTopic]) {
-            NSString *mid = [message.topic substringFromIndex:weakSelf.modelsTopic.length];
+          if ([topic hasPrefix:weakSelf.modelsTopic]) {
+            NSString *mid = [topic substringFromIndex:weakSelf.modelsTopic.length];
             [self mergeModel:message.payload forId:mid];
             return;
           }
       });
   }];
+}
+
+- (NSString *)topicForSection:(NSInteger)section {
+  return [self.sectionsTopic stringByAppendingPathComponent:@(section).stringValue];
 }
 
 - (void)dealloc {
@@ -73,7 +83,7 @@ static NSString *const modelsPath = @"models";
 
 #pragma mark Change model
 
-- (void)reloadModels:(NSArray<GDDModel *> *)models {
+- (void)reloadModels:(NSArray<GDDModel *> *)models forSection:(NSInteger)section {
   self.models = models;
   NSArray<GDDModel *> *patches = [self diffMatch];
   if (patches) {
@@ -85,6 +95,7 @@ static NSString *const modelsPath = @"models";
   [self.dataSource insertModels:models atIndexPaths:indexPaths];
   __weak UITableView *tableView = self.tableView;
   dispatch_async(dispatch_get_main_queue(), ^{
+//      [tableView reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
       [tableView reloadData];
   });
 }
