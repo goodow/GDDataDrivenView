@@ -11,6 +11,6 @@
 
 @property(nonatomic, readonly) NSString *layoutTopic;
 @property(nonatomic, copy) void (^tapHandler)(GDDModel *model, UITapGestureRecognizer *sender);
-@property(nonatomic, copy) void (^infiniteScrollingHandler)(NSArray<GDDModel *> * models, void (^complete)());
+@property(nonatomic, copy) void (^infiniteScrollingHandler)(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL hasMore));
 
 @end

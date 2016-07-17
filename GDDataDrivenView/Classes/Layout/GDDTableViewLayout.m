@@ -15,7 +15,7 @@ static NSString *const modelsPath = @"models";
 @property(nonatomic) GDDTableViewDelegate *delegate;
 @property(nonatomic, weak) UITableView *tableView;
 @property(nonatomic) NSString *modelsTopic;
-@property (nonatomic) NSMutableArray<GDDModel *> *models;
+@property(nonatomic) NSMutableArray<GDDModel *> *models;
 @end
 
 @implementation GDDTableViewLayout {
@@ -125,6 +125,9 @@ static NSString *const modelsPath = @"models";
       [tableView beginUpdates];
       [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
       [tableView endUpdates];
+      if (tableView.infiniteScrollingView.state == SVInfiniteScrollingStateLoading) {
+        [tableView.infiniteScrollingView stopAnimating];
+      }
       [UIView setAnimationsEnabled:YES];
   });
 //    }
@@ -142,10 +145,13 @@ static NSString *const modelsPath = @"models";
 }
 
 - (void)mergeModel:(GDDModel *)patch forId:(NSString *)mid {
-  GDDModel *model = [self.dataSource modelForId:mid];
+  NSIndexPath *indexPath = [self.dataSource indexPathForId:mid];
+  GDDModel *model = [self.dataSource modelForIndexPath:indexPath];
   [model mergeFrom:patch];
+  __weak GDDTableViewLayout *weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
       [model reloadData];
+      [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
   });
 }
 
@@ -161,12 +167,14 @@ static NSString *const modelsPath = @"models";
   __weak GDDTableViewLayout *weakSelf = self;
   [self.tableView addInfiniteScrollingWithActionHandler:^{
       if (weakSelf.infiniteScrollingHandler) {
-        weakSelf.infiniteScrollingHandler(weakSelf.models.copy, ^{
+        weakSelf.infiniteScrollingHandler(weakSelf.models.copy, ^(BOOL hasMore) {
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            if (!hasMore) {
+              self.tableView.showsInfiniteScrolling = NO;
+            }
         });
       }
   }];
 }
-
 
 @end

@@ -23,18 +23,13 @@
   __weak GDDViewController *weakSelf = self;
   self.layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:xyzLayoutTopic];
   self.layout.tapHandler = ^(GDDModel *model, UITapGestureRecognizer *sender) {
-      GDCOptions *opt = [[GDCOptions alloc] init];
-      opt.patch = YES;
-      opt.type = @"GDDModel";
-      GDDModel *copy = [[GDDModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
-      [NSObject.bus publishLocal:xyzLayoutTopic payload:@[copy] options:opt];
+      [weakSelf onLoaded:model];
   };
-  self.layout.infiniteScrollingHandler = ^(NSArray<GDDModel *> *models, void (^complete)()) {
+  self.layout.infiniteScrollingHandler = ^(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL)) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
-          // 加载完成后结束动画
-          complete();
-          // 当不再需要无限滚动翻页时, 将infiniteScrollingHandler设置为nil
-          weakSelf.layout.infiniteScrollingHandler = nil;
+          [weakSelf onLoaded:models.lastObject];
+          // 当没有了下一页数据时, 调用loadComplete(NO)
+          // loadComplete(NO);
       });
   };
 
@@ -44,6 +39,14 @@
   }];
 
   [super viewDidLoad];
+}
+
+- (void)onLoaded:(GDDModel *)model {
+  GDCOptions *opt = [[GDCOptions alloc] init];
+  opt.patch = YES;
+  opt.type = @"GDDModel";
+  GDDModel *copy = [[GDDModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
+  [NSObject.bus publishLocal:xyzLayoutTopic payload:@[copy] options:opt];
 }
 
 - (void)requestJsonModels:(void (^)(NSArray<NSDictionary *> *))callback {
