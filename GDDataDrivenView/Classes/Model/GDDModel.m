@@ -15,7 +15,7 @@
   self = [super init];
   if (self) {
     _data = data;
-    _mid = mid;
+    _mid = mid ?: [[NSUUID alloc] init].UUIDString;
     _renderType = nibNameOrRenderClass;
   }
 
@@ -57,10 +57,7 @@ static NSString *const dataTypeKey = @"dataType";
     NSError *error = nil;
     data = [dataClass parseFromJson:data error:&error];
   }
-  NSString *mid = json[midKey];
-  if (!mid) {
-    mid = [[NSUUID alloc] init].UUIDString;
-  }
+  NSString *mid = json[midKey] ?: [[NSUUID alloc] init].UUIDString;
   return [[self alloc] initWithData:data withId:mid withNibNameOrRenderClass:json[renderTypeKey]];
 }
 

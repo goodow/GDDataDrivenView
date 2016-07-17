@@ -6,19 +6,20 @@
     "data": {
       "title": "Hello world",
       "content": "This is forkingdog team. Here's our logo?\nGithub: \"forkingdog\"",
-      "username": "forkingdog",
-      "time": "2015.04.10",
+      "username": "aaa",
+      "time": "2015.04.11",
       "imageName": "forkingdog"
     }
   },
   {
+    "mid": "2",
     "renderType": "GDDTableViewCellRender",
     "dataType": null,
     "data": {
       "title": "",
       "content": "Working at Baidu, Zhidao iOS team, weibo: @我就叫Sunny怎么了",
-      "username": "sunnyxx",
-      "time": "2015.04.11",
+      "username": "bbb",
+      "time": "2015.04.12",
       "imageName": ""
     }
   },
@@ -27,34 +28,11 @@
     "renderType": "GDDTableViewCellRender",
     "dataType": null,
     "data": {
-      "title": "Team member - SinoJerk",
+      "title": "你好",
       "content": "",
-      "username": "sinojerk",
-      "time": "2015.04.15",
+      "username": "ccc",
+      "time": "2015.04.13",
       "imageName": "phil"
-    }
-  },
-  {
-    "renderType": "GDDTableViewCellRender",
-    "dataType": null,
-    "data": {
-      "title": "Team member - Phil",
-      "content": "Zhidao iOS team, Jiaqi Guo, Github: philcn",
-      "username": "",
-      "time": "2015.04.15",
-      "imageName": ""
-    }
-  },
-  {
-    "mid": "5",
-    "renderType": "GDDTableViewCellRender",
-    "dataType": null,
-    "data": {
-      "title": "William Shakespeare",
-      "content": "To be, or not to be —that is the question, Whether'tis nobler in the mind to suffer. The slings and arrows of outrageous fortune Or to take arms against a sea of troubles, And by opposing end them. To die —to sleep",
-      "username": "sunnyxx",
-      "time": "2015.04.16",
-      "imageName": ""
     }
   }
 ]

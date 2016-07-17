@@ -119,11 +119,20 @@
 
 #pragma mark UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  return _models.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  if (section >= _models.count) {
+    return 0;
+  }
+  int hasHeading = [self _sectionHasHeading:section] ? 1 : 0;
+  return [_models[section] count] - hasHeading;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   GDDModel *model = [self modelForIndexPath:indexPath];
-  if (model.render) {
-    return model.render;
-  }
   UITableViewCell <GDDRender> *cellRender = [tableView dequeueReusableCellWithIdentifier:model.renderType];
   model.render = cellRender;
   for (UIGestureRecognizer *gestureRecognizer in cellRender.gestureRecognizers) {
@@ -142,18 +151,6 @@
   }
   [model reloadData];
   return cellRender;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return _models.count;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  if (section >= _models.count) {
-    return 0;
-  }
-  int hasHeading = [self _sectionHasHeading:section] ? 1 : 0;
-  return [_models[section] count] - hasHeading;
 }
 
 @end

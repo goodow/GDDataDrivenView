@@ -5,26 +5,38 @@
 #import "GDDViewController.h"
 #import "GDDTableViewLayout.h"
 #import "NSObject+GDChannel.h"
-#import "GDDModel.h"
-#import "Channel.pbobjc.h"
-#import "GPBMessage+JsonFormat.h"
 #import "GDCBusProvider.h"
 
 #define xyzLayoutTopic [GDCBusProvider.clientId stringByAppendingPathComponent:@"abcView/layouts/xyzTable"]
 
 @interface GDDViewController ()
-@property(nonatomic, copy) NSArray *json;
+@property(nonatomic) GDDTableViewLayout *layout;
 @end
 
 @implementation GDDViewController {
-  GDDTableViewLayout *_layout;
 }
 
 - (void)viewDidLoad {
   [self.bus subscribe:[GDCBusProvider.clientId stringByAppendingPathComponent:@"#"] handler:^(id <GDCMessage> message) {
 
   }];
-  _layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:xyzLayoutTopic];
+  __weak GDDViewController *weakSelf = self;
+  self.layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:xyzLayoutTopic];
+  self.layout.tapHandler = ^(GDDModel *model, UITapGestureRecognizer *sender) {
+      GDCOptions *opt = [[GDCOptions alloc] init];
+      opt.patch = YES;
+      opt.type = @"GDDModel";
+      GDDModel *copy = [[GDDModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
+      [NSObject.bus publishLocal:xyzLayoutTopic payload:@[copy] options:opt];
+  };
+  self.layout.infiniteScrollingHandler = ^(NSArray<GDDModel *> *models, void (^complete)()) {
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
+          // 加载完成后结束动画
+          complete();
+          // 当不再需要无限滚动翻页时, 将infiniteScrollingHandler设置为nil
+          weakSelf.layout.infiniteScrollingHandler = nil;
+      });
+  };
 
   [self requestJsonModels:^(NSArray<NSDictionary *> *array) {
       NSArray *models = [GDDViewController createModelsFromJsonArray:array];
@@ -32,9 +44,6 @@
   }];
 
   [super viewDidLoad];
-
-  GDCPBOptions *options = [GDCPBOptions message];
-  options.viewOptions.statusBarStyle = 3;
 }
 
 - (void)requestJsonModels:(void (^)(NSArray<NSDictionary *> *))callback {
@@ -56,12 +65,6 @@
   for (NSDictionary *json in array) {
     GDDModel *model = [[GDDModel alloc] initWithData:json[@"data"] withId:json[@"mid"] withNibNameOrRenderClass:json[@"renderType"]];
     [models addObject:model];
-    model.tapHandler = ^(GDDModel *model, UITapGestureRecognizer *sender) {
-        GDCOptions *opt = [[GDCOptions alloc] init];
-        opt.patch = YES;
-        opt.type = @"GDDModel";
-        [NSObject.bus publishLocal:xyzLayoutTopic payload:@[model] options:opt];
-    };
   }
   return models;
 }

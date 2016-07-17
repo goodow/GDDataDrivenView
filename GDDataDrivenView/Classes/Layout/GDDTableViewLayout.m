@@ -33,6 +33,9 @@ static NSString *const modelsPath = @"models";
     tableView.dataSource = _dataSource;
     tableView.delegate = _delegate;
 
+    // 自动算高, 配合systemLayoutSizeFittingSize:使用
+    tableView.estimatedRowHeight = 213;
+
     // 配置tableView样式
     tableView.allowsSelection = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -101,17 +104,7 @@ static NSString *const modelsPath = @"models";
       return nil;
     }
   }
-  //  return [self.models subarrayWithRange:NSMakeRange(rowsInLastSection, self.models.count - rowsInLastSection)];
-  NSMutableArray<GDDModel *> *newModels = @[].mutableCopy;
-  for (int row = rowsInLastSection; row < self.models.count; row++) {
-    GDDModel *model = self.models[row];
-    if ([self.models containsObject:model]) {
-      model = model.copy;
-      [self.models replaceObjectAtIndex:row withObject:model];
-    }
-    [newModels addObject:model];
-  }
-  return newModels;
+  return [self.models subarrayWithRange:NSMakeRange(rowsInLastSection, self.models.count - rowsInLastSection)];
 }
 
 - (void)appendNewModels:(NSArray<GDDModel *> *)newModels {
