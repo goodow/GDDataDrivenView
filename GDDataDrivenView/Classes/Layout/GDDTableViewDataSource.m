@@ -5,8 +5,10 @@
 #import "GDDTableViewDataSource.h"
 #import "GDDModel.h"
 #import "NSObject+GDChannel.h"
+#import "GDDTableViewLayout.h"
 
 @interface GDDTableViewDataSource ()
+@property(nonatomic, weak) GDDTableViewLayout *layout;
 @end
 
 @implementation GDDTableViewDataSource {
@@ -16,10 +18,11 @@
   __weak UITableView *_tableView;
 }
 
-- (instancetype)initWithTableView:(UITableView *)tableView {
+- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout{
   self = [super init];
   if (self) {
     _tableView = tableView;
+    _layout = layout;
     _models = @[].mutableCopy;
     _registeredNibsForCellReuseIdentifier = @{}.mutableCopy;
     _registeredClassForCellReuseIdentifier = @{}.mutableCopy;
@@ -129,6 +132,14 @@
   UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:model action:@selector(handleTap:)];
   tapGesture.cancelsTouchesInView = NO;
   [cellRender addGestureRecognizer:tapGesture];
+  if (!model.tapHandler) {
+    __weak GDDTableViewDataSource *weakSelf = self;
+    model.tapHandler = ^(GDDModel *model, UITapGestureRecognizer *sender) {
+        if (weakSelf.layout.tapHandler) {
+          weakSelf.layout.tapHandler(model, sender);
+        }
+    };
+  }
   [model reloadData];
   return cellRender;
 }
@@ -145,5 +156,4 @@
   return [_models[section] count] - hasHeading;
 }
 
-//#pragma mark Event Handler
 @end

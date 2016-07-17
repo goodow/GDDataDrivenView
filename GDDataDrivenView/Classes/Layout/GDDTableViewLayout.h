@@ -3,13 +3,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class GDDTableViewDataSource;
+#import "GDDModel.h"
 
 @interface GDDTableViewLayout : NSObject
 
 - (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic;
 
 @property(nonatomic, readonly) NSString *layoutTopic;
+@property(nonatomic, copy) void (^tapHandler)(GDDModel *model, UITapGestureRecognizer *sender);
+@property(nonatomic, copy) void (^infiniteScrollingHandler)(NSArray<GDDModel *> * models, void (^complete)());
 
 @end

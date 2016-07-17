@@ -8,6 +8,6 @@
 
 
 @interface GDDTableViewDelegate : NSObject <UITableViewDelegate>
-@property(nonatomic, weak) GDDTableViewDataSource *dataSource;
 
+- (instancetype)initWithDataSource:(GDDTableViewDataSource *)dataSource;
 @end

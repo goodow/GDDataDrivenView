@@ -10,6 +10,7 @@
 @property(nonatomic, readonly) __kindof id data;
 @property(nonatomic, readonly) NSString *mid;
 @property(nonatomic, readonly) NSString *renderType;
+
 @property(nonatomic, weak) __kindof UIView <GDDRender> *render;
 @property(nonatomic, copy) void (^tapHandler)(GDDModel *model, UITapGestureRecognizer *sender);
 

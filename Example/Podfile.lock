@@ -13,12 +13,16 @@ PODS:
   - GDDataDrivenView (0.1.0):
     - Aspects (~> 1.4)
     - GDChannel (~> 0.6)
+    - SVPullToRefresh (~> 0.4)
+    - UITableView+FDTemplateLayoutCell (~> 1.5.beta)
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
   - MQTTKit (0.1.0)
   - Protobuf (3.0.0-beta-3.1)
   - Specta (1.0.5)
+  - SVPullToRefresh (0.4.1)
+  - UITableView+FDTemplateLayoutCell (1.5.beta)
 
 DEPENDENCIES:
   - Expecta
@@ -45,12 +49,14 @@ SPEC CHECKSUMS:
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
   GDChannel: 400f6e092bb498434e49e2c5a1d9786a82fb0084
-  GDDataDrivenView: 2f5e6e3b85330f3855fc8fe3883247b58c8af82c
+  GDDataDrivenView: 9bb59e77edb10b0b4a3ef84a2fea198ec2171956
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
   Protobuf: 93350904b8872d186f9b25d850d8aa6ceb1e68ea
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
+  SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
+  UITableView+FDTemplateLayoutCell: 02b508ab1cb4cea16a8c17ac83d2cd1fd72124f9
 
-PODFILE CHECKSUM: 4d5753cec3e29b0097551e151c866fc153764d63
+PODFILE CHECKSUM: 3de769dd436bf1a4e0002b4dc04022102d475d25
 
 COCOAPODS: 1.0.1

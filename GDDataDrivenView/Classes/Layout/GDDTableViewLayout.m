@@ -5,8 +5,8 @@
 #import "GDDTableViewLayout.h"
 #import "GDDTableViewDataSource.h"
 #import "NSObject+GDChannel.h"
-#import "GDDModel.h"
 #import "GDDTableViewDelegate.h"
+#import "SVPullToRefresh.h"
 
 static NSString *const modelsPath = @"models";
 
@@ -15,20 +15,21 @@ static NSString *const modelsPath = @"models";
 @property(nonatomic) GDDTableViewDelegate *delegate;
 @property(nonatomic, weak) UITableView *tableView;
 @property(nonatomic) NSString *modelsTopic;
+@property (nonatomic) NSMutableArray<GDDModel *> *models;
 @end
 
 @implementation GDDTableViewLayout {
   id <GDCMessageConsumer> _consumer;
-  NSMutableArray<GDDModel *> *_models;
 }
 - (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic {
   self = [super init];
   if (self) {
     _tableView = tableView;
     _modelsTopic = [[layoutTopic stringByAppendingPathComponent:modelsPath] stringByAppendingString:@"/"];
-    _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView];
-    _delegate = [[GDDTableViewDelegate alloc] init];
-    _delegate.dataSource = _dataSource;
+    _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView withLayout:self];
+    _delegate = [[GDDTableViewDelegate alloc] initWithDataSource:_dataSource];
+
+    // 配置tableView代理
     tableView.dataSource = _dataSource;
     tableView.delegate = _delegate;
 
@@ -70,7 +71,7 @@ static NSString *const modelsPath = @"models";
 #pragma mark Change model
 
 - (void)reloadModels:(NSArray<GDDModel *> *)models {
-  _models = models;
+  self.models = models;
   NSArray<GDDModel *> *patches = [self diffMatch];
   if (patches) {
     [self appendNewModels:patches];
@@ -91,22 +92,22 @@ static NSString *const modelsPath = @"models";
 //  if (oldRowCount) {
 //    *oldRowCount = rowsInLastSection;
 //  }
-  if (rowsInLastSection == 0 || _models.count < rowsInLastSection) {
+  if (rowsInLastSection == 0 || self.models.count < rowsInLastSection) {
     return nil;
   }
   for (int row = rowsInLastSection - 1; row >= 0; row--) {
     GDDModel *model = [self.dataSource modelForIndexPath:[NSIndexPath indexPathForRow:row inSection:lastSection]];
-    if (![model isEqual:_models[row]]) {
+    if (![model isEqual:self.models[row]]) {
       return nil;
     }
   }
-  //  return [_models subarrayWithRange:NSMakeRange(rowsInLastSection, _models.count - rowsInLastSection)];
+  //  return [self.models subarrayWithRange:NSMakeRange(rowsInLastSection, self.models.count - rowsInLastSection)];
   NSMutableArray<GDDModel *> *newModels = @[].mutableCopy;
-  for (int row = rowsInLastSection; row < _models.count; row++) {
-    GDDModel *model = _models[row];
-    if ([_models containsObject:model]) {
+  for (int row = rowsInLastSection; row < self.models.count; row++) {
+    GDDModel *model = self.models[row];
+    if ([self.models containsObject:model]) {
       model = model.copy;
-      [_models replaceObjectAtIndex:row withObject:model];
+      [self.models replaceObjectAtIndex:row withObject:model];
     }
     [newModels addObject:model];
   }
@@ -120,11 +121,21 @@ static NSString *const modelsPath = @"models";
   NSMutableArray *indexPaths = [self generateNewIndexPaths:newModels.count];
   [self.dataSource insertModels:newModels atIndexPaths:indexPaths];
   __weak UITableView *tableView = self.tableView;
+//  NSArray<NSIndexPath *> *visibleRows = [tableView indexPathsForVisibleRows];
+//  NSComparisonResult result1 = [indexPaths.firstObject compare:visibleRows.firstObject];
+//  if (result1 == NSOrderedSame || result1 == NSOrderedDescending) {
+//    NSComparisonResult result2 = [indexPaths.firstObject compare:visibleRows.lastObject];
+//    if (result2 == NSOrderedSame || result2 == NSOrderedAscending) {
+//      // cell is visible, reload immediately
   dispatch_async(dispatch_get_main_queue(), ^{
+      [UIView setAnimationsEnabled:NO];
       [tableView beginUpdates];
-      [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+      [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
       [tableView endUpdates];
+      [UIView setAnimationsEnabled:YES];
   });
+//    }
+//  }
 }
 
 - (NSMutableArray *)generateNewIndexPaths:(int)count {
@@ -144,5 +155,25 @@ static NSString *const modelsPath = @"models";
       [model reloadData];
   });
 }
+
+#pragma mark Event Handler
+
+- (void)setInfiniteScrollingHandler:(id)infiniteScrollingHandler {
+  if (!infiniteScrollingHandler) {
+    _infiniteScrollingHandler = nil;
+    self.tableView.showsInfiniteScrolling = NO;
+    return;
+  }
+  _infiniteScrollingHandler = [infiniteScrollingHandler copy];
+  __weak GDDTableViewLayout *weakSelf = self;
+  [self.tableView addInfiniteScrollingWithActionHandler:^{
+      if (weakSelf.infiniteScrollingHandler) {
+        weakSelf.infiniteScrollingHandler(weakSelf.models.copy, ^{
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+        });
+      }
+  }];
+}
+
 
 @end

@@ -7,10 +7,11 @@
 @class GDDModel;
 @protocol GDDRender;
 @protocol GDCMessage;
+@class GDDTableViewLayout;
 
 @interface GDDTableViewDataSource : NSObject <UITableViewDataSource>
 
-- (instancetype)initWithTableView:(UITableView *)tableView;
+- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout;
 
 #pragma mark Read model
 
