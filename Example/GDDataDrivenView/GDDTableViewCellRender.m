@@ -3,7 +3,6 @@
 //
 
 #import "GDDTableViewCellRender.h"
-#import "GDCMessageImpl.h"
 
 @interface GDDTableViewCellRender ()
 @property(weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -18,34 +17,21 @@
   // Initialization code
 }
 
-- (instancetype)init {
-  self = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self.class) owner:self options:nil][0];
-  if (self) {
-
-  }
-
-  return self;
-}
-
-//- (GDDTableViewCellRender *)initWithPayload:(GDDRenderModel *)model {
-//    self = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self.class) owner:self options:nil][0];
-//    if (self) {
-//        GDCMessageImpl *message = [[GDCMessageImpl alloc] init];
-//        message.payload = model;
-//        [self handleMessage:message];
-//    }
-//    return self;
+//- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+//  UIView *view = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self.class) owner:self options:nil][0];
+////  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+//  self = view;
+//  if (self) {
+////    [self.contentView addSubview:view];
+//  }
+//  return self;
 //}
 
-
-- (void)handleMessage:(id <GDCMessage>)message {
-  GDDRenderModel *model = message.payload;
-  NSDictionary *data = model.data;
+- (void)handleData:(NSDictionary *)data {
   self.titleLabel.text = data[@"title"];
   self.usernameLabel.text = data[@"username"];
   NSString *imageName = data[@"imageName"];
   self.contentImageView.image = imageName.length > 0 ? [UIImage imageNamed:imageName] : nil;
 }
-
 
 @end

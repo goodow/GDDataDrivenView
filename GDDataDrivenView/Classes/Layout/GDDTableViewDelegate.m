@@ -3,11 +3,10 @@
 //
 
 #import "GDDTableViewDelegate.h"
-#import "GDDRenderModel.h"
+#import "GDDModel.h"
 #import "GDDTableViewDataSource.h"
 //#import "UITableView+FDTemplateLayoutCell.h"
 #import "NSObject+GDChannel.h"
-#import "GDCMessageImpl.h"
 
 @implementation GDDTableViewDelegate {
 
@@ -20,17 +19,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //  [tableView deselectRowAtIndexPath:indexPath animated:NO];
-  GDDRenderModel *model = [self.dataSource renderModelForIndexPath:indexPath];
+  GDDModel *model = [self.dataSource modelForIndexPath:indexPath];
   if (model.tapHandler) {
     model.tapHandler(model, nil);
   }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  GDDRenderModel *model = [self.dataSource renderModelForIndexPath:indexPath];
+  GDDModel *model = [self.dataSource modelForIndexPath:indexPath];
   return 88;
-//  return [tableView fd_heightForCellWithIdentifier:NSStringFromClass(model.renderClass) cacheByKey:model.topic configuration:^(UITableViewCell *cell) {
-//  return [tableView fd_heightForCellWithIdentifier:NSStringFromClass(model.renderClass) configuration:^(UITableViewCell *cell) {
+//  return [tableView fd_heightForCellWithIdentifier:model.renderType cacheByKey:model.topic configuration:^(UITableViewCell *cell) {
+//  return [tableView fd_heightForCellWithIdentifier:model.renderType configuration:^(UITableViewCell *cell) {
 //      GDCMessageImpl *message = [[GDCMessageImpl alloc] init];
 //      message.topic = model.topic;
 //      message.local = YES;

@@ -3,38 +3,41 @@
 //
 
 #import "GDDTableViewDataSource.h"
-#import "GDDRenderModel.h"
+#import "GDDModel.h"
 #import "NSObject+GDChannel.h"
-#import "GDCMessageImpl.h"
-#import "GDDRender.h"
 
 @interface GDDTableViewDataSource ()
 @end
 
 @implementation GDDTableViewDataSource {
-  __weak NSString *_topic;
-  NSMutableArray<NSMutableArray<GDDRenderModel *> *> *_renderModels;
+  NSMutableArray<NSMutableArray<GDDModel *> *> *_models;
+  NSMutableDictionary<NSString *, UINib *> *_registeredNibsForCellReuseIdentifier;
+  NSMutableDictionary<NSString *, Class> *_registeredClassForCellReuseIdentifier;
+  __weak UITableView *_tableView;
 }
 
-- (instancetype)initWithTopic:(NSString *)topic {
+- (instancetype)initWithTableView:(UITableView *)tableView {
   self = [super init];
   if (self) {
-    _topic = topic;
-    _renderModels = @[].mutableCopy;
+    _tableView = tableView;
+    _models = @[].mutableCopy;
+    _registeredNibsForCellReuseIdentifier = @{}.mutableCopy;
+    _registeredClassForCellReuseIdentifier = @{}.mutableCopy;
   }
 
   return self;
 }
 
 #pragma mark Read model
-- (GDDRenderModel *)renderModelForIndexPath:(NSIndexPath *)indexPath {
+
+- (GDDModel *)modelForIndexPath:(NSIndexPath *)indexPath {
   int hasHeading = [self _sectionHasHeading:indexPath.section] ? 1 : 0;
-  return _renderModels[indexPath.section][indexPath.row + hasHeading];
+  return _models[indexPath.section][indexPath.row + hasHeading];
 }
 
-- (GDDRenderModel *)renderModelForId:(NSString *)mid {
-  for (NSArray *models in _renderModels) {
-    for (GDDRenderModel *model in models) {
+- (GDDModel *)modelForId:(NSString *)mid {
+  for (NSArray *models in _models) {
+    for (GDDModel *model in models) {
       if ([model.mid isEqualToString:mid]) {
         return model;
       }
@@ -46,10 +49,10 @@
 - (NSIndexPath *)indexPathForId:(NSString *)mid {
   NSInteger sectionsCount = [self numberOfSectionsInTableView:nil];
   for (NSUInteger sectionIndex = 0; sectionIndex < sectionsCount; sectionIndex++) {
-    NSArray *section = _renderModels[sectionIndex];
+    NSArray *section = _models[sectionIndex];
     int hasHeading = [self _sectionHasHeading:sectionIndex] ? 1 : 0;
     for (NSUInteger rowIndex = hasHeading ? 1 : 0; rowIndex < section.count; rowIndex++) {
-      GDDRenderModel *model = section[rowIndex];
+      GDDModel *model = section[rowIndex];
       if ([model.mid isEqualToString:mid]) {
         return [NSIndexPath indexPathForRow:rowIndex - hasHeading inSection:sectionIndex];
       }
@@ -58,60 +61,67 @@
   return nil;
 }
 
-- (GDDRenderModel *)headerRenderModelForSection:(NSInteger)section {
+- (GDDModel *)headerModelForSection:(NSInteger)section {
   NSInteger sectionCount = [self numberOfSectionsInTableView:nil];
-  if (section >= sectionCount || _renderModels[section].count == 0) {
+  if (section >= sectionCount || _models[section].count == 0) {
     return nil;
   }
-  GDDRenderModel *model = _renderModels[section][0];
-  if (!model.renderClass && !model.mid && !model.render) {
+  GDDModel *model = _models[section][0];
+  if (!model.renderType && !model.mid && !model.render) {
     return model;
   }
   return nil;
 }
 
 - (BOOL)_sectionHasHeading:(NSInteger)section {
-  return [self headerRenderModelForSection:section] != nil;
+  return [self headerModelForSection:section] != nil;
 }
 
 #pragma mark Change model
 
-- (void)insertModels:(NSArray<GDDRenderModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+- (void)insertModels:(NSArray<GDDModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
   int i = 0;
   for (NSIndexPath *indexPath in indexPaths) {
     if (indexPath.section == [self numberOfSectionsInTableView:nil]) {
-      [_renderModels addObject:@[].mutableCopy];
+      [_models addObject:@[].mutableCopy];
     }
     int hasHeading = [self _sectionHasHeading:indexPath.section] ? 1 : 0;
-    [_renderModels[indexPath.section] insertObject:models[i++] atIndex:indexPath.row + hasHeading];
+    GDDModel *model = models[i++];
+    [_models[indexPath.section] insertObject:model atIndex:indexPath.row + hasHeading];
+    NSString *name = model.renderType;
+    if (_registeredNibsForCellReuseIdentifier[name] || _registeredClassForCellReuseIdentifier[name]) {
+      continue;
+    }
+    if ([[NSBundle mainBundle] pathForResource:name ofType:@"nib"]) {
+      UINib *nib = [UINib nibWithNibName:name bundle:nil];
+      _registeredNibsForCellReuseIdentifier[name] = nib;
+      [_tableView registerNib:nib forCellReuseIdentifier:name];
+      continue;
+    }
+    Class cellClass = NSClassFromString(name);
+#ifdef DEBUG
+    if (!cellClass || ![cellClass isKindOfClass:UITableViewCell.class]) {
+      [NSException raise:NSInvalidArgumentException format:@"Class with name '%@' is not found or not a kind of UITableViewCell", name];
+    }
+#endif
+    _registeredClassForCellReuseIdentifier[name] = cellClass;
+    [_tableView registerClass:cellClass forCellReuseIdentifier:name];
   }
 }
 
 - (void)clearModels {
-  [_renderModels removeAllObjects];
+  [_models removeAllObjects];
+
 }
 
 #pragma mark UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  GDDRenderModel *model = [self renderModelForIndexPath:indexPath];
-  Class renderClass = model.renderClass;
+  GDDModel *model = [self modelForIndexPath:indexPath];
   if (model.render) {
     return model.render;
   }
-  UITableViewCell *cellRender = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(renderClass)];
-  BOOL initWithPayload = NO;
-  if (!cellRender) {
-    initWithPayload = [renderClass instancesRespondToSelector:@selector(initWithPayload:)];
-    cellRender = initWithPayload ? [[renderClass alloc] initWithPayload:model] : [[renderClass alloc] init];
-  }
-  if (!initWithPayload && [cellRender respondsToSelector:@selector(handleMessage:)]) {
-    GDCMessageImpl *message = [[GDCMessageImpl alloc] init];
-    message.topic = [_topic stringByAppendingPathComponent:model.mid];
-    message.local = YES;
-    message.payload = model;
-    [cellRender handleMessage:message];
-  }
+  UITableViewCell <GDDRender> *cellRender = [tableView dequeueReusableCellWithIdentifier:model.renderType];
   model.render = cellRender;
   for (UIGestureRecognizer *gestureRecognizer in cellRender.gestureRecognizers) {
     [cellRender removeGestureRecognizer:gestureRecognizer];
@@ -119,19 +129,20 @@
   UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:model action:@selector(handleTap:)];
   tapGesture.cancelsTouchesInView = NO;
   [cellRender addGestureRecognizer:tapGesture];
+  [model reloadData];
   return cellRender;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return _renderModels.count;
+  return _models.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  if (section >= _renderModels.count) {
+  if (section >= _models.count) {
     return 0;
   }
   int hasHeading = [self _sectionHasHeading:section] ? 1 : 0;
-  return [_renderModels[section] count] - hasHeading;
+  return [_models[section] count] - hasHeading;
 }
 
 //#pragma mark Event Handler

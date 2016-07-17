@@ -4,24 +4,28 @@
 
 #import <UIKit/UIKit.h>
 
-@class GDDRenderModel;
+@class GDDModel;
+@protocol GDDRender;
+@protocol GDCMessage;
 
 @interface GDDTableViewDataSource : NSObject <UITableViewDataSource>
 
+- (instancetype)initWithTableView:(UITableView *)tableView;
+
 #pragma mark Read model
 
-- (instancetype)initWithTopic:(NSString *)topic;
+- (GDDModel *)modelForIndexPath:(NSIndexPath *)indexPath;
 
-- (GDDRenderModel *)renderModelForIndexPath:(NSIndexPath *)indexPath;
-
-- (GDDRenderModel *)renderModelForId:(NSString *)mid;
+- (GDDModel *)modelForId:(NSString *)mid;
 - (NSIndexPath*)indexPathForId:(NSString*)mid;
 
 // Returns the model describing the section's header, or nil if there is no header.
-- (GDDRenderModel *)headerRenderModelForSection:(NSInteger)section;
+- (GDDModel *)headerModelForSection:(NSInteger)section;
 
 #pragma mark Change model
-- (void)insertModels:(NSArray<GDDRenderModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+
+- (void)insertModels:(NSArray<GDDModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+
 - (void)clearModels;
 
 @end

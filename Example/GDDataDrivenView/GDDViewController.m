@@ -5,11 +5,12 @@
 #import "GDDViewController.h"
 #import "GDDTableViewLayout.h"
 #import "NSObject+GDChannel.h"
-#import "GDDRenderModel.h"
-#import "GDDTableViewCellRender.h"
+#import "GDDModel.h"
 #import "Channel.pbobjc.h"
 #import "GPBMessage+JsonFormat.h"
 #import "GDCBusProvider.h"
+
+#define xyzLayoutTopic [GDCBusProvider.clientId stringByAppendingPathComponent:@"abcView/layouts/xyzTable"]
 
 @interface GDDViewController ()
 @property(nonatomic, copy) NSArray *json;
@@ -17,19 +18,17 @@
 
 @implementation GDDViewController {
   GDDTableViewLayout *_layout;
-  NSString *_topic;
 }
 
 - (void)viewDidLoad {
-  _topic = [GDCBusProvider.clientId stringByAppendingPathComponent:@"GDDViewController"];
   [self.bus subscribe:[GDCBusProvider.clientId stringByAppendingPathComponent:@"#"] handler:^(id <GDCMessage> message) {
 
   }];
-  _layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:_topic];
+  _layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:xyzLayoutTopic];
 
   [self requestJsonModels:^(NSArray<NSDictionary *> *array) {
-      NSArray *models = [GDDViewController createRenderModelsFromJsonArray:array];
-      [NSObject.bus publishLocal:_topic payload:models];
+      NSArray *models = [GDDViewController createModelsFromJsonArray:array];
+      [NSObject.bus publishLocal:xyzLayoutTopic payload:models];
   }];
 
   [super viewDidLoad];
@@ -44,7 +43,7 @@
       // Data from `test_data.json`
       NSString *dataFilePath = [[NSBundle mainBundle] pathForResource:@"test_data" ofType:@"json"];
       NSData *data = [NSData dataWithContentsOfFile:dataFilePath];
-      NSArray *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+      NSArray *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
       // Callback
       dispatch_async(dispatch_get_main_queue(), ^{
           !callback ?: callback(json);
@@ -52,17 +51,16 @@
   });
 }
 
-+ (NSArray<GDDRenderModel *> *)createRenderModelsFromJsonArray:(NSArray *)array {
-  NSMutableArray<GDDRenderModel *> *models = [NSMutableArray array];
++ (NSArray<GDDModel *> *)createModelsFromJsonArray:(NSArray *)array {
+  NSMutableArray<GDDModel *> *models = [NSMutableArray array];
   for (NSDictionary *json in array) {
-    Class renderClass = NSClassFromString(json[@"renderClass"]);
-    GDDRenderModel *model = [[GDDRenderModel alloc] initWithData:json[@"data"] withId:json[@"mid"] withRenderClass:renderClass];
+    GDDModel *model = [[GDDModel alloc] initWithData:json[@"data"] withId:json[@"mid"] withNibNameOrRenderClass:json[@"renderType"]];
     [models addObject:model];
-    model.tapHandler = ^(GDDRenderModel *renderModel, UITapGestureRecognizer *sender) {
+    model.tapHandler = ^(GDDModel *model, UITapGestureRecognizer *sender) {
         GDCOptions *opt = [[GDCOptions alloc] init];
         opt.patch = YES;
-        opt.type = @"GDDRenderModel";
-        [NSObject.bus publishLocal:[GDCBusProvider.clientId stringByAppendingPathComponent:@"GDDViewController"] payload:@[model] options:opt];
+        opt.type = @"GDDModel";
+        [NSObject.bus publishLocal:xyzLayoutTopic payload:@[model] options:opt];
     };
   }
   return models;

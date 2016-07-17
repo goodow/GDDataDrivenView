@@ -1,7 +1,8 @@
 [
   {
     "mid": "1",
-    "renderClass": "GDDTableViewCellRender",
+    "renderType": "GDDTableViewCellRender",
+    "dataType": null,
     "data": {
       "title": "Hello world",
       "content": "This is forkingdog team. Here's our logo?\nGithub: \"forkingdog\"",
@@ -11,8 +12,8 @@
     }
   },
   {
-    "mid": "2",
-    "renderClass": "GDDTableViewCellRender",
+    "renderType": "GDDTableViewCellRender",
+    "dataType": null,
     "data": {
       "title": "",
       "content": "Working at Baidu, Zhidao iOS team, weibo: @我就叫Sunny怎么了",
@@ -23,7 +24,8 @@
   },
   {
     "mid": "3",
-    "renderClass": "GDDTableViewCellRender",
+    "renderType": "GDDTableViewCellRender",
+    "dataType": null,
     "data": {
       "title": "Team member - SinoJerk",
       "content": "",
@@ -33,8 +35,8 @@
     }
   },
   {
-    "mid": "4",
-    "renderClass": "GDDTableViewCellRender",
+    "renderType": "GDDTableViewCellRender",
+    "dataType": null,
     "data": {
       "title": "Team member - Phil",
       "content": "Zhidao iOS team, Jiaqi Guo, Github: philcn",
@@ -45,7 +47,8 @@
   },
   {
     "mid": "5",
-    "renderClass": "GDDTableViewCellRender",
+    "renderType": "GDDTableViewCellRender",
+    "dataType": null,
     "data": {
       "title": "William Shakespeare",
       "content": "To be, or not to be —that is the question, Whether'tis nobler in the mind to suffer. The slings and arrows of outrageous fortune Or to take arms against a sea of troubles, And by opposing end them. To die —to sleep",

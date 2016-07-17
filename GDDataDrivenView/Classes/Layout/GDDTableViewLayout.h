@@ -8,8 +8,8 @@
 
 @interface GDDTableViewLayout : NSObject
 
-- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)topic;
+- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic;
 
-@property(nonatomic, readonly) NSString *topic;
+@property(nonatomic, readonly) NSString *layoutTopic;
 
 @end

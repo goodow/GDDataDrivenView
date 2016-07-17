@@ -5,7 +5,7 @@
 #import "GDDTableViewLayout.h"
 #import "GDDTableViewDataSource.h"
 #import "NSObject+GDChannel.h"
-#import "GDDRenderModel.h"
+#import "GDDModel.h"
 #import "GDDTableViewDelegate.h"
 
 static NSString *const modelsPath = @"models";
@@ -14,17 +14,19 @@ static NSString *const modelsPath = @"models";
 @property(nonatomic) GDDTableViewDataSource *dataSource;
 @property(nonatomic) GDDTableViewDelegate *delegate;
 @property(nonatomic, weak) UITableView *tableView;
+@property(nonatomic) NSString *modelsTopic;
 @end
 
 @implementation GDDTableViewLayout {
   id <GDCMessageConsumer> _consumer;
-  NSMutableArray<GDDRenderModel *> *_models;
+  NSMutableArray<GDDModel *> *_models;
 }
-- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)topic {
+- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic {
   self = [super init];
   if (self) {
     _tableView = tableView;
-    _dataSource = [[GDDTableViewDataSource alloc] initWithTopic:topic];
+    _modelsTopic = [[layoutTopic stringByAppendingPathComponent:modelsPath] stringByAppendingString:@"/"];
+    _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView];
     _delegate = [[GDDTableViewDelegate alloc] init];
     _delegate.dataSource = _dataSource;
     tableView.dataSource = _dataSource;
@@ -35,25 +37,25 @@ static NSString *const modelsPath = @"models";
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     // 设置topic
-    [self setTopic:topic];
+    [self setTopic:layoutTopic];
   }
 
   return self;
 }
 
-- (void)setTopic:(NSString *)topic {
-  _topic = topic;
+- (void)setTopic:(NSString *)layoutTopic {
+  _layoutTopic = layoutTopic;
   __weak GDDTableViewLayout *weakSelf = self;
-  NSString *wildcardTopic = [topic stringByAppendingPathComponent:@"#"];
+  NSString *wildcardTopic = [layoutTopic stringByAppendingPathComponent:@"#"];
   _consumer = [self.bus subscribeLocal:wildcardTopic handler:^(id <GDCMessage> message) {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          if ([message.topic isEqualToString:weakSelf.topic]) {
-            [weakSelf reloadRenderModels:message.payload];
+          if ([message.topic isEqualToString:weakSelf.layoutTopic]) {
+            [weakSelf reloadModels:message.payload];
             return;
           }
-          NSString *modelsPrefix = [topic stringByAppendingPathComponent:modelsPath];
-          if ([message.topic hasPrefix:modelsPrefix]) {
-            [weakSelf updateRenderModel:message withModelId:[topic substringFromIndex:modelsPrefix.length]];
+          if ([message.topic hasPrefix:weakSelf.modelsTopic]) {
+            NSString *mid = [message.topic substringFromIndex:weakSelf.modelsTopic.length];
+            [self mergeModel:message.payload forId:mid];
             return;
           }
       });
@@ -67,11 +69,11 @@ static NSString *const modelsPath = @"models";
 
 #pragma mark Change model
 
-- (void)reloadRenderModels:(NSArray<GDDRenderModel *> *)models {
+- (void)reloadModels:(NSArray<GDDModel *> *)models {
   _models = models;
-  NSArray<GDDRenderModel *> *patches = [self diffMatch];
+  NSArray<GDDModel *> *patches = [self diffMatch];
   if (patches) {
-    [self appendNewRenderModels:patches];
+    [self appendNewModels:patches];
     return;
   }
   [self.dataSource clearModels];
@@ -83,7 +85,7 @@ static NSString *const modelsPath = @"models";
   });
 }
 
-- (NSArray<GDDRenderModel *> *)diffMatch { //  oldRowCount:(int *)oldRowCount {
+- (NSArray<GDDModel *> *)diffMatch { //  oldRowCount:(int *)oldRowCount {
   NSInteger lastSection = [self.dataSource numberOfSectionsInTableView:self.tableView] - 1;
   NSInteger rowsInLastSection = [self.dataSource tableView:self.tableView numberOfRowsInSection:lastSection];
 //  if (oldRowCount) {
@@ -93,15 +95,15 @@ static NSString *const modelsPath = @"models";
     return nil;
   }
   for (int row = rowsInLastSection - 1; row >= 0; row--) {
-    GDDRenderModel *model = [self.dataSource renderModelForIndexPath:[NSIndexPath indexPathForRow:row inSection:lastSection]];
+    GDDModel *model = [self.dataSource modelForIndexPath:[NSIndexPath indexPathForRow:row inSection:lastSection]];
     if (![model isEqual:_models[row]]) {
       return nil;
     }
   }
   //  return [_models subarrayWithRange:NSMakeRange(rowsInLastSection, _models.count - rowsInLastSection)];
-  NSMutableArray<GDDRenderModel *> * newModels = @[].mutableCopy;
+  NSMutableArray<GDDModel *> *newModels = @[].mutableCopy;
   for (int row = rowsInLastSection; row < _models.count; row++) {
-    GDDRenderModel *model = _models[row];
+    GDDModel *model = _models[row];
     if ([_models containsObject:model]) {
       model = model.copy;
       [_models replaceObjectAtIndex:row withObject:model];
@@ -111,7 +113,7 @@ static NSString *const modelsPath = @"models";
   return newModels;
 }
 
-- (void)appendNewRenderModels:(NSArray<GDDRenderModel *> *)newModels {
+- (void)appendNewModels:(NSArray<GDDModel *> *)newModels {
   if (newModels.count == 0) {
     return;
   }
@@ -135,13 +137,12 @@ static NSString *const modelsPath = @"models";
   return indexPaths;
 }
 
-- (void)updateRenderModel:(id <GDCMessage>)message withModelId:(NSString *)mid {
-  GDDRenderModel *model = [self.dataSource renderModelForId:mid];
-  if ([model.render respondsToSelector:@selector(handleMessage:)]) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [model.render handleMessage:message];
-    });
-  }
+- (void)mergeModel:(GDDModel *)patch forId:(NSString *)mid {
+  GDDModel *model = [self.dataSource modelForId:mid];
+  [model mergeFrom:patch];
+  dispatch_async(dispatch_get_main_queue(), ^{
+      [model reloadData];
+  });
 }
 
 @end
