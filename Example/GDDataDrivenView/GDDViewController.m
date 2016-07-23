@@ -21,13 +21,10 @@
 
   }];
   __weak GDDViewController *weakSelf = self;
-  self.layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:xyzLayoutTopic];
-  self.layout.tapHandler = ^(GDDModel *model, UITapGestureRecognizer *sender) {
-      [weakSelf onLoaded:model];
-  };
+  self.layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:xyzLayoutTopic withOwnerView:self];
   self.layout.infiniteScrollingHandler = ^(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL)) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
-          [weakSelf onLoaded:models.lastObject];
+          [weakSelf appendToLastRow:models.lastObject];
           // 当没有了下一页数据时, 调用loadComplete(NO)
           // loadComplete(NO);
       });
@@ -41,10 +38,10 @@
   [super viewDidLoad];
 }
 
-- (void)onLoaded:(GDDModel *)model {
+- (void)appendToLastRow:(GDDModel *)model {
   GDCOptions *opt = [[GDCOptions alloc] init];
   opt.patch = YES;
-  opt.type = @"GDDModel";
+  opt.type = NSStringFromClass(GDDModel.class);
   GDDModel *copy = [[GDDModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
   [NSObject.bus publishLocal:[self.layout topicForSection:0] payload:@[copy] options:opt];
 }

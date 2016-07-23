@@ -38,7 +38,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GDChannel:
-    :commit: bb9032051aa2c57728bf447fbee9c4cced684356
+    :commit: 841e198cf92d5acc30e119d32de645f26daa37a4
     :git: https://github.com/goodow/GDChannel.git
 
 SPEC CHECKSUMS:

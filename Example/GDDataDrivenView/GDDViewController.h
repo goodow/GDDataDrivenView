@@ -4,6 +4,9 @@
 
 @import UIKit;
 
+@class GDDModel;
+
 @interface GDDViewController : UITableViewController
 
+- (void)appendToLastRow:(GDDModel *)model;
 @end

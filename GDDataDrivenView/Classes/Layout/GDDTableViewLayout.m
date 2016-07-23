@@ -22,23 +22,26 @@ static NSString *const sectionsPath = @"sections";
 
 @implementation GDDTableViewLayout {
   id <GDCMessageConsumer> _consumer;
-  NSString *_layoutTopic;
 }
-- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic {
+- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic withOwnerView:(id)ownerView {
   self = [super init];
   if (self) {
     _tableView = tableView;
     _modelsTopic = [[layoutTopic stringByAppendingPathComponent:modelsPath] stringByAppendingString:@"/"];
     _sectionsTopic = [[layoutTopic stringByAppendingPathComponent:sectionsPath] stringByAppendingString:@"/"];
-    _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView withLayout:self];
+    _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView withLayout:self withOwnerView:ownerView];
     _delegate = [[GDDTableViewDelegate alloc] initWithDataSource:_dataSource];
 
     // 配置tableView代理
     tableView.dataSource = _dataSource;
     tableView.delegate = _delegate;
 
-    // 自动算高, 配合systemLayoutSizeFittingSize:使用
-    tableView.estimatedRowHeight = 213;
+    // Self-sizing table view cells in iOS 8 are enabled when the estimatedRowHeight property of the table view is set to a non-zero value.
+    // Setting the estimated row height prevents the table view from calling tableView:heightForRowAtIndexPath: for every row in the table on first load;
+    // it will only be called as cells are about to scroll onscreen. This is a major performance optimization.
+    tableView.estimatedRowHeight = 213; // set this to whatever your "average" cell height is; it doesn't need to be very accurate
+    // Self-sizing table view cells in iOS 8 require that the rowHeight property of the table view be set to the constant UITableViewAutomaticDimension
+    tableView.rowHeight = UITableViewAutomaticDimension;
 
     // 配置tableView样式
     tableView.allowsSelection = NO;
@@ -52,7 +55,6 @@ static NSString *const sectionsPath = @"sections";
 }
 
 - (void)setTopic:(NSString *)layoutTopic {
-  _layoutTopic = layoutTopic;
   __weak GDDTableViewLayout *weakSelf = self;
   NSString *wildcardTopic = [layoutTopic stringByAppendingPathComponent:@"#"];
   _consumer = [self.bus subscribeLocal:wildcardTopic handler:^(id <GDCMessage> message) {
@@ -65,7 +67,7 @@ static NSString *const sectionsPath = @"sections";
           }
           if ([topic hasPrefix:weakSelf.modelsTopic]) {
             NSString *mid = [topic substringFromIndex:weakSelf.modelsTopic.length];
-            [self mergeModel:message.payload forId:mid];
+            [weakSelf reloadModel:message forId:mid];
             return;
           }
       });
@@ -101,8 +103,9 @@ static NSString *const sectionsPath = @"sections";
 }
 
 - (NSArray<GDDModel *> *)diffMatch { //  oldRowCount:(int *)oldRowCount {
-  NSInteger lastSection = [self.dataSource numberOfSectionsInTableView:self.tableView] - 1;
-  NSInteger rowsInLastSection = [self.dataSource tableView:self.tableView numberOfRowsInSection:lastSection];
+  NSInteger sectionsCount = self.tableView.numberOfSections;
+  NSInteger lastSection = sectionsCount ? sectionsCount - 1 : 0;
+  NSInteger rowsInLastSection = sectionsCount ? [self.tableView numberOfRowsInSection:lastSection] : 0;
 //  if (oldRowCount) {
 //    *oldRowCount = rowsInLastSection;
 //  }
@@ -147,21 +150,28 @@ static NSString *const sectionsPath = @"sections";
 
 - (NSMutableArray *)generateNewIndexPaths:(int)count {
   NSMutableArray *indexPaths = @[].mutableCopy;
-  NSInteger lastSection = MAX([self.dataSource numberOfSectionsInTableView:self.tableView] - 1, 0);
-  int lastRow = [self.dataSource tableView:self.tableView numberOfRowsInSection:lastSection] - 1;
+  NSInteger sectionsCount = self.tableView.numberOfSections;
+  NSInteger lastSection = sectionsCount ? sectionsCount - 1 : 0;
+  int lastRow = sectionsCount ? [self.tableView numberOfRowsInSection:lastSection] - 1 : -1;
   for (int i = 0; i < count; i++) {
     [indexPaths addObject:[NSIndexPath indexPathForRow:++lastRow inSection:lastSection]];
   }
   return indexPaths;
 }
 
-- (void)mergeModel:(GDDModel *)patch forId:(NSString *)mid {
+- (void)reloadModel:(id <GDCMessage>)msg forId:(NSString *)mid {
+  id patch = msg.payload;
   NSIndexPath *indexPath = [self.dataSource indexPathForId:mid];
   GDDModel *model = [self.dataSource modelForIndexPath:indexPath];
-  [model mergeFrom:patch];
+  if ([patch isKindOfClass:NSDictionary.class]) {
+    [model mergeFromJson:patch];
+  } else {
+    [model mergeFrom:patch];
+  }
+  UITableViewCell <GDDRender> *render = [self.tableView cellForRowAtIndexPath:indexPath];
   __weak GDDTableViewLayout *weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
-      [model reloadData];
+      [weakSelf.dataSource reloadModel:model forRender:render];
       [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
   });
 }

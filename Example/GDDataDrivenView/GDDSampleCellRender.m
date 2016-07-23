@@ -2,45 +2,56 @@
 //  Created by Larry Tin on 16/7/12.
 //
 
-#import "GDDTableViewCellRender.h"
+#import "GDDSampleCellRender.h"
+#import "GDDSampleCellPresenter.h"
 
-@interface GDDTableViewCellRender ()
-@property(weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property(weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property(weak, nonatomic) IBOutlet UIImageView *contentImageView;
+@interface GDDSampleCellRender ()
+
 @end
 
-@implementation GDDTableViewCellRender
+@implementation GDDSampleCellRender
 
 - (void)awakeFromNib {
   [super awakeFromNib];
   // Initialization code
+  [self addEventHandler];
+
+  NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self.class) owner:self options:nil][0];
   if (self) {
+    [self addEventHandler];
   }
+  NSLog(@"%s", __PRETTY_FUNCTION__);
   return self;
 }
 
-- (void)handleData:(NSDictionary *)data {
-  static int a;
-  a++;
-  NSLog(@"handleData: %lu", a);
-  self.titleLabel.text = data[@"title"];
-  self.contentLabel.text = data[@"content"];
-  self.usernameLabel.text = data[@"username"];
-  self.timeLabel.text = data[@"time"];
-  NSString *imageName = data[@"imageName"];
-  self.contentImageView.image = imageName.length > 0 ? [UIImage imageNamed:imageName] : nil;
+- (void)dealloc {
+  NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (Class <GDDPresenter>)presenterClass {
+  return GDDSampleCellPresenter.class;
+}
+
+- (void)addEventHandler {
+  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+  tapGesture.cancelsTouchesInView = NO;
+  [self addGestureRecognizer:tapGesture];
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+  if (self.tapHandler) {
+    self.tapHandler();
+  }
 }
 
 // If you are not using auto layout, override this method, enable it by setting
 // "fd_enforceFrameLayout" to YES.
 - (CGSize)sizeThatFits:(CGSize)size {
+  NSLog(@"%s", __PRETTY_FUNCTION__);
   CGFloat totalHeight = 0;
   totalHeight += [self.titleLabel sizeThatFits:size].height;
   totalHeight += [self.contentLabel sizeThatFits:size].height;

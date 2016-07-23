@@ -4,7 +4,6 @@
 
 #import "GDCSerializable.h"
 #import "GDDModel.h"
-#import "GDCStorage.h"
 #import "GPBMessage.h"
 
 @implementation GDDModel {
@@ -24,38 +23,32 @@
 
 - (id)copyWithZone:(NSZone *)zone {
   GDDModel *copy = [[GDDModel allocWithZone:zone] initWithData:self.data withId:self.mid withNibNameOrRenderClass:self.renderType];
-  copy.tapHandler = self.tapHandler;
   return copy;
 }
 
-#pragma mark Event Handler
-
-- (void)handleTap:(UITapGestureRecognizer *)sender {
-  if (self.tapHandler) {
-    self.tapHandler(self, sender);
-  }
-}
-
-- (void)reloadData {
-  if ([self.render respondsToSelector:@selector(presenter)]) {
-    [self.render.presenter handleData:self.data];
-  } else {
-    [self.render handleData:self.data];
-  }
+- (NSString *)description {
+  NSError *error;
+  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.toJson
+                                                     options:NSJSONWritingPrettyPrinted
+                                                       error:&error];
+  return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
 #pragma mark GDCSerializable
 static NSString *const dataKey = @"data";
 static NSString *const midKey = @"mid";
 static NSString *const renderTypeKey = @"renderType";
-static NSString *const dataTypeKey = @"dataType";
+static NSString *const dataTypeKey = @"@type";
 
 + (instancetype)parseFromJson:(NSDictionary *)json error:(NSError **)errorPtr {
   id data = json[dataKey];
-  Class dataClass = NSClassFromString(json[dataTypeKey]);
-  if ([dataClass conformsToProtocol:@protocol(GDCSerializable)]) {
-    NSError *error = nil;
-    data = [dataClass parseFromJson:data error:&error];
+  if ([data isKindOfClass:NSDictionary.class]) {
+    NSString *typeUrl = data[dataTypeKey];
+    Class dataClass = NSClassFromString(typeUrl.lastPathComponent);
+    if ([dataClass conformsToProtocol:@protocol(GDCSerializable)]) {
+      NSError *error = nil;
+      data = [dataClass parseFromJson:data error:&error];
+    }
   }
   NSString *mid = json[midKey] ?: [[NSUUID alloc] init].UUIDString;
   return [[self alloc] initWithData:data withId:mid withNibNameOrRenderClass:json[renderTypeKey]];
@@ -63,11 +56,9 @@ static NSString *const dataTypeKey = @"dataType";
 
 - (NSDictionary *)toJson {
   NSMutableDictionary *json = [NSMutableDictionary dictionary];
-  if ([self.data conformsToProtocol:@protocol(GDCSerializable)]) {
-    json[dataKey] = ((id <GDCSerializable>) self.data).toJson;
-    json[dataTypeKey] = NSStringFromClass([self.data class]);
-  } else {
-    json[dataKey] = self.data;
+  json[dataKey] = self.data.toJson.mutableCopy;
+  if (![self.data isKindOfClass:NSMutableDictionary.class] && ![self.data isKindOfClass:NSMutableArray.class]) {
+    json[dataKey][dataTypeKey] = [NSString stringWithFormat:@"://%@", NSStringFromClass([self.data class])];
   }
   json[midKey] = self.mid;
   json[renderTypeKey] = self.renderType;
@@ -76,22 +67,10 @@ static NSString *const dataTypeKey = @"dataType";
 
 - (void)mergeFromJson:(NSDictionary *)json {
   id data = json[dataKey];
-  if ([self.data conformsToProtocol:@protocol(GDCSerializable)]) {
-    [self.data mergeFromJson:data];
-    return;
-  }
-  [GDCStorage patchJsonRecursively:self.data with:data];
+  [self.data mergeFromJson:data];
 }
 
 - (void)mergeFrom:(GDDModel *)other {
-  if ([self.data conformsToProtocol:@protocol(GDCSerializable)]) {
-    if ([other.data conformsToProtocol:@protocol(GDCSerializable)]) {
-      [self.data mergeFrom:other];
-    } else {
-      [self.data mergeFromJson:other.data];
-    }
-    return;
-  }
-  [GDCStorage patchJsonRecursively:self.data with:other.data];
+  [self.data mergeFrom:other.data];
 }
 @end

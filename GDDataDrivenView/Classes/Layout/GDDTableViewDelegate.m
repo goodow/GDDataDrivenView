@@ -21,18 +21,9 @@
   return self;
 }
 
-//- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//  return nil;
-//}
+#pragma mark Cell Height calculating
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//  [tableView deselectRowAtIndexPath:indexPath animated:NO];
-  GDDModel *model = [_dataSource modelForIndexPath:indexPath];
-  if (model.tapHandler) {
-    model.tapHandler(model, nil);
-  }
-}
-
+#if !(SelfSizing_UpdateConstraints)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   GDDModel *model = [_dataSource modelForIndexPath:indexPath];
   UITableViewCell *cell = model.render;
@@ -41,6 +32,7 @@
   }
   return [self fd_systemFittingHeightForConfiguratedCell:cell tableView:tableView];
 }
+#endif
 
 - (CGFloat)fd_systemFittingHeightForConfiguratedCell:(UITableViewCell *)cell tableView:(UITableView *)tableView {
   CGFloat contentViewWidth = CGRectGetWidth(tableView.frame);

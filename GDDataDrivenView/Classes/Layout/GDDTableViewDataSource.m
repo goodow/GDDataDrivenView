@@ -2,10 +2,15 @@
 //  Created by Larry Tin on 7/9/16.
 //
 
+#import <objc/runtime.h>
 #import "GDDTableViewDataSource.h"
 #import "GDDModel.h"
 #import "NSObject+GDChannel.h"
 #import "GDDTableViewLayout.h"
+#import "GDDRender.h"
+
+// The address of this variable is used as a key for obj_getAssociatedObject.
+static const char kPresenterKey = 0;
 
 @interface GDDTableViewDataSource ()
 @property(nonatomic, weak) GDDTableViewLayout *layout;
@@ -16,16 +21,20 @@
   NSMutableDictionary<NSString *, UINib *> *_registeredNibsForCellReuseIdentifier;
   NSMutableDictionary<NSString *, Class> *_registeredClassForCellReuseIdentifier;
   __weak UITableView *_tableView;
+  __weak id _ownerView;
+  NSMapTable *_presentersByClass;
 }
 
-- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout{
+- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwnerView:(id)ownerView {
   self = [super init];
   if (self) {
     _tableView = tableView;
     _layout = layout;
+    _ownerView = ownerView;
     _models = @[].mutableCopy;
     _registeredNibsForCellReuseIdentifier = @{}.mutableCopy;
     _registeredClassForCellReuseIdentifier = @{}.mutableCopy;
+    _presentersByClass = [NSMapTable weakToWeakObjectsMapTable];
   }
 
   return self;
@@ -70,7 +79,7 @@
     return nil;
   }
   GDDModel *model = _models[section][0];
-  if (!model.renderType && !model.mid && !model.render) {
+  if (!model.renderType && !model.mid) {
     return model;
   }
   return nil;
@@ -133,24 +142,34 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   GDDModel *model = [self modelForIndexPath:indexPath];
-  UITableViewCell <GDDRender> *cellRender = [tableView dequeueReusableCellWithIdentifier:model.renderType];
-  model.render = cellRender;
-  for (UIGestureRecognizer *gestureRecognizer in cellRender.gestureRecognizers) {
-    [cellRender removeGestureRecognizer:gestureRecognizer];
-  }
-  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:model action:@selector(handleTap:)];
-  tapGesture.cancelsTouchesInView = NO;
-  [cellRender addGestureRecognizer:tapGesture];
-  if (!model.tapHandler) {
-    __weak GDDTableViewDataSource *weakSelf = self;
-    model.tapHandler = ^(GDDModel *model, UITapGestureRecognizer *sender) {
-        if (weakSelf.layout.tapHandler) {
-          weakSelf.layout.tapHandler(model, sender);
-        }
-    };
-  }
-  [model reloadData];
-  return cellRender;
+  UITableViewCell <GDDRender> *cell = [tableView dequeueReusableCellWithIdentifier:model.renderType];
+
+  // Configure the cell for this indexPath
+  [self reloadModel:model forRender:cell];
+
+  // Make sure the constraints have been added to this cell, since it may have just been created from scratch
+#if SelfSizing_UpdateConstraints
+  [cell setNeedsUpdateConstraints];
+  [cell updateConstraintsIfNeeded];
+#endif
+  return cell;
 }
 
+- (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(UITableViewCell <GDDRender> *)render {
+  id <GDDPresenter> presenter = objc_getAssociatedObject(render, &kPresenterKey);
+  if (!presenter) {
+    Class presenterClass = render.presenterClass;
+    presenter = [_presentersByClass objectForKey:presenterClass];
+    if (!presenter) {
+      if ([presenterClass instancesRespondToSelector:@selector(initWithOwnerView:)]) {
+        presenter = [(id <GDDPresenter>) [presenterClass alloc] initWithOwnerView:_ownerView];
+      } else {
+        presenter = [[presenterClass alloc] init];
+      }
+    }
+    objc_setAssociatedObject(render, &kPresenterKey, presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  }
+  [presenter update:render withModel:model];
+  return presenter;
+}
 @end

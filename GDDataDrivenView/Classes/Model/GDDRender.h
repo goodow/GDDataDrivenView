@@ -7,8 +7,6 @@
 
 @protocol GDDRender
 
-@optional
-- (id <GDDPresenter>)presenter;
+- (Class <GDDPresenter>)presenterClass;
 
-- (void)handleData:(id)data;
 @end

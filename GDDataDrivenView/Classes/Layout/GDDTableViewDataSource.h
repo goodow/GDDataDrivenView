@@ -8,17 +8,20 @@
 @protocol GDDRender;
 @protocol GDCMessage;
 @class GDDTableViewLayout;
+@protocol GDDPresenter;
+
+#define SelfSizing_UpdateConstraints 1
 
 @interface GDDTableViewDataSource : NSObject <UITableViewDataSource>
 
-- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout;
+- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwnerView:(id)ownerView;
 
 #pragma mark Read model
 
 - (GDDModel *)modelForIndexPath:(NSIndexPath *)indexPath;
 
 - (GDDModel *)modelForId:(NSString *)mid;
-- (NSIndexPath*)indexPathForId:(NSString*)mid;
+- (NSIndexPath *)indexPathForId:(NSString *)mid;
 
 // Returns the model describing the section's header, or nil if there is no header.
 - (GDDModel *)headerModelForSection:(NSInteger)section;
@@ -29,4 +32,7 @@
 
 - (void)clearModels;
 
+#pragma mark Display model
+
+- (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(id <GDDRender>)render;
 @end

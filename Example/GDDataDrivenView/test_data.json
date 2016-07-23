@@ -1,9 +1,9 @@
 [
   {
     "mid": "1",
-    "renderType": "GDDTableViewCellRender",
-    "dataType": null,
+    "renderType": "GDDSampleCellRender",
     "data": {
+      "@type": "gdd://any/NSMutableDictionary",
       "title": "Hello world",
       "content": "This is forkingdog team. Here's our logo?\nGithub: \"forkingdog\"",
       "username": "aaa",
@@ -13,9 +13,9 @@
   },
   {
     "mid": "2",
-    "renderType": "GDDTableViewCellRender",
-    "dataType": null,
+    "renderType": "GDDSampleCellRender",
     "data": {
+      "@type": "gdd://any/NSMutableDictionary",
       "title": "",
       "content": "Working at Baidu, Zhidao iOS team, weibo: @我就叫Sunny怎么了",
       "username": "bbb",
@@ -25,9 +25,9 @@
   },
   {
     "mid": "3",
-    "renderType": "GDDTableViewCellRender",
-    "dataType": null,
+    "renderType": "GDDSampleCellRender",
     "data": {
+      "@type": "gdd://any/NSMutableDictionary",
       "title": "你好",
       "content": "",
       "username": "ccc",

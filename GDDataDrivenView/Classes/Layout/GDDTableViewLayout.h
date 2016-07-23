@@ -7,11 +7,10 @@
 
 @interface GDDTableViewLayout : NSObject
 
-- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic;
+- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic withOwnerView:(id)ownerView;
 
 - (NSString *)topicForSection:(NSInteger)section;
 
-@property(nonatomic, copy) void (^tapHandler)(GDDModel *model, UITapGestureRecognizer *sender);
 @property(nonatomic, copy) void (^infiniteScrollingHandler)(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL hasMore));
 
 @end
