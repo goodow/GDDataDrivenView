@@ -21,7 +21,7 @@
 - (void)update:(GDDSampleCellRender *)render withModel:(GDDModel *)model {
   static int a;
   a++;
-  NSLog(@"%s: %lu", __PRETTY_FUNCTION__, a);
+  NSLog(@"%s: %d", __PRETTY_FUNCTION__, a);
 
   NSDictionary *data = model.data;
   render.titleLabel.text = data[@"title"];

@@ -18,7 +18,7 @@ PODS:
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
   - MQTTKit (0.1.0)
-  - Protobuf (3.0.0-beta-3.1)
+  - Protobuf (3.0.0-beta-4)
   - Specta (1.0.5)
   - SVPullToRefresh (0.4.1)
 
@@ -38,7 +38,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GDChannel:
-    :commit: 841e198cf92d5acc30e119d32de645f26daa37a4
+    :commit: 09e9023fde128b8b1f8a7ff13dbed7ef3fca4f55
     :git: https://github.com/goodow/GDChannel.git
 
 SPEC CHECKSUMS:
@@ -50,7 +50,7 @@ SPEC CHECKSUMS:
   GDDataDrivenView: 85dfaa27ce89745705d7b110b17e73a66bebdb18
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
-  Protobuf: 93350904b8872d186f9b25d850d8aa6ceb1e68ea
+  Protobuf: ec704f0045f7a30e1686fbb3994f43f689a0021b
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
 
