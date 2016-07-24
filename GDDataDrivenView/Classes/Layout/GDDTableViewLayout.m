@@ -11,7 +11,7 @@
 static NSString *const modelsPath = @"models";
 static NSString *const sectionsPath = @"sections";
 
-@interface GDDTableViewLayout () <UITableViewDelegate>
+@interface GDDTableViewLayout ()
 @property(nonatomic) GDDTableViewDataSource *dataSource;
 @property(nonatomic) GDDTableViewDelegate *delegate;
 @property(nonatomic, weak) UITableView *tableView;

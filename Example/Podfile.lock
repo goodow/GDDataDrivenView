@@ -1,5 +1,4 @@
 PODS:
-  - Aspects (1.4.1)
   - Expecta (1.0.5)
   - Expecta+Snapshots (3.0.0):
     - Expecta (~> 1.0)
@@ -11,7 +10,6 @@ PODS:
     - MQTTKit (~> 0.1.0)
     - Protobuf (~> 3.0.0-beta-3.1)
   - GDDataDrivenView (0.1.0):
-    - Aspects (~> 1.4)
     - GDChannel (~> 0.6)
     - SVPullToRefresh (~> 0.4)
   - Mantle (2.0.7):
@@ -38,16 +36,15 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GDChannel:
-    :commit: 09e9023fde128b8b1f8a7ff13dbed7ef3fca4f55
+    :commit: 91185bb07e84b3b187da46b6b26b68ffbb1e47e2
     :git: https://github.com/goodow/GDChannel.git
 
 SPEC CHECKSUMS:
-  Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
   GDChannel: 400f6e092bb498434e49e2c5a1d9786a82fb0084
-  GDDataDrivenView: 85dfaa27ce89745705d7b110b17e73a66bebdb18
+  GDDataDrivenView: de21373f20bf7f39f8d62d2db5332aeb727a2786
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
   Protobuf: ec704f0045f7a30e1686fbb3994f43f689a0021b
