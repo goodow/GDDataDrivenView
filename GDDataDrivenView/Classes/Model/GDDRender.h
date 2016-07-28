@@ -7,6 +7,9 @@
 
 @protocol GDDRender
 
+/**
+ * @return 若返回nil, 则使用命名约定: AbcRender -> AbcPresenter
+ */
 - (Class <GDDPresenter>)presenterClass;
 
 @end

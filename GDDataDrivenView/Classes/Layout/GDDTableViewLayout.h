@@ -7,7 +7,7 @@
 
 @interface GDDTableViewLayout : NSObject
 
-- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic withOwnerView:(id)ownerView;
+- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic withOwner:(id)owner;
 
 - (NSString *)topicForSection:(NSInteger)section;
 

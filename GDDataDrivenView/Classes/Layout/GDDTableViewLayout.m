@@ -23,13 +23,13 @@ static NSString *const sectionsPath = @"sections";
 @implementation GDDTableViewLayout {
   id <GDCMessageConsumer> _consumer;
 }
-- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic withOwnerView:(id)ownerView {
+- (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic withOwner:(id)owner {
   self = [super init];
   if (self) {
     _tableView = tableView;
     _modelsTopic = [[layoutTopic stringByAppendingPathComponent:modelsPath] stringByAppendingString:@"/"];
     _sectionsTopic = [[layoutTopic stringByAppendingPathComponent:sectionsPath] stringByAppendingString:@"/"];
-    _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView withLayout:self withOwnerView:ownerView];
+    _dataSource = [[GDDTableViewDataSource alloc] initWithTableView:tableView withLayout:self withOwner:owner];
     _delegate = [[GDDTableViewDelegate alloc] initWithDataSource:_dataSource];
 
     // 配置tableView代理

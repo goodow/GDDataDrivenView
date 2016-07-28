@@ -14,7 +14,7 @@
 
 @interface GDDTableViewDataSource : NSObject <UITableViewDataSource>
 
-- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwnerView:(id)ownerView;
+- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwner:(id)owner;
 
 #pragma mark Read model
 

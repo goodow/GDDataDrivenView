@@ -12,6 +12,10 @@
 - (void)update:(id<GDDRender>)render withModel:(GDDModel *)model;
 
 @optional
-- (instancetype)initWithOwnerView:(id)ownerView;
+/**
+ * @param owner 使用弱引用持有, 否则将导致循环引用
+ * @return
+ */
+- (instancetype)initWithOwner:(id)owner;
 
 @end

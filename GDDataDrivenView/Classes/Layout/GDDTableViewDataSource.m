@@ -21,16 +21,16 @@ static const char kPresenterKey = 0;
   NSMutableDictionary<NSString *, UINib *> *_registeredNibsForCellReuseIdentifier;
   NSMutableDictionary<NSString *, Class> *_registeredClassForCellReuseIdentifier;
   __weak UITableView *_tableView;
-  __weak id _ownerView;
+  __weak id _owner;
   NSMapTable *_presentersByClass;
 }
 
-- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwnerView:(id)ownerView {
+- (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwner:(id)owner {
   self = [super init];
   if (self) {
     _tableView = tableView;
     _layout = layout;
-    _ownerView = ownerView;
+    _owner = owner;
     _models = @[].mutableCopy;
     _registeredNibsForCellReuseIdentifier = @{}.mutableCopy;
     _registeredClassForCellReuseIdentifier = @{}.mutableCopy;
@@ -159,10 +159,23 @@ static const char kPresenterKey = 0;
   id <GDDPresenter> presenter = objc_getAssociatedObject(render, &kPresenterKey);
   if (!presenter) {
     Class presenterClass = render.presenterClass;
+    if (!presenterClass) {
+      // 如果 render 的 presenterClass 返回nil, 则使用命名约定: AbcRender -> AbcPresenter
+      NSString *renderClassName = NSStringFromClass(render.class);
+      NSString *presenterClassName;
+      NSString *renderSuffix = @"Render";
+      if ([renderClassName hasSuffix:renderSuffix]) {
+        presenterClassName = [renderClassName substringToIndex:renderClassName.length - renderSuffix.length];
+        presenterClass = NSClassFromString(presenterClassName);
+      }
+      if (!presenterClass) {
+        [NSException raise:NSInvalidArgumentException format:@"Could not find a presenter class named '%@' for %@", presenterClassName, renderClassName];
+      }
+    }
     presenter = [_presentersByClass objectForKey:presenterClass];
     if (!presenter) {
-      if ([presenterClass instancesRespondToSelector:@selector(initWithOwnerView:)]) {
-        presenter = [(id <GDDPresenter>) [presenterClass alloc] initWithOwnerView:_ownerView];
+      if ([presenterClass instancesRespondToSelector:@selector(initWithOwner:)]) {
+        presenter = [(id <GDDPresenter>) [presenterClass alloc] initWithOwner:_owner];
       } else {
         presenter = [[presenterClass alloc] init];
       }
