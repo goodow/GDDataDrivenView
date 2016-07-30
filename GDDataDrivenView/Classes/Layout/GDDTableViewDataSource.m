@@ -166,7 +166,7 @@ static const char kPresenterKey = 0;
       NSString *renderSuffix = @"Render";
       if ([renderClassName hasSuffix:renderSuffix]) {
         presenterClassName = [renderClassName substringToIndex:renderClassName.length - renderSuffix.length];
-        presenterClass = NSClassFromString(presenterClassName);
+        presenterClass = NSClassFromString([NSString stringWithFormat:@"%@Presenter", presenterClassName]);
       }
       if (!presenterClass) {
         [NSException raise:NSInvalidArgumentException format:@"Could not find a presenter class named '%@' for %@", presenterClassName, renderClassName];
