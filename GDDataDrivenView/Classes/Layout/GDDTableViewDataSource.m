@@ -123,7 +123,6 @@ static const char kPresenterKey = 0;
 
 - (void)clearModels {
   [_models removeAllObjects];
-
 }
 
 #pragma mark UITableViewDataSource

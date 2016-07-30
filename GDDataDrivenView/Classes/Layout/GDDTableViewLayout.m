@@ -93,6 +93,7 @@ static NSString *const sectionsPath = @"sections";
     return;
   }
   [self.dataSource clearModels];
+  [self.tableView reloadData];
   NSMutableArray *indexPaths = [self generateNewIndexPaths:models.count];
   [self.dataSource insertModels:models atIndexPaths:indexPaths];
   __weak UITableView *tableView = self.tableView;
