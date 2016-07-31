@@ -3,7 +3,6 @@
 //
 
 #import "GDDSampleCellRender.h"
-#import "GDDSampleCellPresenter.h"
 
 @interface GDDSampleCellRender ()
 
@@ -33,7 +32,7 @@
 }
 
 - (Class <GDDPresenter>)presenterClass {
-  return GDDSampleCellPresenter.class;
+  return nil;
 }
 
 - (void)addEventHandler {

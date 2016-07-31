@@ -4,13 +4,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GDDModel.h"
+#import "GDDBaseViewLayout.h"
 
-@interface GDDTableViewLayout : NSObject
+@interface GDDTableViewLayout : GDDBaseViewLayout
 
 - (instancetype)initWithTableView:(UITableView *)tableView withTopic:(NSString *)layoutTopic withOwner:(id)owner;
-
-- (NSString *)topicForSection:(NSInteger)section;
-
-@property(nonatomic, copy) void (^infiniteScrollingHandler)(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL hasMore));
 
 @end

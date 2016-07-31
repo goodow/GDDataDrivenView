@@ -7,8 +7,6 @@
 #import "NSObject+GDChannel.h"
 #import "GDCBusProvider.h"
 
-#define xyzLayoutTopic [GDCBusProvider.clientId stringByAppendingPathComponent:@"abcView/layouts/xyzTable"]
-
 @interface GDDViewController ()
 @property(nonatomic) GDDTableViewLayout *layout;
 @end
@@ -17,11 +15,13 @@
 }
 
 - (void)viewDidLoad {
+  self.topic = [GDCBusProvider.clientId stringByAppendingPathComponent:@"abcView"];
   [self.bus subscribe:[GDCBusProvider.clientId stringByAppendingPathComponent:@"#"] handler:^(id <GDCMessage> message) {
 
   }];
   __weak GDDViewController *weakSelf = self;
-  self.layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:xyzLayoutTopic withOwnerView:self];
+  NSString *layoutTopic = [self.topic stringByAppendingPathComponent:@"layouts/xyzTable"];
+  self.layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:layoutTopic withOwner:self];
   self.layout.infiniteScrollingHandler = ^(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL)) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
           [weakSelf appendToLastRow:models.lastObject];

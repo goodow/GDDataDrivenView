@@ -8,7 +8,7 @@ PODS:
   - GDChannel (0.6.0):
     - Mantle (~> 2.0.6)
     - MQTTKit (~> 0.1.0)
-    - Protobuf (~> 3.0.0-beta-3.1)
+    - Protobuf (~> 3.0.0-beta-4)
   - GDDataDrivenView (0.1.0):
     - GDChannel (~> 0.6)
     - SVPullToRefresh (~> 0.4)
@@ -36,14 +36,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GDChannel:
-    :commit: 91185bb07e84b3b187da46b6b26b68ffbb1e47e2
+    :commit: 7b13b0b4784242493922b9af46157c840cdc558e
     :git: https://github.com/goodow/GDChannel.git
 
 SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
-  GDChannel: 400f6e092bb498434e49e2c5a1d9786a82fb0084
+  GDChannel: 4b538275a06ee5e07f33b02074cee8e01e7d492d
   GDDataDrivenView: de21373f20bf7f39f8d62d2db5332aeb727a2786
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4

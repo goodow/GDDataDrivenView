@@ -3,6 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GDDBaseViewDataSource.h"
 
 @class GDDModel;
 @protocol GDDRender;
@@ -12,27 +13,8 @@
 
 #define SelfSizing_UpdateConstraints 1
 
-@interface GDDTableViewDataSource : NSObject <UITableViewDataSource>
+@interface GDDTableViewDataSource : GDDBaseViewDataSource <UITableViewDataSource>
 
 - (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwner:(id)owner;
 
-#pragma mark Read model
-
-- (GDDModel *)modelForIndexPath:(NSIndexPath *)indexPath;
-
-- (GDDModel *)modelForId:(NSString *)mid;
-- (NSIndexPath *)indexPathForId:(NSString *)mid;
-
-// Returns the model describing the section's header, or nil if there is no header.
-- (GDDModel *)headerModelForSection:(NSInteger)section;
-
-#pragma mark Change model
-
-- (void)insertModels:(NSArray<GDDModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
-
-- (void)clearModels;
-
-#pragma mark Display model
-
-- (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(id <GDDRender>)render;
 @end

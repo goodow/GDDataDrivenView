@@ -8,13 +8,13 @@
 #import "GDDViewController.h"
 
 @interface GDDSampleCellPresenter ()
-@property(weak, nonatomic) GDDViewController *ownerView;
+@property(weak, nonatomic) GDDViewController *owner;
 @end
 
 @implementation GDDSampleCellPresenter {
 }
-- (instancetype)initWithOwnerView:(GDDViewController *)ownerView {
-  _ownerView = ownerView;
+- (instancetype)initWithOwner:(GDDViewController *)owner {
+  _owner = owner;
   return [self init];
 }
 
@@ -33,7 +33,7 @@
 
   __weak GDDSampleCellPresenter *weakSelf = self;
   render.tapHandler = ^{
-      [weakSelf.ownerView appendToLastRow:model];
+      [weakSelf.owner appendToLastRow:model];
   };
 }
 

@@ -17,7 +17,6 @@
   if (self) {
     _dataSource = dataSource;
   }
-
   return self;
 }
 
@@ -25,8 +24,7 @@
 
 #if !(SelfSizing_UpdateConstraints)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  GDDModel *model = [_dataSource modelForIndexPath:indexPath];
-  UITableViewCell *cell = model.render;
+  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
   if (!cell) {
     return 0;
   }

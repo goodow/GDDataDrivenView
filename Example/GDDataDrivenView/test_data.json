@@ -34,5 +34,17 @@
       "time": "2015.04.13",
       "imageName": "phil"
     }
+  },
+  {
+    "mid": "4",
+    "renderType": "GDDCollectionViewEmbeddedInTableViewCellRender",
+    "data": {
+      "@type": "gdd://any/NSMutableDictionary",
+      "images": [
+        "forkingdog",
+        "phil",
+        "phil"
+      ]
+    }
   }
 ]

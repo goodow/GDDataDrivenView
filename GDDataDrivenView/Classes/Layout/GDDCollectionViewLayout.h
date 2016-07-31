@@ -3,12 +3,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GDDBaseViewLayout.h"
 
-@class UICollectionView;
+@interface GDDCollectionViewLayout : GDDBaseViewLayout
 
-
-@interface GDDCollectionViewLayout : NSObject
-
-- (instancetype)initWithCollectionView:(UICollectionView *)collectionView withTopic:(NSString *)layoutTopic withOwnerView:(id)ownerView;
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView withTopic:(NSString *)layoutTopic withOwner:(id)owner;
 
 @end

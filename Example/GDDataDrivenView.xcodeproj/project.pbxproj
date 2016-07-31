@@ -24,7 +24,11 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		61FBC01F617B5004D55FC52E /* GDDSampleCellPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBC772965FCE547C73F336 /* GDDSampleCellPresenter.m */; };
+		61FBC4B9CACF218A52623DD2 /* GDDSampleCollectionViewCellPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBC3C2413FED786CDA470A /* GDDSampleCollectionViewCellPresenter.m */; };
+		61FBC65B94033B1EBB452073 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBCF5A70B64B4262BE3799 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m */; };
 		61FBCA5AED5F2B29978B9653 /* test_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 61FBC87E2BA28B9D962635CE /* test_data.json */; };
+		61FBCBB85FB28D816D8FA20A /* GDDSampleCollectionViewCellRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBC53B56759D5421F5404E /* GDDSampleCollectionViewCellRender.m */; };
+		61FBCD83AF439617870D6BD2 /* GDDCollectionViewEmbeddedInTableViewCellRender.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBCF7AFE5EB0DD1905AEA5 /* GDDCollectionViewEmbeddedInTableViewCellRender.m */; };
 		7F539AB82A3BC98429683550 /* libPods-GDDataDrivenView_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB40A2142DD937158E07F5B1 /* libPods-GDDataDrivenView_Example.a */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		E41339FC30FF232894F40D5F /* libPods-GDDataDrivenView_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D484E5084A8A022BC3057D02 /* libPods-GDDataDrivenView_Tests.a */; };
@@ -68,8 +72,16 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		61FBC2CDCB9609C1FB005738 /* GDDSampleCellPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDSampleCellPresenter.h; sourceTree = "<group>"; };
+		61FBC3AEE2259CCB7532DAB1 /* GDDCollectionViewEmbeddedInTableViewCellRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDCollectionViewEmbeddedInTableViewCellRender.h; sourceTree = "<group>"; };
+		61FBC3C2413FED786CDA470A /* GDDSampleCollectionViewCellPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDSampleCollectionViewCellPresenter.m; sourceTree = "<group>"; };
+		61FBC53B56759D5421F5404E /* GDDSampleCollectionViewCellRender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDSampleCollectionViewCellRender.m; sourceTree = "<group>"; };
 		61FBC772965FCE547C73F336 /* GDDSampleCellPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDSampleCellPresenter.m; sourceTree = "<group>"; };
 		61FBC87E2BA28B9D962635CE /* test_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_data.json; sourceTree = "<group>"; };
+		61FBC9077CB4A5E9BA20CC98 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDCollectionViewEmbeddedInTableViewCellPresenter.h; sourceTree = "<group>"; };
+		61FBC94C720D2FF1B4D449E6 /* GDDSampleCollectionViewCellRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDSampleCollectionViewCellRender.h; sourceTree = "<group>"; };
+		61FBCC6D528001DE1CEB4ABB /* GDDSampleCollectionViewCellPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDSampleCollectionViewCellPresenter.h; sourceTree = "<group>"; };
+		61FBCF5A70B64B4262BE3799 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDCollectionViewEmbeddedInTableViewCellPresenter.m; sourceTree = "<group>"; };
+		61FBCF7AFE5EB0DD1905AEA5 /* GDDCollectionViewEmbeddedInTableViewCellRender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDCollectionViewEmbeddedInTableViewCellRender.m; sourceTree = "<group>"; };
 		664CAFEA054EFF8889C6B45B /* Pods-GDDataDrivenView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDDataDrivenView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-GDDataDrivenView_Example/Pods-GDDataDrivenView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BB40A2142DD937158E07F5B1 /* libPods-GDDataDrivenView_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GDDataDrivenView_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +167,14 @@
 				467A56D41D3B4015001ABAED /* Launch Screen.storyboard */,
 				61FBC772965FCE547C73F336 /* GDDSampleCellPresenter.m */,
 				61FBC2CDCB9609C1FB005738 /* GDDSampleCellPresenter.h */,
+				61FBCF7AFE5EB0DD1905AEA5 /* GDDCollectionViewEmbeddedInTableViewCellRender.m */,
+				61FBC3AEE2259CCB7532DAB1 /* GDDCollectionViewEmbeddedInTableViewCellRender.h */,
+				61FBCF5A70B64B4262BE3799 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m */,
+				61FBC9077CB4A5E9BA20CC98 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.h */,
+				61FBC53B56759D5421F5404E /* GDDSampleCollectionViewCellRender.m */,
+				61FBC94C720D2FF1B4D449E6 /* GDDSampleCollectionViewCellRender.h */,
+				61FBC3C2413FED786CDA470A /* GDDSampleCollectionViewCellPresenter.m */,
+				61FBCC6D528001DE1CEB4ABB /* GDDSampleCollectionViewCellPresenter.h */,
 			);
 			name = "Example for GDDataDrivenView";
 			path = GDDataDrivenView;
@@ -415,6 +435,10 @@
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				464D97071D35100C00BF44DE /* GDDSampleCellRender.m in Sources */,
 				61FBC01F617B5004D55FC52E /* GDDSampleCellPresenter.m in Sources */,
+				61FBCD83AF439617870D6BD2 /* GDDCollectionViewEmbeddedInTableViewCellRender.m in Sources */,
+				61FBC65B94033B1EBB452073 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m in Sources */,
+				61FBCBB85FB28D816D8FA20A /* GDDSampleCollectionViewCellRender.m in Sources */,
+				61FBC4B9CACF218A52623DD2 /* GDDSampleCollectionViewCellPresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,5 +8,7 @@
 
 @interface GDDViewController : UITableViewController
 
+@property NSString *topic;
+
 - (void)appendToLastRow:(GDDModel *)model;
 @end
