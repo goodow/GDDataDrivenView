@@ -2,11 +2,11 @@
 // Created by Larry Tin on 16/7/11.
 //
 
-#import <objc/runtime.h>
 #import "GDDTableViewDelegate.h"
 #import "GDDModel.h"
 #import "GDDTableViewDataSource.h"
 #import "NSObject+GDChannel.h"
+#import <objc/runtime.h>
 
 @implementation GDDTableViewDelegate {
   __weak GDDTableViewDataSource *_dataSource;
@@ -25,6 +25,9 @@
 #if !(SelfSizing_UpdateConstraints)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+  GDDModel *model = [_dataSource modelForIndexPath:indexPath];
+//  cell = cell ?: objc_getAssociatedObject(model, &kPresenterKey2);
+  cell = cell ?: model.render;
   if (!cell) {
     return 0;
   }

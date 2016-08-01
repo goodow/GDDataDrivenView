@@ -12,6 +12,7 @@
 @protocol GDDPresenter;
 
 #define SelfSizing_UpdateConstraints 1
+//static const char kPresenterKey2 = 0;
 
 @interface GDDTableViewDataSource : GDDBaseViewDataSource <UITableViewDataSource>
 

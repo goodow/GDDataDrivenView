@@ -43,8 +43,22 @@
       "images": [
         "forkingdog",
         "phil",
-        "phil"
+        "phil",
+        "forkingdog",
+        "forkingdog"
       ]
+    }
+  },
+  {
+    "mid": "5",
+    "renderType": "GDDSampleCellRender",
+    "data": {
+      "@type": "gdd://any/NSMutableDictionary",
+      "title": "",
+      "content": "New customizable member privileges, fine-grained team permissions, and improved security",
+      "username": "ddd",
+      "time": "2015.04.15",
+      "imageName": ""
     }
   }
 ]

@@ -36,7 +36,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   GDDModel *model = [super modelForIndexPath:indexPath];
   UITableViewCell <GDDRender> *cell = [tableView dequeueReusableCellWithIdentifier:model.renderType];
-
   // Configure the cell for this indexPath
   [super reloadModel:model forRender:cell];
 
@@ -44,6 +43,9 @@
 #if SelfSizing_UpdateConstraints
   [cell setNeedsUpdateConstraints];
   [cell updateConstraintsIfNeeded];
+#else
+  //  objc_setAssociatedObject(model, &kPresenterKey2, cell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    model.render = cell;
 #endif
   return cell;
 }

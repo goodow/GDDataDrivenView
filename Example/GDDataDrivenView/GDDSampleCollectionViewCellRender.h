@@ -8,5 +8,5 @@
 
 
 @interface GDDSampleCollectionViewCellRender : UICollectionViewCell <GDDRender>
-@property UIImageView *imageView;
+@property(nonatomic, strong) UIImageView *imageView;
 @end

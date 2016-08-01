@@ -9,6 +9,5 @@
 @class GDDCollectionViewLayout;
 
 @interface GDDCollectionViewEmbeddedInTableViewCellRender : UITableViewCell <GDDRender>
-@property(readonly) UICollectionView *collectionView;
-@property(nonatomic, strong) GDDCollectionViewLayout *layout;
+@property(nonatomic, readonly) UICollectionView *collectionView;
 @end

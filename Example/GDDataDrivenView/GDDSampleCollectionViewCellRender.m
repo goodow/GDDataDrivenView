@@ -7,20 +7,19 @@
 
 
 @implementation GDDSampleCollectionViewCellRender {
-
 }
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+    _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     [self addSubview:_imageView];
+    _imageView.translatesAutoresizingMaskIntoConstraints = NO;
 
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:
-//        @"H:|-0-[view]-0-|" options:0 metrics:nil views:@{@"view" : _collectionView}]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:
-//        @"V:|-0-[view]-0-|" options:0 metrics:nil views:@{@"view" : _collectionView}]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:
+        @"H:|-0-[view]-0-|" options:0 metrics:nil views:@{@"view" : _imageView}]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:
+        @"V:|-0-[view]-0-|" options:0 metrics:nil views:@{@"view" : _imageView}]];
   }
-
   return self;
 }
 

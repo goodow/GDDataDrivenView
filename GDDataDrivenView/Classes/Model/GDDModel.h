@@ -12,4 +12,7 @@
 
 - (instancetype)initWithData:(id)data withId:(NSString *)mid withNibNameOrRenderClass:(NSString *)nibNameOrRenderClass;
 
+#if !(SelfSizing_UpdateConstraints)
+@property(nonatomic, weak) UIView *render;
+#endif
 @end

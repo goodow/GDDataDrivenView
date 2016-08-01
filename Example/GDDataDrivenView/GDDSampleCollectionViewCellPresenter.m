@@ -6,7 +6,6 @@
 #import "GDDSampleCollectionViewCellPresenter.h"
 #import "GDDSampleCollectionViewCellRender.h"
 
-
 @implementation GDDSampleCollectionViewCellPresenter {
 
 }

@@ -36,11 +36,6 @@
   // Configure the cell for this indexPath
   [super reloadModel:model forRender:cell];
 
-  // Make sure the constraints have been added to this cell, since it may have just been created from scratch
-#if SelfSizing_UpdateConstraints
-  //  [cell setNeedsUpdateConstraints];
-  //  [cell updateConstraintsIfNeeded];
-#endif
   return cell;
 }
 

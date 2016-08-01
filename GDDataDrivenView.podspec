@@ -40,5 +40,4 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'GDChannel', '~> 0.6'
   s.dependency 'SVPullToRefresh', '~> 0.4'
-  # s.dependency 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
 end

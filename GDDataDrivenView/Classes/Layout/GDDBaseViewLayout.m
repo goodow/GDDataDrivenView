@@ -120,12 +120,10 @@ static NSString *const sectionsPath = @"sections";
 //      // cell is visible, reload immediately
   dispatch_async(dispatch_get_main_queue(), ^{
       if ([view isKindOfClass:UITableView.class]) {
-        [UIView setAnimationsEnabled:NO];
         UITableView *tableView = view;
         [tableView beginUpdates];
         [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
         [tableView endUpdates];
-        [UIView setAnimationsEnabled:YES];
       } else if ([view isKindOfClass:UICollectionView.class]) {
         UICollectionView *collectionView = view;
         [collectionView performBatchUpdates:^{

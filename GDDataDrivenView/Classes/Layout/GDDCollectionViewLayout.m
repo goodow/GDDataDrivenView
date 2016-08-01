@@ -20,13 +20,13 @@
     _delegate = [[GDDCollectionViewDelegate alloc] initWithDataSource:super.dataSource];
 
     collectionView.dataSource = super.dataSource;
-    collectionView.delegate = _delegate;
+//    collectionView.delegate = _delegate;
 //    collectionView.showsHorizontalScrollIndicator = NO;
 
-    UICollectionViewLayout *viewLayout = collectionView.collectionViewLayout;
-    if ([viewLayout isKindOfClass:UICollectionViewFlowLayout.class]) {
-      ((UICollectionViewFlowLayout *) viewLayout).estimatedItemSize = CGSizeMake(100, 100);
-    }
+//    UICollectionViewLayout *viewLayout = collectionView.collectionViewLayout;
+//    if ([viewLayout isKindOfClass:UICollectionViewFlowLayout.class]) {
+//      ((UICollectionViewFlowLayout *) viewLayout).estimatedItemSize = CGSizeMake(100, 100);
+//    }
   }
   return self;
 }

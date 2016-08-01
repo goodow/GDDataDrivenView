@@ -11,7 +11,8 @@
 #import "NSObject+GDChannel.h"
 
 @interface GDDCollectionViewEmbeddedInTableViewCellPresenter ()
-@property(weak, nonatomic) GDDViewController *owner;
+@property(nonatomic, weak) GDDViewController *owner;
+@property(nonatomic, strong) GDDCollectionViewLayout *layout;
 @end
 
 @implementation GDDCollectionViewEmbeddedInTableViewCellPresenter {
@@ -25,8 +26,8 @@
 
 - (void)update:(GDDCollectionViewEmbeddedInTableViewCellRender *)render withModel:(GDDModel *)model {
   NSString *layoutTopic = [NSString stringWithFormat:@"%@/%@/%@", self.owner.topic, @"layouts", model.mid];
-  render.layout = [[GDDCollectionViewLayout alloc] initWithCollectionView:
-      render.collectionView                                     withTopic:layoutTopic withOwner:self.owner];
+  self.layout = [[GDDCollectionViewLayout alloc] initWithCollectionView:
+      render.collectionView withTopic:layoutTopic withOwner:self.owner];
 
   NSDictionary *data = model.data;
   NSArray *images = data[@"images"];
@@ -35,7 +36,7 @@
     [models addObject:[[GDDModel alloc] initWithData:image withId:nil
                             withNibNameOrRenderClass:NSStringFromClass(GDDSampleCollectionViewCellRender.class)]];
   }
-  [self.bus publishLocal:[render.layout topicForSection:0] payload:models];
+  [self.bus publishLocal:[self.layout topicForSection:0] payload:models];
 }
 
 @end
