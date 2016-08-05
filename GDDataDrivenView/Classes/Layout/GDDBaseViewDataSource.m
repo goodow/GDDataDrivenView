@@ -22,7 +22,7 @@ static const char kPresenterKey = 0;
   NSMapTable *_presentersByClass;
 }
 
-- (instancetype)initWithView:(id)view withOwner:(id)owner{
+- (instancetype)initWithView:(id)view withOwner:(id)owner {
   self = [super init];
   if (self) {
     _owner = owner;
@@ -117,7 +117,7 @@ static const char kPresenterKey = 0;
       _registeredNibsForCellReuseIdentifier[name] = nib;
       if ([_view isKindOfClass:UITableView.class]) {
         [_view registerNib:nib forCellReuseIdentifier:name];
-      } else if([_view isKindOfClass:UICollectionView.class]) {
+      } else if ([_view isKindOfClass:UICollectionView.class]) {
         [_view registerNib:nib forCellWithReuseIdentifier:name];
       }
       continue;
@@ -131,7 +131,7 @@ static const char kPresenterKey = 0;
     _registeredClassForCellReuseIdentifier[name] = cellClass;
     if ([_view isKindOfClass:UITableView.class]) {
       [_view registerClass:cellClass forCellReuseIdentifier:name];
-    } else if([_view isKindOfClass:UICollectionView.class]) {
+    } else if ([_view isKindOfClass:UICollectionView.class]) {
       [_view registerClass:cellClass forCellWithReuseIdentifier:name];
     }
   }
@@ -141,15 +141,16 @@ static const char kPresenterKey = 0;
   [_models removeAllObjects];
 }
 
-- (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(id <GDDRender>)render {
+- (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(NSObject <GDDRender> *)render {
   id <GDDPresenter> presenter = objc_getAssociatedObject(render, &kPresenterKey);
   if (!presenter) {
-    Class presenterClass = render.presenterClass;
-    if (!presenterClass) {
-      // 如果 render 的 presenterClass 返回nil, 则使用命名约定: AbcRender -> AbcPresenter
-      NSString *renderClassName = NSStringFromClass([(NSObject *)render class]);
+    if ([render respondsToSelector:@selector(presenter)]) {
+      presenter = render.presenter;
+    } else { // 使用命名约定: AbcRender -> AbcPresenter
+      Class presenterClass;
+      NSString *renderClassName = NSStringFromClass([render class]);
       NSString *presenterClassName;
-      NSString *renderSuffix = @"Render";
+      const NSString *renderSuffix = @"Render";
       if ([renderClassName hasSuffix:renderSuffix]) {
         presenterClassName = [renderClassName substringToIndex:renderClassName.length - renderSuffix.length];
         presenterClass = NSClassFromString([NSString stringWithFormat:@"%@Presenter", presenterClassName]);
@@ -157,13 +158,13 @@ static const char kPresenterKey = 0;
       if (!presenterClass) {
         [NSException raise:NSInvalidArgumentException format:@"Could not find a presenter class named '%@' for %@", presenterClassName, renderClassName];
       }
-    }
-    presenter = [_presentersByClass objectForKey:presenterClass];
-    if (!presenter) {
-      if ([presenterClass instancesRespondToSelector:@selector(initWithOwner:)]) {
-        presenter = [(id <GDDPresenter>) [presenterClass alloc] initWithOwner:_owner];
-      } else {
-        presenter = [[presenterClass alloc] init];
+      presenter = [_presentersByClass objectForKey:presenterClass];
+      if (!presenter) {
+        if ([presenterClass instancesRespondToSelector:@selector(initWithOwner:)]) {
+          presenter = [(id <GDDPresenter>) [presenterClass alloc] initWithOwner:_owner];
+        } else {
+          presenter = [[presenterClass alloc] init];
+        }
       }
     }
     objc_setAssociatedObject(render, &kPresenterKey, presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

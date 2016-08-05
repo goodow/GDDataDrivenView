@@ -4,6 +4,10 @@
 //
 
 #import "GDDCollectionViewEmbeddedInTableViewCellRender.h"
+#import "GDDCollectionViewEmbeddedInTableViewCellPresenter.h"
+
+//@interface GDDCollectionViewEmbeddedInTableViewCellRender () <UICollectionViewDelegateFlowLayout>
+//@end
 
 @implementation GDDCollectionViewEmbeddedInTableViewCellRender {
 
@@ -27,18 +31,21 @@
     _collectionView.showsHorizontalScrollIndicator = NO;
 
     // 设置每一个cell的固定高度和宽度
-    CGFloat height = 150.0;
     CGFloat width = 100.0; //self.contentView.frame.size.width;
-    flowLayout.itemSize = CGSizeMake(width, height);
+    CGFloat height = 150.0;
 //    flowLayout.estimatedItemSize = CGSizeMake(1, 1);
+    flowLayout.itemSize = CGSizeMake(width, height);
     [_collectionView addConstraint:[NSLayoutConstraint constraintWithItem:_collectionView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:height]];
+//    _collectionView.delegate = self;
   }
   return self;
 }
 
-- (Class <GDDPresenter>)presenterClass {
-  return nil;
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//  CGSize size = collectionView.frame.size;
+//  return CGSizeMake(200, 150);
+//}
+
 
 - (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize withHorizontalFittingPriority:(UILayoutPriority)horizontalFittingPriority verticalFittingPriority:(UILayoutPriority)verticalFittingPriority {
   // With autolayout enabled on collection view's cells we need to force a collection view relayout with the shown size (width)

@@ -41,7 +41,6 @@
 - (void)appendToLastRow:(GDDModel *)model {
   GDCOptions *opt = [[GDCOptions alloc] init];
   opt.patch = YES;
-  opt.type = GDDModel.class;
   GDDModel *copy = [[GDDModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
   [NSObject.bus publishLocal:[self.layout topicForSection:0] payload:@[copy] options:opt];
 }

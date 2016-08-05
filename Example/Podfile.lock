@@ -8,7 +8,7 @@ PODS:
   - GDChannel (0.6.0):
     - Mantle (~> 2.0.6)
     - MQTTKit (~> 0.1.0)
-    - Protobuf (~> 3.0.0-beta-4)
+    - Protobuf (~> 3.0)
   - GDDataDrivenView (0.1.0):
     - GDChannel (~> 0.6)
     - SVPullToRefresh (~> 0.4)
@@ -16,7 +16,7 @@ PODS:
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
   - MQTTKit (0.1.0)
-  - Protobuf (3.0.0-beta-4)
+  - Protobuf (3.0.0)
   - Specta (1.0.5)
   - SVPullToRefresh (0.4.1)
 
@@ -36,18 +36,18 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   GDChannel:
-    :commit: 7b13b0b4784242493922b9af46157c840cdc558e
+    :commit: 63114a505540bc7070366e96805611685402045e
     :git: https://github.com/goodow/GDChannel.git
 
 SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
-  GDChannel: 4b538275a06ee5e07f33b02074cee8e01e7d492d
+  GDChannel: e26b61a1f156eb4b657516d80d90bdad2db46c56
   GDDataDrivenView: de21373f20bf7f39f8d62d2db5332aeb727a2786
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
-  Protobuf: ec704f0045f7a30e1686fbb3994f43f689a0021b
+  Protobuf: c032ce1bdf7a266acfd640fbfd8bdb166127c7f5
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
 

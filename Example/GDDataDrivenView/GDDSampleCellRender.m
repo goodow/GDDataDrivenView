@@ -31,10 +31,6 @@
   NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
-- (Class <GDDPresenter>)presenterClass {
-  return nil;
-}
-
 - (void)addEventHandler {
   UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
   tapGesture.cancelsTouchesInView = NO;
