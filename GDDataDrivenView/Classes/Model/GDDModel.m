@@ -4,13 +4,13 @@
 
 #import "GDCSerializable.h"
 #import "GDDModel.h"
-#import "GPBMessage.h"
+#import "GPBAny+GDChannel.h"
 
 @implementation GDDModel {
 
 }
 
-- (instancetype)initWithData:(id)data withId:(NSString *)mid withNibNameOrRenderClass:(NSString *)nibNameOrRenderClass {
+- (instancetype)initWithData:(id <GDCSerializable>)data withId:(NSString *)mid withNibNameOrRenderClass:(NSString *)nibNameOrRenderClass {
   self = [super init];
   if (self) {
     _data = data;
@@ -19,11 +19,6 @@
   }
 
   return self;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-  GDDModel *copy = [[GDDModel allocWithZone:zone] initWithData:self.data withId:self.mid withNibNameOrRenderClass:self.renderType];
-  return copy;
 }
 
 - (NSString *)description {
@@ -38,27 +33,18 @@
 static NSString *const dataKey = @"data";
 static NSString *const midKey = @"mid";
 static NSString *const renderTypeKey = @"renderType";
-static NSString *const dataTypeKey = @"@type";
 
 + (instancetype)parseFromJson:(NSDictionary *)json error:(NSError **)errorPtr {
-  id data = json[dataKey];
-  if ([data isKindOfClass:NSDictionary.class]) {
-    NSString *typeUrl = data[dataTypeKey];
-    Class dataClass = NSClassFromString(typeUrl.lastPathComponent);
-    if ([dataClass conformsToProtocol:@protocol(GDCSerializable)]) {
-      NSError *error = nil;
-      data = [dataClass parseFromJson:data error:&error];
-    }
-  }
-  NSString *mid = json[midKey] ?: [[NSUUID alloc] init].UUIDString;
+  id data = [GPBAny unpackFromJson:json[dataKey] error:nil];
+  NSString *mid = json[midKey];
+  mid = mid.length > 0 ? mid : nil;
   return [[self alloc] initWithData:data withId:mid withNibNameOrRenderClass:json[renderTypeKey]];
 }
 
 - (NSDictionary *)toJson {
   NSMutableDictionary *json = [NSMutableDictionary dictionary];
-  json[dataKey] = self.data.toJson.mutableCopy;
-  if (![self.data isKindOfClass:NSMutableDictionary.class] && ![self.data isKindOfClass:NSMutableArray.class]) {
-    json[dataKey][dataTypeKey] = [NSString stringWithFormat:@"://%@", NSStringFromClass([self.data class])];
+  if (self.data) {
+    json[dataKey] = [GPBAny packToJson:self.data];
   }
   json[midKey] = self.mid;
   json[renderTypeKey] = self.renderType;
