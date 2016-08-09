@@ -142,11 +142,12 @@ static const char kPresenterKey = 0;
 }
 
 - (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(NSObject <GDDRender> *)render {
-  id <GDDPresenter> presenter = objc_getAssociatedObject(render, &kPresenterKey);
-  if (!presenter) {
-    if ([render respondsToSelector:@selector(presenter)]) {
-      presenter = render.presenter;
-    } else { // 使用命名约定: AbcRender -> AbcPresenter
+  id <GDDPresenter> presenter;
+  if ([render respondsToSelector:@selector(presenter)]) {
+    presenter = render.presenter;
+  } else {
+    presenter = objc_getAssociatedObject(render, &kPresenterKey);
+    if (!presenter) { // 使用命名约定查询或创建Presenter: AbcRender -> AbcPresenter
       Class presenterClass;
       NSString *renderClassName = NSStringFromClass([render class]);
       NSString *presenterClassName;
@@ -166,9 +167,10 @@ static const char kPresenterKey = 0;
           presenter = [[presenterClass alloc] init];
         }
       }
+      objc_setAssociatedObject(render, &kPresenterKey, presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    objc_setAssociatedObject(render, &kPresenterKey, presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   }
+
   [presenter update:render withModel:model];
   return presenter;
 }
