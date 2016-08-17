@@ -13,7 +13,7 @@
   },
   {
     "mid": "2",
-    "renderType": "GDDSampleCellRender",
+    "renderType": "GDDUnknownCellRender",
     "data": {
       "@type": "gdd://any/NSMutableDictionary",
       "title": "",

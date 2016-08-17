@@ -51,6 +51,7 @@ static NSString *const sectionsPath = @"sections";
           NSString *topic = message.topic;
           if ([topic hasPrefix:weakSelf.sectionsTopic]) {
             NSInteger section = [topic substringFromIndex:weakSelf.sectionsTopic.length].integerValue;
+//            NSLog(@"%s", __PRETTY_FUNCTION__);
             [weakSelf reloadModels:message.payload forSection:section];
             return;
           }
@@ -76,13 +77,19 @@ static NSString *const sectionsPath = @"sections";
     [self appendNewModels:patches];
     return;
   }
-  [self.dataSource clearModels];
-  NSMutableArray *indexPaths = [self generateNewIndexPaths:models.count fromRow:0];
-  [self.dataSource insertModels:models atIndexPaths:indexPaths];
-  __weak id view = self.view;
+//  NSLog(@"clearModels1");
+//  [self.dataSource clearModels];
+//  NSLog(@"clearModels2");
+//  NSMutableArray *indexPaths = [self generateNewIndexPaths:models.count fromRow:0];
+//  [self.dataSource insertModels:models atIndexPaths:indexPaths];
+
+  __weak GDDBaseViewLayout *weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
-//      [view reloadSections:[NSIndexSet indexSetWithIndex:section] withRowAnimation:UITableViewRowAnimationAutomatic];
-      [view reloadData];
+      [weakSelf.dataSource clearModels];
+      NSMutableArray *indexPaths = [weakSelf generateNewIndexPaths:models.count fromRow:0];
+      [weakSelf.dataSource insertModels:models atIndexPaths:indexPaths];
+//      NSLog(@"reloadData");
+      [(id) weakSelf.view reloadData];
   });
 }
 
