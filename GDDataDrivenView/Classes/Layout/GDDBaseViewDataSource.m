@@ -166,6 +166,7 @@ static const char kPresenterKey = 0;
         } else {
           presenter = [[presenterClass alloc] init];
         }
+        [_presentersByClass setObject:presenter forKey:presenterClass];
       }
       objc_setAssociatedObject(render, &kPresenterKey, presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
