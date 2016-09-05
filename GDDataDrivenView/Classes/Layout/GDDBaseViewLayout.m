@@ -128,9 +128,13 @@ static NSString *const sectionsPath = @"sections";
   dispatch_async(dispatch_get_main_queue(), ^{
       if ([view isKindOfClass:UITableView.class]) {
         UITableView *tableView = view;
-        [tableView beginUpdates];
-        [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-        [tableView endUpdates];
+        if (view.infiniteScrollingView.state == SVInfiniteScrollingStateLoading) {
+          [tableView reloadData];
+        } else {
+          [tableView beginUpdates];
+          [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+          [tableView endUpdates];
+        }
       } else if ([view isKindOfClass:UICollectionView.class]) {
         UICollectionView *collectionView = view;
         [collectionView performBatchUpdates:^{
