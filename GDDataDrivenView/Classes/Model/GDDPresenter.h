@@ -9,7 +9,7 @@
 
 @protocol GDDPresenter
 
-- (void)update:(id<GDDRender>)render withModel:(GDDModel *)model;
+- (void)update:(id <GDDRender>)render withData:(id)data;
 
 @optional
 /**

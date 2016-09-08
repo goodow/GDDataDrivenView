@@ -36,8 +36,8 @@
   return self;
 }
 
-- (void)update:(GDDUnknownCellRender *)render withModel:(GDDModel *)model {
-  self.descriptionLabel.text = [model description];
+- (void)update:(GDDUnknownCellRender *)render withData:(id)data {
+  self.descriptionLabel.text = [data description];
 }
 
 //- (void)updateConstraints {
@@ -69,7 +69,9 @@
   }
   UITableView *tableView = [self.class findTableViewOfCell:self];
 //  [tableView reloadData];
+//  NSLog(@"reloadRowsAtIndexPaths");
   [tableView reloadRowsAtIndexPaths:@[[tableView indexPathForCell:self]] withRowAnimation:UITableViewRowAnimationAutomatic];
+
 //  [self setNeedsUpdateConstraints];
 //  [self updateConstraintsIfNeeded];
 //  [self updateConstraints];

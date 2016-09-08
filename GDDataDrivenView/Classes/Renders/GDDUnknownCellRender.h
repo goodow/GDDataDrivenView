@@ -7,4 +7,6 @@
 
 @interface GDDUnknownCellRender : UITableViewCell <GDDRender, GDDPresenter>
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
+
++ (UITableView *)findTableViewOfCell:(UITableViewCell *)cell;
 @end

@@ -172,7 +172,7 @@ static const char kPresenterKey = 0;
     }
   }
 
-  [presenter update:render withModel:model];
+  [presenter update:render withData:model.data];
   return presenter;
 }
 @end
