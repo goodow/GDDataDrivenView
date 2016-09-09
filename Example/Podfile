@@ -1,6 +1,6 @@
 target 'GDDataDrivenView_Example' do
   pod 'GDDataDrivenView', :path => '../'
-  pod 'GDChannel', :git => 'https://github.com/goodow/GDChannel.git', :branch => 'mqtt'
+  pod 'GDChannel', :git => 'https://github.com/goodow/GDChannel.git'
   # pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
   target 'GDDataDrivenView_Tests' do
     inherit! :search_paths

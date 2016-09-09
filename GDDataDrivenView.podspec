@@ -38,6 +38,24 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'GDChannel', '~> 0.6'
-  s.dependency 'SVPullToRefresh', '~> 0.4'
+
+  s.subspec 'MVP' do |sp|
+    sp.source_files = 'GDDataDrivenView/Classes/MVP/**/*'
+  end
+
+  s.subspec 'Core' do |sp|
+    sp.dependency 'GDDataDrivenView/MVP'
+    sp.dependency 'GDChannel', '~> 0.6'
+    sp.dependency 'SVPullToRefresh', '~> 0.4'
+    sp.source_files = 'GDDataDrivenView/Classes/Model/**/*', 'GDDataDrivenView/Classes/Layout/**/*', 'GDDataDrivenView/Classes/Renders/**/*'
+  end
+
+  s.subspec 'UIViewController' do |sp|
+    sp.dependency 'GDDataDrivenView/MVP'
+    sp.dependency 'GDChannel', '~> 0.6'
+    sp.dependency 'Aspects', '~> 1.4.1'
+
+    sp.source_files = 'GDDataDrivenView/Classes/UIViewController/**/*'
+    sp.requires_arc = ['GDDataDrivenView/Classes/UIViewController/GDDViewControllerHelper.*', 'GDDataDrivenView/Classes/UIViewController/UIViewController+GDDataDrivenView.*']
+  end
 end

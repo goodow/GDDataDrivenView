@@ -18,12 +18,11 @@
   return [self init];
 }
 
-- (void)update:(GDDSampleCellRender *)render withModel:(GDDModel *)model {
+- (void)update:(GDDSampleCellRender *)render withData:(NSDictionary *)data {
   static int a;
   a++;
   NSLog(@"%s: %d", __PRETTY_FUNCTION__, a);
 
-  NSDictionary *data = model.data;
   render.titleLabel.text = data[@"title"];
   render.contentLabel.text = data[@"content"];
   render.usernameLabel.text = data[@"username"];
@@ -33,7 +32,7 @@
 
   __weak GDDSampleCellPresenter *weakSelf = self;
   render.tapHandler = ^{
-      [weakSelf.owner appendToLastRow:model];
+//      [weakSelf.owner appendToLastRow:model];
   };
 }
 

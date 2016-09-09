@@ -10,9 +10,8 @@
 
 }
 
-- (void)update:(GDDSampleCollectionViewCellRender *)render withModel:(GDDModel *)model {
-  NSString *image = model.data;
-  render.imageView.image = [UIImage imageNamed:image];
+- (void)update:(GDDSampleCollectionViewCellRender *)render withData:(NSString *)data {
+  render.imageView.image = [UIImage imageNamed:data];
 }
 
 @end

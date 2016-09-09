@@ -3,7 +3,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GDDModel.h"
 
 @protocol GDDRender;
 

@@ -5,6 +5,7 @@
 #import "GDDCollectionViewDataSource.h"
 #import "GDDRender.h"
 #import "GDDCollectionViewLayout.h"
+#import "GDDModel.h"
 
 @interface GDDCollectionViewDataSource ()
 @property(nonatomic, weak) GDDCollectionViewLayout *layout;

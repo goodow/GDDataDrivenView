@@ -9,6 +9,7 @@
 #import "GDDCollectionViewLayout.h"
 #import "GDDSampleCollectionViewCellRender.h"
 #import "NSObject+GDChannel.h"
+#import "GDDModel.h"
 
 @interface GDDCollectionViewEmbeddedInTableViewCellPresenter ()
 @property(nonatomic, weak) GDDViewController *owner;
@@ -24,12 +25,11 @@
   return [self init];
 }
 
-- (void)update:(GDDCollectionViewEmbeddedInTableViewCellRender *)render withModel:(GDDModel *)model {
-  NSString *layoutTopic = [NSString stringWithFormat:@"%@/%@/%@", self.owner.topic, @"layouts", model.mid];
+- (void)update:(GDDCollectionViewEmbeddedInTableViewCellRender *)render withData:(NSDictionary *)data {
+  NSString *layoutTopic = [NSString stringWithFormat:@"%@/%@/%@", self.owner.topic, @"layouts", [[NSUUID alloc] init].UUIDString];
   self.layout = [[GDDCollectionViewLayout alloc] initWithCollectionView:
       render.collectionView withTopic:layoutTopic withOwner:self.owner];
 
-  NSDictionary *data = model.data;
   NSArray *images = data[@"images"];
   NSMutableArray<GDDModel *> *models = @[].mutableCopy;
   for (NSString *image in images) {
