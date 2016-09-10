@@ -232,6 +232,13 @@ static const char kPresenterKey = 0;
 }
 
 + (void)aspect_hookSelector {
+  // Fix bug: 当使用swipe to pop getsture返回UINavigationController的前一个UIViewController的过程中取消，
+  //          如果两个viewController的viewOption不一致，则会导致界面显示不是当前viewController的viewOption所期望的。
+  [UIViewController aspect_hookSelector:@selector(viewWillAppear:) withOptions:AspectPositionAfter usingBlock:^(id <AspectInfo> aspectInfo) {
+    UIViewController *viewController = [aspectInfo instance];
+    [GDDViewControllerHelper config:viewController viewOptions:viewController.viewOption];
+  } error:nil];
+  
   [UIViewController aspect_hookSelector:@selector(shouldAutorotate) withOptions:AspectPositionInstead usingBlock:^(id <AspectInfo> info) {
       NSInvocation *invocation = info.originalInvocation;
       UIViewController *instance = info.instance;
