@@ -56,6 +56,6 @@ TODO: Add long description of the pod here.
     sp.dependency 'Aspects', '~> 1.4.1'
 
     sp.source_files = 'GDDataDrivenView/Classes/UIViewController/**/*'
-    sp.requires_arc = ['GDDataDrivenView/Classes/UIViewController/GDDViewControllerHelper.*', 'GDDataDrivenView/Classes/UIViewController/UIViewController+GDDataDrivenView.*']
+    sp.requires_arc = ['GDDataDrivenView/Classes/UIViewController/GDD*', 'GDDataDrivenView/Classes/UIViewController/UIViewController+GDDataDrivenView.*']
   end
 end
