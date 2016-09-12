@@ -3,7 +3,7 @@
 //
 
 #import "GDDUnknownCellRender.h"
-
+#import "UITableViewCell+GDDRender.h"
 
 @implementation GDDUnknownCellRender {
 //  BOOL _didSetupConstraints;
@@ -67,7 +67,7 @@
     [self.descriptionLabel addConstraint:_heightConstraint];
 //    NSLog(@"_heightConstraint");
   }
-  UITableView *tableView = [self.class findTableViewOfCell:self];
+  UITableView *tableView = [self nearestTableView];
 //  [tableView reloadData];
 //  NSLog(@"reloadRowsAtIndexPaths");
   [tableView reloadRowsAtIndexPaths:@[[tableView indexPathForCell:self]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -81,11 +81,4 @@
   return self;
 }
 
-+ (UITableView *)findTableViewOfCell:(UITableViewCell *)cell {
-  UIView *view = cell.superview;
-  do {
-    view = view.superview;
-  } while (![view isKindOfClass:UITableView.class]);
-  return view;
-}
 @end

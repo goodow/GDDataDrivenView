@@ -12,16 +12,20 @@ PODS:
     - Protobuf (~> 3.0)
   - GDDataDrivenView (0.1.0):
     - GDDataDrivenView/Core (= 0.1.0)
+    - GDDataDrivenView/Generated (= 0.1.0)
     - GDDataDrivenView/MVP (= 0.1.0)
     - GDDataDrivenView/UIViewController (= 0.1.0)
   - GDDataDrivenView/Core (0.1.0):
     - GDChannel (~> 0.6)
     - GDDataDrivenView/MVP
     - SVPullToRefresh (~> 0.4)
+  - GDDataDrivenView/Generated (0.1.0):
+    - Protobuf (~> 3.0)
   - GDDataDrivenView/MVP (0.1.0)
   - GDDataDrivenView/UIViewController (0.1.0):
     - Aspects (~> 1.4.1)
     - GDChannel (~> 0.6)
+    - GDDataDrivenView/Generated
     - GDDataDrivenView/MVP
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
@@ -55,7 +59,7 @@ SPEC CHECKSUMS:
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
   GDChannel: e26b61a1f156eb4b657516d80d90bdad2db46c56
-  GDDataDrivenView: 131234691a702326e9f5d2631dd5187bdde0fbb2
+  GDDataDrivenView: 31e283dce74cdf5e3651d02a85603104229b71d0
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
   Protobuf: c032ce1bdf7a266acfd640fbfd8bdb166127c7f5

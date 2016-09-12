@@ -52,10 +52,17 @@ TODO: Add long description of the pod here.
 
   s.subspec 'UIViewController' do |sp|
     sp.dependency 'GDDataDrivenView/MVP'
+    sp.dependency 'GDDataDrivenView/Generated'
     sp.dependency 'GDChannel', '~> 0.6'
     sp.dependency 'Aspects', '~> 1.4.1'
 
     sp.source_files = 'GDDataDrivenView/Classes/UIViewController/**/*'
-    sp.requires_arc = ['GDDataDrivenView/Classes/UIViewController/GDDViewControllerHelper.*', 'GDDataDrivenView/Classes/UIViewController/UIViewController+GDDataDrivenView.*']
+  end
+
+  s.subspec 'Generated' do |sp|
+    sp.dependency 'Protobuf', '~> 3.0'
+
+    sp.requires_arc = false
+    sp.source_files = 'GDDataDrivenView/Generated/**/*'
   end
 end

@@ -33,8 +33,8 @@ static const char kPresenterKey = 0;
   if (!controller) {
     return;
   }
-  id <GDDPresenter> presenter = [self findOrCreatePresenterForViewController:controller];
   void (^messageHandler)() = ^{
+      id <GDDPresenter> presenter = [self findOrCreatePresenterForViewController:controller];
       if (presenter) {
         NSParameterAssert([controller conformsToProtocol:@protocol(GDDRender)]);
         [presenter update:(id <GDDRender>) controller withData:message.payload];
@@ -334,7 +334,7 @@ static const char kPresenterKey = 0;
   Class presenterClass;
   NSString *viewControllerClassName = NSStringFromClass(controller.class);
   NSString *presenterClassName;
-  NSString *const renderSuffix = @"ViewContrller";
+  NSString *const renderSuffix = @"ViewController";
   if ([viewControllerClassName hasSuffix:renderSuffix]) {
     presenterClassName = [viewControllerClassName substringToIndex:viewControllerClassName.length - renderSuffix.length];
     presenterClass = NSClassFromString([NSString stringWithFormat:@"%@Presenter", presenterClassName]);
