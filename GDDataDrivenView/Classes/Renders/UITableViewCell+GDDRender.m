@@ -11,7 +11,7 @@
   UIView *view = self.superview;
   do {
     view = view.superview;
-  } while (![view isKindOfClass:UITableView.class]);
+  } while (view && ![view isKindOfClass:UITableView.class]);
   return view;
 }
 

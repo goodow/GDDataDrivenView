@@ -201,21 +201,23 @@ static const char kPresenterKey = 0;
     }
   }
   if ([parent isKindOfClass:UITabBarController.class]) {
-    if ([self isSameInstanceOrKindOfClass:controllerOrClass in:parent instanceOrClass:isInstance]) {
-      return parent;
-    }
     UITabBarController *tabBarController = (UITabBarController *) parent;
-    for (UIViewController *ctr in tabBarController.viewControllers) {
+    NSMutableArray<UIViewController *> *viewControllers = tabBarController.viewControllers.mutableCopy;
+    if (tabBarController.selectedIndex != 0) {
+      UIViewController *selectedViewController = tabBarController.selectedViewController;
+      [viewControllers removeObject:selectedViewController];
+      [viewControllers insertObject:selectedViewController atIndex:0];
+    }
+    for (UIViewController *ctr in viewControllers) {
       UIViewController *found = [self find:controllerOrClass in:ctr instanceOrClass:isInstance];
       if (found) {
         return found;
       }
     }
-  }
-  if ([parent isKindOfClass:UINavigationController.class]) {
-    if ([self isSameInstanceOrKindOfClass:controllerOrClass in:parent instanceOrClass:isInstance]) {
-      return parent;
+    if ([self isSame:controllerOrClass with:tabBarController instanceOrClass:isInstance]) {
+      return tabBarController;
     }
+  } else if ([parent isKindOfClass:UINavigationController.class]) {
     UINavigationController *navigationController = (UINavigationController *) parent;
     for (UIViewController *ctr in navigationController.viewControllers.reverseObjectEnumerator) {
       UIViewController *found = [self find:controllerOrClass in:ctr instanceOrClass:isInstance];
@@ -223,11 +225,25 @@ static const char kPresenterKey = 0;
         return found;
       }
     }
+    if ([self isSame:controllerOrClass with:navigationController instanceOrClass:isInstance]) {
+      return navigationController;
+    }
+  } else if ([parent isKindOfClass:UIPageViewController.class]) {
+    UIPageViewController *pageViewController = (UIPageViewController *) parent;
+    for (UIViewController *ctr in pageViewController.viewControllers) {
+      UIViewController *found = [self find:controllerOrClass in:ctr instanceOrClass:isInstance];
+      if (found) {
+        return found;
+      }
+    }
+    if ([self isSame:controllerOrClass with:pageViewController instanceOrClass:isInstance]) {
+      return pageViewController;
+    }
   }
-  return [self isSameInstanceOrKindOfClass:controllerOrClass in:parent instanceOrClass:isInstance] ? parent : nil;
+  return [self isSame:controllerOrClass with:parent instanceOrClass:isInstance] ? parent : nil;
 }
 
-+ (BOOL)isSameInstanceOrKindOfClass:(id)controllerOrClass in:(UIViewController *)otherController instanceOrClass:(BOOL)isInstance {
++ (BOOL)isSame:(id)controllerOrClass with:(UIViewController *)otherController instanceOrClass:(BOOL)isInstance {
   return isInstance ? controllerOrClass == otherController : [otherController isKindOfClass:controllerOrClass];
 }
 
@@ -314,6 +330,8 @@ static const char kPresenterKey = 0;
     return forceChild ? navigationController.topViewController : navigationController.visibleViewController;
   } else if ([parent isKindOfClass:UITabBarController.class]) {
     return ((UITabBarController *) parent).selectedViewController;
+  } else if ([parent isKindOfClass:UIPageViewController.class]) {
+    return ((UIPageViewController *) parent).viewControllers.firstObject;
   } else {
     return nil;
   }
