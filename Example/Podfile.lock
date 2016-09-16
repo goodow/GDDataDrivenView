@@ -18,7 +18,6 @@ PODS:
   - GDDataDrivenView/Core (0.1.0):
     - GDChannel (~> 0.6)
     - GDDataDrivenView/MVP
-    - SVPullToRefresh (~> 0.4)
   - GDDataDrivenView/Generated (0.1.0):
     - Protobuf (~> 3.0)
   - GDDataDrivenView/MVP (0.1.0)
@@ -33,7 +32,6 @@ PODS:
   - MQTTKit (0.1.0)
   - Protobuf (3.0.0)
   - Specta (1.0.5)
-  - SVPullToRefresh (0.4.1)
 
 DEPENDENCIES:
   - Expecta
@@ -59,12 +57,11 @@ SPEC CHECKSUMS:
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
   GDChannel: e26b61a1f156eb4b657516d80d90bdad2db46c56
-  GDDataDrivenView: 31e283dce74cdf5e3651d02a85603104229b71d0
+  GDDataDrivenView: fd8fc27a1c1e55c6284eaa2209ee734ef4f3daa1
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
   Protobuf: c032ce1bdf7a266acfd640fbfd8bdb166127c7f5
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
-  SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
 
 PODFILE CHECKSUM: 19eae2f29ee302412e409736c977a408d65a641e
 

@@ -9,8 +9,6 @@
 
 @interface GDDBaseViewLayout : NSObject
 
-@property(nonatomic, copy) void (^infiniteScrollingHandler)(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL hasMore));
-
 @property(nonatomic, readonly) NSString *modelsTopic;
 @property(nonatomic, readonly) NSString *sectionsTopic;
 @property(nonatomic) NSMutableArray<GDDModel *> *models;

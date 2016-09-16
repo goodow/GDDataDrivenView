@@ -8,7 +8,6 @@
 #import "GDCMessageConsumer.h"
 #import "NSObject+GDChannel.h"
 #import "GDDBaseViewDataSource.h"
-#import "SVPullToRefresh.h"
 
 static NSString *const modelsPath = @"models";
 static NSString *const sectionsPath = @"sections";
@@ -128,21 +127,14 @@ static NSString *const sectionsPath = @"sections";
   dispatch_async(dispatch_get_main_queue(), ^{
       if ([view isKindOfClass:UITableView.class]) {
         UITableView *tableView = view;
-        if (view.infiniteScrollingView.state == SVInfiniteScrollingStateLoading) {
-          [tableView reloadData];
-        } else {
-          [tableView beginUpdates];
-          [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
-          [tableView endUpdates];
-        }
+//          [tableView beginUpdates];
+        [tableView reloadData];
+//          [tableView endUpdates];
       } else if ([view isKindOfClass:UICollectionView.class]) {
         UICollectionView *collectionView = view;
         [collectionView performBatchUpdates:^{
             [collectionView insertItemsAtIndexPaths:indexPaths];
         }                        completion:nil];
-      }
-      if (view.infiniteScrollingView.state == SVInfiniteScrollingStateLoading) {
-        [view.infiniteScrollingView stopAnimating];
       }
   });
 //    }
@@ -188,25 +180,4 @@ static NSString *const sectionsPath = @"sections";
   });
 }
 
-#pragma mark Event Handler
-
-- (void)setInfiniteScrollingHandler:(id)infiniteScrollingHandler {
-  if (!infiniteScrollingHandler) {
-    _infiniteScrollingHandler = nil;
-    self.view.showsInfiniteScrolling = NO;
-    return;
-  }
-  _infiniteScrollingHandler = [infiniteScrollingHandler copy];
-  __weak GDDBaseViewLayout *weakSelf = self;
-  [self.view addInfiniteScrollingWithActionHandler:^{
-      if (weakSelf.infiniteScrollingHandler) {
-        weakSelf.infiniteScrollingHandler(weakSelf.models.copy, ^(BOOL hasMore) {
-            [weakSelf.view.infiniteScrollingView stopAnimating];
-            if (!hasMore) {
-              weakSelf.view.showsInfiniteScrolling = NO;
-            }
-        });
-      }
-  }];
-}
 @end

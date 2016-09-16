@@ -228,8 +228,10 @@ typedef GPB_ENUM(GDDPBViewOption_FieldNumber) {
 
 @property(nonatomic, readwrite) enum GDPBBool navBar;
 
+/// UIStatusBarStyle
 @property(nonatomic, readwrite) uint32_t statusBarStyle;
 
+/// UIBarStyle
 @property(nonatomic, readwrite) uint32_t navBarStyle;
 
 /// 仅初始化时有效
@@ -237,6 +239,7 @@ typedef GPB_ENUM(GDDPBViewOption_FieldNumber) {
 
 @property(nonatomic, readwrite) enum GDPBBool tabBar;
 
+/// UIInterfaceOrientationMask
 @property(nonatomic, readwrite) uint32_t supportedInterfaceOrientations;
 
 /// 是否应该自动旋转
@@ -246,20 +249,21 @@ typedef GPB_ENUM(GDDPBViewOption_FieldNumber) {
 
 @property(nonatomic, readwrite) BOOL attemptRotationToDeviceOrientation;
 
-/// 更改设备的朝向
+/// 更改设备的朝向 UIDeviceOrientation
 @property(nonatomic, readwrite) uint32_t deviceOrientation;
 
 @property(nonatomic, readwrite) enum GDPBBool toolBar;
 
+/// UIInterfaceOrientation
 @property(nonatomic, readwrite) uint32_t preferredInterfaceOrientationForPresentation;
 
-/// 仅初始化时有效
+/// 仅初始化时有效 UIModalPresentationStyle
 @property(nonatomic, readwrite) uint32_t modalPresentationStyle;
 
-/// 仅初始化时有效
+/// 仅初始化时有效 UIModalTransitionStyle
 @property(nonatomic, readwrite) uint32_t modalTransitionStyle;
 
-/// 仅初始化时有效
+/// 仅初始化时有效 UIRectEdge
 @property(nonatomic, readwrite) uint32_t edgesForExtendedLayout;
 
 @end

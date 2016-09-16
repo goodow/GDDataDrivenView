@@ -46,7 +46,6 @@ TODO: Add long description of the pod here.
   s.subspec 'Core' do |sp|
     sp.dependency 'GDDataDrivenView/MVP'
     sp.dependency 'GDChannel', '~> 0.6'
-    sp.dependency 'SVPullToRefresh', '~> 0.4'
     sp.source_files = 'GDDataDrivenView/Classes/Model/**/*', 'GDDataDrivenView/Classes/Layout/**/*', 'GDDataDrivenView/Classes/Renders/**/*'
   end
 
