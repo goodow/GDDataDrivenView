@@ -6,7 +6,7 @@
 #import <objc/runtime.h>
 #import "Aspects.h"
 #import "GDDPresenter.h"
-#import "GDDRender.h"
+#import "GDDView.h"
 
 // The address of this variable is used as a key for obj_getAssociatedObject.
 static const char kPresenterKey = 0;
@@ -36,8 +36,8 @@ static const char kPresenterKey = 0;
   void (^messageHandler)() = ^{
       id <GDDPresenter> presenter = [self findOrCreatePresenterForViewController:controller];
       if (presenter) {
-        NSParameterAssert([controller conformsToProtocol:@protocol(GDDRender)]);
-        [presenter update:(id <GDDRender>) controller withData:message.payload];
+        NSParameterAssert([controller conformsToProtocol:@protocol(GDDView)]);
+        [presenter update:(id <GDDView>) controller withData:message.payload];
       } else {
         [controller handleMessage:message];
       }
@@ -97,7 +97,9 @@ static const char kPresenterKey = 0;
         }
         [GDDViewControllerHelper replaceRootViewController:controller];
         [self config:controller viewOptions:viewOpt];
-        [controller view]; // force viewDidLoad to be called
+        if (!controller.isViewLoaded) {
+          [controller view]; // force viewDidLoad to be called
+        }
         messageHandler();
         return;
       default: {
@@ -122,7 +124,9 @@ static const char kPresenterKey = 0;
     [top.navigationController pushViewController:controller animated:YES];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self config:controller viewOptions:viewOpt];
-        [controller view]; // force viewDidLoad to be called
+        if (!controller.isViewLoaded) {
+          [controller view]; // force viewDidLoad to be called
+        }
         messageHandler();
     });
     return;
@@ -338,11 +342,11 @@ static const char kPresenterKey = 0;
 }
 
 + (id <GDDPresenter>)findOrCreatePresenterForViewController:(UIViewController *)controller {
-  if (![controller conformsToProtocol:@protocol(GDDRender)]) {
+  if (![controller conformsToProtocol:@protocol(GDDView)]) {
     return nil;
   }
   if ([controller respondsToSelector:@selector(presenter)]) {
-    return [(UIViewController <GDDRender> *) controller presenter];
+    return [(UIViewController <GDDView> *) controller presenter];
   }
   id <GDDPresenter> presenter = objc_getAssociatedObject(self, &kPresenterKey);
   if (presenter) {

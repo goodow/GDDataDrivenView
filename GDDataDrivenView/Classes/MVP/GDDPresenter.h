@@ -4,11 +4,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol GDDRender;
+@protocol GDDView;
 
 @protocol GDDPresenter
 
-- (void)update:(id <GDDRender>)render withData:(id)data;
+- (void)update:(id <GDDView>)view withData:(id)data;
 
 @optional
 /**
