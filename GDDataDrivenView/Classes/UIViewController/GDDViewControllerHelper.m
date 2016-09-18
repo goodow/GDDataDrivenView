@@ -51,7 +51,7 @@ static const char kPresenterKey = 0;
 
   UIViewController *found = [self find:controller in:UIApplication.sharedApplication.keyWindow.rootViewController instanceOrClass:YES];
   if (found) {
-    [self config:controller viewOptions:viewOpt];
+    [self config:controller viewOptions:viewOpt eagerly:NO];
     void (^bringFoundToFront)() = ^{
         UIViewController *current = controller;
         while (current.parentViewController) {
@@ -96,7 +96,7 @@ static const char kPresenterKey = 0;
           controller = [[UINavigationController alloc] initWithRootViewController:controller];
         }
         [GDDViewControllerHelper replaceRootViewController:controller];
-        [self config:controller viewOptions:viewOpt];
+        [self config:controller viewOptions:viewOpt eagerly:NO];
         if (!controller.isViewLoaded) {
           [controller view]; // force viewDidLoad to be called
         }
@@ -123,7 +123,7 @@ static const char kPresenterKey = 0;
   if (!forcePresent && top.navigationController) {
     [top.navigationController pushViewController:controller animated:YES];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self config:controller viewOptions:viewOpt];
+        [self config:controller viewOptions:viewOpt eagerly:NO];
         if (!controller.isViewLoaded) {
           [controller view]; // force viewDidLoad to be called
         }
@@ -132,10 +132,11 @@ static const char kPresenterKey = 0;
     return;
   }
 
+  [self config:controller viewOptions:viewOpt eagerly:YES];
   [top presentViewController:forcePresentWithoutNav ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
-      [self config:controller viewOptions:viewOpt];
       messageHandler();
   }];
+  [self config:controller viewOptions:nil eagerly:NO];
 }
 
 + (void)replaceRootViewController:(UIViewController *)controller {
@@ -161,7 +162,7 @@ static const char kPresenterKey = 0;
   return child ? [self findTopViewController:child] : parent;
 }
 
-+ (void)config:(UIViewController *)controller viewOptions:(GDDPBViewOption *)viewOpt {
++ (void)config:(UIViewController *)controller viewOptions:(GDDPBViewOption *)viewOpt eagerly:(BOOL)eagerly {
   GDDPBViewOption *viewOption = controller.viewOption;
   if (viewOpt) {
     [viewOption mergeFrom:viewOpt];
@@ -170,6 +171,9 @@ static const char kPresenterKey = 0;
   enum GDPBBool statusBar = viewOption.statusBar;
   if (statusBar != GDPBBool_Default && GDPBBool_IsValidValue(statusBar)) {
     [controller setNeedsStatusBarAppearanceUpdate];
+  }
+  if (eagerly) {
+    return; // 在 presentViewController 前设置 navBar 无效
   }
   enum GDPBBool navBar = viewOption.navBar;
   if (navBar != GDPBBool_Default && GDPBBool_IsValidValue(navBar)) {
