@@ -33,10 +33,9 @@ static const char kPresenterKey = 0;
   if (!controller) {
     return;
   }
+  id <GDDPresenter> presenter = [self findOrCreatePresenterForViewController:controller];
   void (^messageHandler)() = ^{
-      id <GDDPresenter> presenter = [self findOrCreatePresenterForViewController:controller];
       if (presenter) {
-        NSParameterAssert([controller conformsToProtocol:@protocol(GDDView)]);
         [presenter update:(id <GDDView>) controller withData:message.payload];
       } else {
         [controller handleMessage:message];
@@ -352,7 +351,7 @@ static const char kPresenterKey = 0;
   if ([controller respondsToSelector:@selector(presenter)]) {
     return [(UIViewController <GDDView> *) controller presenter];
   }
-  id <GDDPresenter> presenter = objc_getAssociatedObject(self, &kPresenterKey);
+  id <GDDPresenter> presenter = objc_getAssociatedObject(controller, &kPresenterKey);
   if (presenter) {
     return presenter;
   }
