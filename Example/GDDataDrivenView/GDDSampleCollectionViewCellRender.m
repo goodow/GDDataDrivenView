@@ -23,8 +23,4 @@
   return self;
 }
 
-- (Class <GDDPresenter>)presenterClass {
-  return nil;
-}
-
 @end

@@ -6,7 +6,7 @@
 
 @class GDDModel;
 @protocol GDDRender;
-@protocol GDDPresenter;
+@protocol GDDRenderPresenter;
 
 @interface GDDBaseViewDataSource : NSObject
 
@@ -36,5 +36,5 @@
 
 #pragma mark Display model
 
-- (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(id <GDDRender>)render;
+- (id <GDDRenderPresenter>)reloadModel:(GDDModel *)model forRender:(id <GDDRender>)render;
 @end

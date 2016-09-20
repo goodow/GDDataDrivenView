@@ -5,11 +5,7 @@
 #import <UIKit/UIKit.h>
 #import "GDDBaseViewDataSource.h"
 
-@class GDDModel;
-@protocol GDDRender;
-@protocol GDCMessage;
 @class GDDTableViewLayout;
-@protocol GDDPresenter;
 
 #define SelfSizing_UpdateConstraints 1
 //static const char kPresenterKey2 = 0;

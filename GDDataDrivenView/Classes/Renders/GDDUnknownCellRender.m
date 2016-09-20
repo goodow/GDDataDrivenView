@@ -77,7 +77,7 @@
 //  [self updateConstraints];
 }
 
-- (id <GDDPresenter>)presenter {
+- (id <GDDRenderPresenter>)presenter {
   return self;
 }
 

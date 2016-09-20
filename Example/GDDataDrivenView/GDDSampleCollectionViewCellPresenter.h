@@ -4,8 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GDDPresenter.h"
+#import "GDDRenderPresenter.h"
 
-
-@interface GDDSampleCollectionViewCellPresenter : NSObject <GDDPresenter>
+@interface GDDSampleCollectionViewCellPresenter : NSObject <GDDRenderPresenter>
 @end

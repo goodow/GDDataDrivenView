@@ -4,8 +4,9 @@
 
 #import <Foundation/Foundation.h>
 #import "GDDRender.h"
+#import "GDDRenderPresenter.h"
 
-@interface GDDUnknownCellRender : UITableViewCell <GDDRender, GDDPresenter>
+@interface GDDUnknownCellRender : UITableViewCell <GDDRender, GDDRenderPresenter>
 
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 

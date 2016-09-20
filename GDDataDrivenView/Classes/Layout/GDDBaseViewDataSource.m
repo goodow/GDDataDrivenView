@@ -7,6 +7,7 @@
 #import "GDDModel.h"
 #import "NSObject+GDChannel.h"
 #import "GDDRender.h"
+#import "GDDRenderPresenter.h";
 
 // The address of this variable is used as a key for obj_getAssociatedObject.
 static const char kPresenterKey = 0;
@@ -141,8 +142,8 @@ static const char kPresenterKey = 0;
   [_models removeAllObjects];
 }
 
-- (id <GDDPresenter>)reloadModel:(GDDModel *)model forRender:(NSObject <GDDRender> *)render {
-  id <GDDPresenter> presenter;
+- (id <GDDRenderPresenter>)reloadModel:(GDDModel *)model forRender:(NSObject <GDDRender> *)render {
+  id <GDDRenderPresenter> presenter;
   if ([render respondsToSelector:@selector(presenter)]) {
     presenter = render.presenter;
   } else {
@@ -162,7 +163,7 @@ static const char kPresenterKey = 0;
       presenter = [_presentersByClass objectForKey:presenterClass];
       if (!presenter) {
         if ([presenterClass instancesRespondToSelector:@selector(initWithOwner:)]) {
-          presenter = [(id <GDDPresenter>) [presenterClass alloc] initWithOwner:_owner];
+          presenter = [(id <GDDRenderPresenter>) [presenterClass alloc] initWithOwner:_owner];
         } else {
           presenter = [[presenterClass alloc] init];
         }

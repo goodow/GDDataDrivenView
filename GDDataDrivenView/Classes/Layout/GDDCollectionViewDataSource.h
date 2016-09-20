@@ -5,9 +5,6 @@
 #import <UIKit/UIKit.h>
 #import "GDDBaseViewDataSource.h"
 
-@protocol GDDRender;
-@class GDDModel;
-@protocol GDDPresenter;
 @class GDDCollectionViewLayout;
 
 @interface GDDCollectionViewDataSource : GDDBaseViewDataSource <UICollectionViewDataSource>

@@ -7,5 +7,4 @@
 
 @protocol GDDRender <GDDView>
 
-
 @end
