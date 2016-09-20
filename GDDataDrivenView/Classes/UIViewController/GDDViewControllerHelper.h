@@ -8,6 +8,7 @@
 #import "GoodowBool.pbobjc.h"
 #import "GoodowExtrasOption.pbobjc.h"
 #import "UIViewController+GDDataDrivenView.h"
+#import "GDDPresenter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @interface GDDViewControllerHelper : NSObject
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIViewController *)findViewController:(Class)viewControllerClass;
 
++ (id <GDDPresenter>)findOrCreatePresenterForViewController:(UIViewController *)controller;
 
 + (void)aspect_hookSelector;
 @end
