@@ -7,6 +7,7 @@
 #import "NSObject+GDChannel.h"
 #import "GDDTableViewLayout.h"
 #import "GDDRender.h"
+#import <objc/runtime.h>
 
 @interface GDDTableViewDataSource ()
 @property(nonatomic, weak) GDDTableViewLayout *layout;
@@ -39,14 +40,21 @@
   // Configure the cell for this indexPath
   [super reloadModel:model forRender:cell];
 
-  // Make sure the constraints have been added to this cell, since it may have just been created from scratch
 #if SelfSizing_UpdateConstraints
+  // Make sure the constraints have been added to this cell, since it may have just been created from scratch
   [cell setNeedsUpdateConstraints];
   [cell updateConstraintsIfNeeded];
 #else
-  //  objc_setAssociatedObject(model, &kPresenterKey2, cell, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    model.render = cell;
+  objc_setAssociatedObject(model, &kRenderKey, cell, OBJC_ASSOCIATION_ASSIGN);
 #endif
   return cell;
 }
+
+#if !(SelfSizing_UpdateConstraints)
+static const char kRenderKey = 0;
+- (UITableViewCell *)renderForModel:(GDDModel *)model {
+  return objc_getAssociatedObject(model, &kRenderKey);
+}
+#endif
+
 @end

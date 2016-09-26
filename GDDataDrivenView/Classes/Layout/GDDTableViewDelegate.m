@@ -24,12 +24,10 @@
 
 #if !(SelfSizing_UpdateConstraints)
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
   GDDModel *model = [_dataSource modelForIndexPath:indexPath];
-//  cell = cell ?: objc_getAssociatedObject(model, &kPresenterKey2);
-  cell = cell ?: model.render;
+  UITableViewCell *cell = [_dataSource renderForModel:model];
   if (!cell) {
-    return 0;
+    return 1;
   }
   return [self fd_systemFittingHeightForConfiguratedCell:cell tableView:tableView];
 }

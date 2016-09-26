@@ -3,7 +3,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 @protocol GDDView;
 
 @protocol GDDPresenter

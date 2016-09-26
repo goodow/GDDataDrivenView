@@ -12,7 +12,4 @@
 
 - (instancetype)initWithData:(id <GDCSerializable>)data withId:(NSString *)mid withNibNameOrRenderClass:(NSString *)nibNameOrRenderClass;
 
-#if !(SelfSizing_UpdateConstraints)
-//@property(nonatomic, weak) UIView *render;
-#endif
 @end
