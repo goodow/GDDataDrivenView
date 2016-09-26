@@ -4,7 +4,7 @@
 
 #import "GDDBaseViewDataSource.h"
 #import <objc/runtime.h>
-#import "GDDModel.h"
+#import "GDDRenderModel.h"
 #import "NSObject+GDChannel.h"
 #import "GDDRender.h"
 #import "GDDRenderPresenter.h";
@@ -16,7 +16,7 @@ static const char kPresenterKey = 0;
 @end
 
 @implementation GDDBaseViewDataSource {
-  NSMutableArray<NSMutableArray<GDDModel *> *> *_models;
+  NSMutableArray<NSMutableArray<GDDRenderModel *> *> *_models;
   NSMutableDictionary<NSString *, UINib *> *_registeredNibsForCellReuseIdentifier;
   NSMutableDictionary<NSString *, Class> *_registeredClassForCellReuseIdentifier;
   __weak id _owner;
@@ -39,14 +39,14 @@ static const char kPresenterKey = 0;
 
 #pragma mark Read model
 
-- (GDDModel *)modelForIndexPath:(NSIndexPath *)indexPath {
+- (GDDRenderModel *)modelForIndexPath:(NSIndexPath *)indexPath {
   int hasHeading = [self _sectionHasHeading:indexPath.section] ? 1 : 0;
   return _models[indexPath.section][indexPath.item + hasHeading];
 }
 
-- (GDDModel *)modelForId:(NSString *)mid {
+- (GDDRenderModel *)modelForId:(NSString *)mid {
   for (NSArray *models in _models) {
-    for (GDDModel *model in models) {
+    for (GDDRenderModel *model in models) {
       if ([model.mid isEqualToString:mid]) {
         return model;
       }
@@ -61,7 +61,7 @@ static const char kPresenterKey = 0;
     NSArray *section = _models[sectionIndex];
     int hasHeading = [self _sectionHasHeading:sectionIndex] ? 1 : 0;
     for (NSUInteger itemIndex = hasHeading ? 1 : 0; itemIndex < section.count; itemIndex++) {
-      GDDModel *model = section[itemIndex];
+      GDDRenderModel *model = section[itemIndex];
       if ([model.mid isEqualToString:mid]) {
         return [NSIndexPath indexPathForItem:itemIndex - hasHeading inSection:sectionIndex];
       }
@@ -70,12 +70,12 @@ static const char kPresenterKey = 0;
   return nil;
 }
 
-- (GDDModel *)headerModelForSection:(NSInteger)section {
+- (GDDRenderModel *)headerModelForSection:(NSInteger)section {
   NSInteger sectionCount = [self numberOfSections];
   if (section >= sectionCount || _models[section].count == 0) {
     return nil;
   }
-  GDDModel *model = _models[section][0];
+  GDDRenderModel *model = _models[section][0];
   if (!model.renderType && !model.mid) {
     return model;
   }
@@ -100,14 +100,14 @@ static const char kPresenterKey = 0;
 
 #pragma mark Change model
 
-- (void)insertModels:(NSArray<GDDModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+- (void)insertModels:(NSArray<GDDRenderModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
   int i = 0;
   for (NSIndexPath *indexPath in indexPaths) {
     if (indexPath.section == [self numberOfSections]) {
       [_models addObject:@[].mutableCopy];
     }
     int hasHeading = [self _sectionHasHeading:indexPath.section] ? 1 : 0;
-    GDDModel *model = models[i++];
+    GDDRenderModel *model = models[i++];
     [_models[indexPath.section] insertObject:model atIndex:indexPath.item + hasHeading];
     NSString *name = model.renderType;
     if (_registeredNibsForCellReuseIdentifier[name] || _registeredClassForCellReuseIdentifier[name]) {
@@ -142,7 +142,7 @@ static const char kPresenterKey = 0;
   [_models removeAllObjects];
 }
 
-- (id <GDDRenderPresenter>)reloadModel:(GDDModel *)model forRender:(NSObject <GDDRender> *)render {
+- (id <GDDRenderPresenter>)reloadModel:(GDDRenderModel *)model forRender:(NSObject <GDDRender> *)render {
   id <GDDRenderPresenter> presenter;
   if ([render respondsToSelector:@selector(presenter)]) {
     presenter = render.presenter;

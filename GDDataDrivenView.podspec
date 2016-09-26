@@ -43,10 +43,10 @@ TODO: Add long description of the pod here.
     sp.source_files = 'GDDataDrivenView/Classes/MVP/**/*'
   end
 
-  s.subspec 'Core' do |sp|
+  s.subspec 'DataDrivenRender' do |sp|
     sp.dependency 'GDDataDrivenView/MVP'
     sp.dependency 'GDChannel', '~> 0.6'
-    sp.source_files = 'GDDataDrivenView/Classes/Model/**/*', 'GDDataDrivenView/Classes/Layout/**/*', 'GDDataDrivenView/Classes/Renders/**/*'
+    sp.source_files = 'GDDataDrivenView/Classes/Layout/**/*', 'GDDataDrivenView/Classes/Renders/**/*'
   end
 
   s.subspec 'UIViewController' do |sp|
@@ -63,5 +63,11 @@ TODO: Add long description of the pod here.
 
     sp.requires_arc = false
     sp.source_files = 'GDDataDrivenView/Generated/**/*'
+  end
+
+  s.subspec 'Model' do |sp|
+    sp.dependency 'Protobuf', '~> 3.0'
+
+    sp.source_files = 'GDDataDrivenView/Classes/Model/**/*'
   end
 end

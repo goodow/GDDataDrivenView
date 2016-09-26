@@ -9,7 +9,7 @@
 #import "GDDCollectionViewLayout.h"
 #import "GDDSampleCollectionViewCellRender.h"
 #import "NSObject+GDChannel.h"
-#import "GDDModel.h"
+#import "GDDRenderModel.h"
 
 @interface GDDCollectionViewEmbeddedInTableViewCellPresenter ()
 @property(nonatomic, weak) GDDViewController *owner;
@@ -31,9 +31,9 @@
       render.collectionView withTopic:layoutTopic withOwner:self.owner];
 
   NSArray *images = data[@"images"];
-  NSMutableArray<GDDModel *> *models = @[].mutableCopy;
+  NSMutableArray<GDDRenderModel *> *models = @[].mutableCopy;
   for (NSString *image in images) {
-    [models addObject:[[GDDModel alloc] initWithData:image withId:nil
+    [models addObject:[[GDDRenderModel alloc] initWithData:image withId:nil
                             withNibNameOrRenderClass:NSStringFromClass(GDDSampleCollectionViewCellRender.class)]];
   }
   [self.bus publishLocal:[self.layout topicForSection:0] payload:models];

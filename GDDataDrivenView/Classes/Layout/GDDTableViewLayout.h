@@ -3,7 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GDDModel.h"
+#import "GDDRenderModel.h"
 #import "GDDBaseViewLayout.h"
 
 @interface GDDTableViewLayout : GDDBaseViewLayout

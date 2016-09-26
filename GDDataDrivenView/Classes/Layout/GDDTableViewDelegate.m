@@ -3,7 +3,7 @@
 //
 
 #import "GDDTableViewDelegate.h"
-#import "GDDModel.h"
+#import "GDDRenderModel.h"
 #import "GDDTableViewDataSource.h"
 #import "NSObject+GDChannel.h"
 #import <objc/runtime.h>

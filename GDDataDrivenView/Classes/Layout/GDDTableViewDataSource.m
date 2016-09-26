@@ -3,7 +3,7 @@
 //
 
 #import "GDDTableViewDataSource.h"
-#import "GDDModel.h"
+#import "GDDRenderModel.h"
 #import "NSObject+GDChannel.h"
 #import "GDDTableViewLayout.h"
 #import "GDDRender.h"
@@ -35,7 +35,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  GDDModel *model = [super modelForIndexPath:indexPath];
+  GDDRenderModel *model = [super modelForIndexPath:indexPath];
   UITableViewCell <GDDRender> *cell = [tableView dequeueReusableCellWithIdentifier:model.renderType];
   // Configure the cell for this indexPath
   [super reloadModel:model forRender:cell];

@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class GDDModel;
+@class GDDRenderModel;
 @protocol GDDRender;
 @protocol GDDRenderPresenter;
 
@@ -16,13 +16,13 @@
 
 #pragma mark Read model
 
-- (GDDModel *)modelForIndexPath:(NSIndexPath *)indexPath;
+- (GDDRenderModel *)modelForIndexPath:(NSIndexPath *)indexPath;
 
-- (GDDModel *)modelForId:(NSString *)mid;
+- (GDDRenderModel *)modelForId:(NSString *)mid;
 - (NSIndexPath *)indexPathForId:(NSString *)mid;
 
 // Returns the model describing the section's header, or nil if there is no header.
-- (GDDModel *)headerModelForSection:(NSInteger)section;
+- (GDDRenderModel *)headerModelForSection:(NSInteger)section;
 
 - (NSInteger)numberOfSections;
 
@@ -30,11 +30,11 @@
 
 #pragma mark Change model
 
-- (void)insertModels:(NSArray<GDDModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
+- (void)insertModels:(NSArray<GDDRenderModel *> *)models atIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 
 - (void)clearModels;
 
 #pragma mark Display model
 
-- (id <GDDRenderPresenter>)reloadModel:(GDDModel *)model forRender:(id <GDDRender>)render;
+- (id <GDDRenderPresenter>)reloadModel:(GDDRenderModel *)model forRender:(id <GDDRender>)render;
 @end

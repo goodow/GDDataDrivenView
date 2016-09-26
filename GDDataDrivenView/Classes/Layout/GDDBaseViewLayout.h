@@ -4,14 +4,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class GDDModel;
+@class GDDRenderModel;
 @class GDDBaseViewDataSource;
 
 @interface GDDBaseViewLayout : NSObject
 
 @property(nonatomic, readonly) NSString *modelsTopic;
 @property(nonatomic, readonly) NSString *sectionsTopic;
-@property(nonatomic) NSMutableArray<GDDModel *> *models;
+@property(nonatomic) NSMutableArray<GDDRenderModel *> *models;
 @property(nonatomic) GDDBaseViewDataSource *dataSource;
 @property(nonatomic, weak) UIScrollView *view;
 

@@ -22,7 +22,7 @@
   __weak GDDViewController *weakSelf = self;
   NSString *layoutTopic = [self.topic stringByAppendingPathComponent:@"layouts/xyzTable"];
   self.layout = [[GDDTableViewLayout alloc] initWithTableView:self.tableView withTopic:layoutTopic withOwner:self];
-//  self.layout.infiniteScrollingHandler = ^(NSArray<GDDModel *> *models, void (^loadComplete)(BOOL)) {
+//  self.layout.infiniteScrollingHandler = ^(NSArray<GDDRenderModel *> *models, void (^loadComplete)(BOOL)) {
 //      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
 //          [weakSelf appendToLastRow:models.lastObject];
 //          // 当没有了下一页数据时, 调用loadComplete(NO)
@@ -38,10 +38,10 @@
   [super viewDidLoad];
 }
 
-- (void)appendToLastRow:(GDDModel *)model {
+- (void)appendToLastRow:(GDDRenderModel *)model {
   GDCOptions *opt = [[GDCOptions alloc] init];
   opt.patch = YES;
-  GDDModel *copy = [[GDDModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
+  GDDRenderModel *copy = [[GDDRenderModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
   [NSObject.bus publishLocal:[self.layout topicForSection:0] payload:@[copy] options:opt];
 }
 
@@ -59,10 +59,10 @@
   });
 }
 
-+ (NSArray<GDDModel *> *)createModelsFromJsonArray:(NSArray *)array {
-  NSMutableArray<GDDModel *> *models = [NSMutableArray array];
++ (NSArray<GDDRenderModel *> *)createModelsFromJsonArray:(NSArray *)array {
+  NSMutableArray<GDDRenderModel *> *models = [NSMutableArray array];
   for (NSDictionary *json in array) {
-    GDDModel *model = [[GDDModel alloc] initWithData:json[@"data"] withId:json[@"mid"] withNibNameOrRenderClass:json[@"renderType"]];
+    GDDRenderModel *model = [[GDDRenderModel alloc] initWithData:json[@"data"] withId:json[@"mid"] withNibNameOrRenderClass:json[@"renderType"]];
     [models addObject:model];
   }
   return models;

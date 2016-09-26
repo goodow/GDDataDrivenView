@@ -4,11 +4,11 @@
 
 @import UIKit;
 
-@class GDDModel;
+@class GDDRenderModel;
 
 @interface GDDViewController : UITableViewController
 
 @property NSString *topic;
 
-- (void)appendToLastRow:(GDDModel *)model;
+- (void)appendToLastRow:(GDDRenderModel *)model;
 @end

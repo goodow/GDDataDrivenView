@@ -3,7 +3,7 @@
 //
 
 #import "GDDBaseViewLayout.h"
-#import "GDDModel.h"
+#import "GDDRenderModel.h"
 #import "GDCMessage.h"
 #import "GDCMessageConsumer.h"
 #import "NSObject+GDChannel.h"
@@ -69,9 +69,9 @@ static NSString *const sectionsPath = @"sections";
 
 #pragma mark Change model
 
-- (void)reloadModels:(NSArray<GDDModel *> *)models forSection:(NSInteger)section {
+- (void)reloadModels:(NSArray<GDDRenderModel *> *)models forSection:(NSInteger)section {
   self.models = models;
-  NSArray<GDDModel *> *patches = [self diffMatch];
+  NSArray<GDDRenderModel *> *patches = [self diffMatch];
   if (patches) {
     [self appendNewModels:patches];
     return;
@@ -92,7 +92,7 @@ static NSString *const sectionsPath = @"sections";
   });
 }
 
-- (NSArray<GDDModel *> *)diffMatch { //  oldRowCount:(int *)oldRowCount {
+- (NSArray<GDDRenderModel *> *)diffMatch { //  oldRowCount:(int *)oldRowCount {
   NSInteger sectionsCount = self.dataSource.numberOfSections;
   NSInteger lastSection = sectionsCount ? sectionsCount - 1 : 0;
   NSInteger rowsInLastSection = sectionsCount ? [self.dataSource numberOfItemsInSection:lastSection] : 0;
@@ -103,7 +103,7 @@ static NSString *const sectionsPath = @"sections";
     return nil;
   }
   for (int row = rowsInLastSection - 1; row >= 0; row--) {
-    GDDModel *model = [self.dataSource modelForIndexPath:[NSIndexPath indexPathForRow:row inSection:lastSection]];
+    GDDRenderModel *model = [self.dataSource modelForIndexPath:[NSIndexPath indexPathForRow:row inSection:lastSection]];
     if (![model isEqual:self.models[row]]) {
       return nil;
     }
@@ -111,7 +111,7 @@ static NSString *const sectionsPath = @"sections";
   return [self.models subarrayWithRange:NSMakeRange(rowsInLastSection, self.models.count - rowsInLastSection)];
 }
 
-- (void)appendNewModels:(NSArray<GDDModel *> *)newModels {
+- (void)appendNewModels:(NSArray<GDDRenderModel *> *)newModels {
   if (newModels.count == 0) {
     return;
   }
@@ -157,7 +157,7 @@ static NSString *const sectionsPath = @"sections";
 - (void)reloadModel:(id <GDCMessage>)msg forId:(NSString *)mid {
   id patch = msg.payload;
   NSIndexPath *indexPath = [self.dataSource indexPathForId:mid];
-  GDDModel *model = [self.dataSource modelForIndexPath:indexPath];
+  GDDRenderModel *model = [self.dataSource modelForIndexPath:indexPath];
   if ([patch isKindOfClass:NSDictionary.class]) {
     [model mergeFromJson:patch];
   } else {

@@ -5,7 +5,7 @@
 #import "GDDCollectionViewDataSource.h"
 #import "GDDRender.h"
 #import "GDDCollectionViewLayout.h"
-#import "GDDModel.h"
+#import "GDDRenderModel.h"
 
 @interface GDDCollectionViewDataSource ()
 @property(nonatomic, weak) GDDCollectionViewLayout *layout;
@@ -32,7 +32,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-  GDDModel *model = [super modelForIndexPath:indexPath];
+  GDDRenderModel *model = [super modelForIndexPath:indexPath];
   UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:model.renderType forIndexPath:indexPath];
   // Configure the cell for this indexPath
   [super reloadModel:model forRender:cell];

@@ -5,20 +5,23 @@ PODS:
     - Expecta (~> 1.0)
     - FBSnapshotTestCase/Core (~> 2.0)
     - Specta (~> 1.0)
-  - FBSnapshotTestCase/Core (2.1.2)
+  - FBSnapshotTestCase/Core (2.1.3)
   - GDChannel (0.6.0):
     - Mantle (~> 2.0.6)
     - MQTTKit (~> 0.1.0)
     - Protobuf (~> 3.0)
   - GDDataDrivenView (0.1.0):
-    - GDDataDrivenView/Core (= 0.1.0)
+    - GDDataDrivenView/DataDrivenRender (= 0.1.0)
     - GDDataDrivenView/Generated (= 0.1.0)
+    - GDDataDrivenView/Model (= 0.1.0)
     - GDDataDrivenView/MVP (= 0.1.0)
     - GDDataDrivenView/UIViewController (= 0.1.0)
-  - GDDataDrivenView/Core (0.1.0):
+  - GDDataDrivenView/DataDrivenRender (0.1.0):
     - GDChannel (~> 0.6)
     - GDDataDrivenView/MVP
   - GDDataDrivenView/Generated (0.1.0):
+    - Protobuf (~> 3.0)
+  - GDDataDrivenView/Model (0.1.0):
     - Protobuf (~> 3.0)
   - GDDataDrivenView/MVP (0.1.0)
   - GDDataDrivenView/UIViewController (0.1.0):
@@ -30,7 +33,7 @@ PODS:
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
   - MQTTKit (0.1.0)
-  - Protobuf (3.0.0)
+  - Protobuf (3.0.2)
   - Specta (1.0.5)
 
 DEPENDENCIES:
@@ -55,12 +58,12 @@ SPEC CHECKSUMS:
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
-  FBSnapshotTestCase: 918c55861356ee83aee7843d759f55a18ff6982b
+  FBSnapshotTestCase: 4607968e0dfa1e2772ec0d0098354f8b870c5753
   GDChannel: e26b61a1f156eb4b657516d80d90bdad2db46c56
-  GDDataDrivenView: fd8fc27a1c1e55c6284eaa2209ee734ef4f3daa1
+  GDDataDrivenView: 910fbd4b636828dee5424ad0f4460d8c75b7db7c
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
-  Protobuf: c032ce1bdf7a266acfd640fbfd8bdb166127c7f5
+  Protobuf: 6d10f661ec22108e47dea70446ec89e00584fd42
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
 
 PODFILE CHECKSUM: 19eae2f29ee302412e409736c977a408d65a641e
