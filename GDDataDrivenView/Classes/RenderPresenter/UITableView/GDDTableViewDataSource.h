@@ -14,6 +14,6 @@
 - (instancetype)initWithTableView:(UITableView *)tableView withLayout:(GDDTableViewLayout *)layout withOwner:(id)owner;
 
 #if !(SelfSizing_UpdateConstraints)
-- (UITableViewCell *)renderForModel:(GDDModel *)model;
+- (UITableViewCell *)renderForModel:(GDDRenderModel *)model;
 #endif
 @end

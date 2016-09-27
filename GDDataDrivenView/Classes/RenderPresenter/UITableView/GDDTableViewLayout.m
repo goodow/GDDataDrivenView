@@ -41,8 +41,4 @@
   return self;
 }
 
-//-(UITableView *)tableView {
-//  return super.view;
-//}
-
 @end

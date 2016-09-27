@@ -52,7 +52,7 @@
 
 #if !(SelfSizing_UpdateConstraints)
 static const char kRenderKey = 0;
-- (UITableViewCell *)renderForModel:(GDDModel *)model {
+- (UITableViewCell *)renderForModel:(GDDRenderModel *)model {
   return objc_getAssociatedObject(model, &kRenderKey);
 }
 #endif

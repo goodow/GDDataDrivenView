@@ -4,8 +4,9 @@
 
 #import <Foundation/Foundation.h>
 #import "GDCSerializable.h"
+#import "GDDModel.h"
 
-@interface GDDRenderModel : NSObject <GDCSerializable>
+@interface GDDRenderModel : GDDModel <GDCSerializable>
 @property(nonatomic, readonly) __kindof id <GDCSerializable> data;
 @property(nonatomic, readonly) NSString *mid;
 @property(nonatomic, readonly) NSString *renderType;
