@@ -39,8 +39,7 @@
 }
 
 - (void)appendToLastRow:(GDDRenderModel *)model {
-  GDCOptions *opt = [[GDCOptions alloc] init];
-  opt.patch = YES;
+  GDCOptions *opt = GDCOptions.new.patch(YES);
   GDDRenderModel *copy = [[GDDRenderModel alloc] initWithData:model.data withId:nil withNibNameOrRenderClass:model.renderType];
   [NSObject.bus publishLocal:[self.layout topicForSection:0] payload:@[copy] options:opt];
 }

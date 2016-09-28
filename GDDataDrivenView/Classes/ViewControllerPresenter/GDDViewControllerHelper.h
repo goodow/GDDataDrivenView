@@ -15,16 +15,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIViewController *)topViewController;
 
-+ (UIViewController *)backViewController;
-
 + (void)show:(UIViewController *)controller message:(id <GDCMessage>)message;
-
-+ (void)config:(UIViewController *)controller viewOptions:(GDDPBViewOption *)viewOpt eagerly:(BOOL)eagerly;
 
 + (UIViewController *)findViewController:(Class)viewControllerClass;
 
-+ (id <GDDPresenter>)findOrCreatePresenterForViewController:(UIViewController *)controller;
-
 + (void)aspect_hookSelector;
+
++ (void)up:(id <GDCMessage>)message;
++ (void)option:(id <GDCMessage>)message;
++ (void)load:(id <GDCMessage>)message withClass:(Class)clz;
+
 @end
 NS_ASSUME_NONNULL_END

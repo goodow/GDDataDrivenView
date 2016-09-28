@@ -5,8 +5,8 @@
 #import "GDDViewControllerHelper.h"
 #import <objc/runtime.h>
 #import "Aspects.h"
-#import "GDDPresenter.h"
 #import "GDDView.h"
+#import "GDCOptions+ReadAccess.h"
 
 // The address of this variable is used as a key for obj_getAssociatedObject.
 static const char kPresenterKey = 0;
@@ -41,7 +41,7 @@ static const char kPresenterKey = 0;
         [controller handleMessage:message];
       }
   };
-  GDDPBExtrasOption *extras = message.options.extras;
+  GDDPBExtrasOption *extras = message.options.getExtras;
   GDDPBViewOption *viewOpt = extras.hasViewOpt ? extras.viewOpt : nil;
   if (viewOpt.launchMode == GDDPBLaunchMode_None) {
     messageHandler();
@@ -374,6 +374,40 @@ static const char kPresenterKey = 0;
   }
   objc_setAssociatedObject(controller, &kPresenterKey, presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   return presenter;
+}
+
++ (void)up:(id <GDCMessage>)message {
+  [GDDViewControllerHelper show:GDDViewControllerHelper.backViewController ?: GDDViewControllerHelper.topViewController message:message];
+}
+
++ (void)option:(id <GDCMessage>)message {
+  UIViewController *topViewController = GDDViewControllerHelper.topViewController;
+  GDDPBViewOption *viewOpt = ((GDDPBExtrasOption *) message.options.getExtras).viewOpt;
+  [self config:topViewController viewOptions:viewOpt eagerly:NO];
+  if (viewOpt.needsRefresh) {
+    id <GDDPresenter> presenter = [self findOrCreatePresenterForViewController:topViewController];
+    if (presenter) {
+      [presenter update:topViewController withData:nil];
+    }
+  }
+}
+
++ (void)load:(id <GDCMessage>)message withClass:(Class)clz {
+  if ([clz isSubclassOfClass:UIViewController.class]) {
+    GDDPBExtrasOption *extrasOpt = message.options.getExtras;
+    UIViewController *controller = extrasOpt.viewOpt.launchMode == GDDPBLaunchMode_Standard ? nil : [self findViewController:clz];
+    if (!controller) {
+      controller = [clz instancesRespondToSelector:@selector(initWithPayload:)] ? [[clz alloc] initWithPayload:message.payload] : [[clz alloc] init];
+    }
+    [self show:controller message:message];
+    return;
+  }
+  if ([clz isSubclassOfClass:UIView.class]) {
+    UIView *view = [clz instancesRespondToSelector:@selector(initWithPayload:)] ? [[clz alloc] initWithPayload:message.payload] : [[clz alloc] init];
+    [self.topViewController.view addSubview:view];
+    [view handleMessage:message];
+    return;
+  }
 }
 
 @end
