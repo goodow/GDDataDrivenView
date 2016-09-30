@@ -1,4 +1,3 @@
-#import <Foundation/Foundation.h>
 #import "GDDRpc.h"
 
 @interface GDDLocalRpc<__covariant ObjectType> : NSObject <GDDRpc>

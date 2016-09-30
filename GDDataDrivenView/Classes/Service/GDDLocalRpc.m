@@ -2,7 +2,7 @@
 
 @implementation GDDLocalRpc {
   id _result;
-  id _error;
+  NSError *_error;
 
   void (^_success)(id);
 

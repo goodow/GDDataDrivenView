@@ -66,8 +66,6 @@ TODO: Add long description of the pod here.
   end
 
   s.subspec 'Model' do |sp|
-    sp.dependency 'Protobuf', '~> 3.0'
-
     sp.source_files = 'GDDataDrivenView/Classes/Model/**/*', 'GDDataDrivenView/Classes/Service/**/*'
   end
 end
