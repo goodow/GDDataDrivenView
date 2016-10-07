@@ -28,7 +28,7 @@ message ViewOption {
   uint32 supported_interface_orientations = 12; // UIInterfaceOrientationMask
   goodow.protobuf.Bool autorotate = 13; // 是否应该自动旋转
 
-  bool needsRefresh = 21;
+  bool needs_refresh = 21;
   bool attempt_rotation_to_device_orientation = 22;
   uint32 device_orientation = 23; // 更改设备的朝向 UIDeviceOrientation
   goodow.protobuf.Bool tool_bar = 24;
