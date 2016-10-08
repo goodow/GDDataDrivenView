@@ -2,7 +2,7 @@
 // Created by Larry Tin on 10/7/16.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "GoodowExtrasOption.pbobjc.h"
 #import "GoodowBool.pbobjc.h"
 

@@ -1,8 +1,3 @@
-//
-// Created by Larry Tin on 16/9/7.
-// Copyright (c) 2016 Tencent. All rights reserved.
-//
-
 #import <objc/runtime.h>
 #import "UIViewController+GDDataDrivenView.h"
 #import "GoodowExtrasOption.pbobjc.h"

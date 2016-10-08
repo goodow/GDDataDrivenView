@@ -18,8 +18,7 @@ PODS:
     - GDDataDrivenView/ViewControllerPresenter (= 0.1.0)
   - GDDataDrivenView/Generated (0.1.0):
     - Protobuf (~> 3.0)
-  - GDDataDrivenView/Model (0.1.0):
-    - Protobuf (~> 3.0)
+  - GDDataDrivenView/Model (0.1.0)
   - GDDataDrivenView/MVP (0.1.0)
   - GDDataDrivenView/RenderPresenter (0.1.0):
     - GDChannel (~> 0.6)
@@ -60,7 +59,7 @@ SPEC CHECKSUMS:
   Expecta+Snapshots: c343f410c7a6392f3e22e78f94c44b6c0749a516
   FBSnapshotTestCase: 4607968e0dfa1e2772ec0d0098354f8b870c5753
   GDChannel: e26b61a1f156eb4b657516d80d90bdad2db46c56
-  GDDataDrivenView: d153713e54105c682d3f7fcf6847f6d2071a250e
+  GDDataDrivenView: 5771b14137b23e19c7cdecdd078ebf8ab7aa2478
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MQTTKit: a4e6b8aa92db1aeae917d2b773fd72a7749937c4
   Protobuf: 6d10f661ec22108e47dea70446ec89e00584fd42
