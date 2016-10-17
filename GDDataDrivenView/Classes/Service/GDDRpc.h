@@ -6,9 +6,6 @@
 
 - (id <GDDRpc> (^)(void (^)(NSError *)))failure;
 
-- (void)load;
-
-@optional
-- (void (^)(id cursor))loadMore;
+- (void (^)(id query))load;
 
 @end

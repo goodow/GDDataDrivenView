@@ -36,13 +36,15 @@
   };
 }
 
-- (void)load {
-  if (_error) {
-    _failure ? _failure(_error) : nil;
-    return;
-  }
+- (void (^)(id query))load {
+  return ^(id query) {
+      if (_error) {
+        _failure ? _failure(_error) : nil;
+        return;
+      }
 
-  _success ? _success(_result) : nil;
+      _success ? _success(_result) : nil;
+  };
 }
 
 @end
