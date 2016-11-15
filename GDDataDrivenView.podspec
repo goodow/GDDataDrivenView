@@ -52,7 +52,6 @@ TODO: Add long description of the pod here.
   s.subspec 'ViewControllerPresenter' do |sp|
     sp.dependency 'GDDataDrivenView/MVP'
     sp.dependency 'GDDataDrivenView/Generated'
-    sp.dependency 'GDChannel', '~> 0.6'
     sp.dependency 'Aspects', '~> 1.4.1'
 
     sp.source_files = 'GDDataDrivenView/Classes/ViewControllerPresenter/**/*'

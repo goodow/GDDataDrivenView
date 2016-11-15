@@ -4,7 +4,6 @@
 
 #import "GDDViewControllerTransition.h"
 #import <objc/runtime.h>
-#import "GDCMessageHandler.h"
 
 // The address of this variable is used as a key for obj_getAssociatedObject.
 static const char kPresenterKey = 0;
@@ -36,7 +35,7 @@ static const char kPresenterKey = 0;
 
 - (id <GDDTransitionBuilder> (^)(Class viewControllerClass))to {
   return ^id <GDDTransitionBuilder>(Class viewControllerClass) {
-      _viewController = [viewControllerClass instancesRespondToSelector:@selector(initWithPayload:)] ? [[viewControllerClass alloc] initWithPayload:_data] : [[viewControllerClass alloc] init];
+      _viewController = [[viewControllerClass alloc] init];
       return self;
   };
 }
@@ -152,10 +151,6 @@ static const char kPresenterKey = 0;
 
     if (!shouldPush) {
       // 动画: 仅在 present 时有效
-//      if (viewOptions.transition) {
-//        controller.transitioningDelegate = viewOptions.transition;
-//        controller.modalPresentationStyle = UIModalPresentationCustom;
-//      }
       controller.modalTransitionStyle = _viewOption.modalTransitionStyle;
       controller.modalPresentationStyle = _viewOption.modalPresentationStyle;
     }
@@ -168,14 +163,14 @@ static const char kPresenterKey = 0;
         if (!controller.isViewLoaded) {
           [controller view]; // force viewDidLoad to be called
         }
-        [presenter update:(id <GDDView>) controller withData:_data];
+        [presenter update:controller withData:_data];
     });
     return;
   }
 
   [self config:YES]; // 某些 ViewOption 需要在 present 之前设置才会生效
   [top presentViewController:_stackMode == PRESENT ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
-      [presenter update:(id <GDDView>) controller withData:_data];
+      [presenter update:controller withData:_data];
   }];
   [self config:NO];
 }
@@ -209,9 +204,6 @@ static const char kPresenterKey = 0;
   if (toolBar != GDPBBool_Default && GDPBBool_IsValidValue(toolBar)) {
     [controller.navigationController setToolbarHidden:toolBar == GDPBBool_False animated:NO];
   }
-//  if (options[optionStatusBarOrientation]) {
-//    [[UIApplication sharedApplication] setStatusBarOrientation:(UIInterfaceOrientation) [options[optionStatusBarOrientation] integerValue]];
-//  }
   if (viewOption.deviceOrientation) {
     viewOption.deviceOrientation = UIDeviceOrientationUnknown;
     [[UIDevice currentDevice] setValue:@(viewOption.deviceOrientation) forKey:@"orientation"];
@@ -251,7 +243,7 @@ static const char kPresenterKey = 0;
   if (rootViewController.presentedViewController) { // 避免内存泄漏, 以释放 rootViewController 和 rootViewController.presentedViewController
     [rootViewController dismissViewControllerAnimated:YES completion:nil];
   }
-  UIApplication.sharedApplication.keyWindow.rootViewController = controller;
+  UIApplication.sharedApplication.delegate.window.rootViewController = controller; // keyWindow 在 makeKeyAndVisible 执行前为nil
 }
 
 + (UIViewController *)findViewController:(Class)viewControllerClass {

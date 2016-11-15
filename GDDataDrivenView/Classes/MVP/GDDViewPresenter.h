@@ -7,7 +7,7 @@
 
 @protocol GDDViewPresenter <GDDPresenter>
 
-- (void)update:(id)view withData:(id)data;
+- (void)update:(UIView<GDDView> *)view withData:(id)data;
 
 @optional
 - (UIView *) view;

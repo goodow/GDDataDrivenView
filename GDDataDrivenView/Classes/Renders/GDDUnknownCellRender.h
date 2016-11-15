@@ -8,6 +8,4 @@
 
 @interface GDDUnknownCellRender : UITableViewCell <GDDRender, GDDRenderPresenter>
 
-@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
-
 @end

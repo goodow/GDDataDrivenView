@@ -13,9 +13,18 @@ enum GDDViewControllerTransitionStackMode {
   PUSH, PRESENT, PRESENT_THEN_PUSH
 };
 
+/**
+ * 当不存在于历史堆栈中时, 使用该模式进行显示
+ */
 - (void (^)(enum GDDViewControllerTransitionStackMode stackMode))by;
+/**
+ * 作为 UIWindow 的 rootViewController
+ */
 - (void (^)())asRoot;
 
+/**
+ * 适用于 ViewController 已存在于历史堆栈中的情况
+ */
 - (void (^)(BOOL bringToFront))refresh;
 
 @end
@@ -26,8 +35,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (GDDViewControllerTransition *(^)(id data))data;
 - (GDDViewControllerTransition *(^)(GDDPBViewOption *viewOption))viewOption;
 
+/**
+ * 总是创建新的 ViewController 实例, 并显示
+ */
 - (id<GDDTransitionBuilder> (^)(Class viewControllerClass))to;
+/**
+ * 先检查历史堆栈中是否存在该类型的 ViewController, 若存在则回退至可见; 若不存在则先创建再显示
+ */
 - (id<GDDTransitionBuilder> (^)(Class viewControllerClass))toSingleton;
+/**
+ * 先检查历史堆栈中是否存在该 ViewController, 若存在则回退至可见; 若不存在则先创建再显示
+ */
 - (id<GDDTransitionBuilder> (^)(UIViewController *viewController))toInstance;
 
 /**
@@ -40,8 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void (^)())toCurrent;
 
 /**
- * 返回当前可见的 View Controller
- * @return
+ * @return 当前可见的 ViewController
  */
 + (UIViewController *)topViewController;
 

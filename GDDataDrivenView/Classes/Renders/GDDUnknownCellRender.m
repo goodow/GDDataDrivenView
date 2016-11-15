@@ -5,6 +5,10 @@
 #import "GDDUnknownCellRender.h"
 #import "UITableViewCell+GDDRender.h"
 
+@interface GDDUnknownCellRender ()
+@property (strong, nonatomic) UILabel *descriptionLabel;
+@end
+
 @implementation GDDUnknownCellRender {
 //  BOOL _didSetupConstraints;
   NSLayoutConstraint *_heightConstraint;
