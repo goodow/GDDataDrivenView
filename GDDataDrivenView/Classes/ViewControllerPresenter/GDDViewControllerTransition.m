@@ -93,6 +93,9 @@ static const char kPresenterKey = 0;
         _viewController = controller = [[UINavigationController alloc] initWithRootViewController:controller];
       }
       [GDDViewControllerTransition replaceRootViewController:controller];
+      if (!controller.isViewLoaded) {
+        [controller view]; // force viewDidLoad to be called
+      }
       self.refresh(NO);
   };
 }
@@ -103,9 +106,6 @@ static const char kPresenterKey = 0;
       if (!bringToFront) {
         [self config:NO];
         id <GDDPresenter> presenter = [self.class findOrCreatePresenterForViewController:controller];
-        if (!controller.isViewLoaded) {
-          [controller view]; // force viewDidLoad to be called
-        }
         [presenter update:controller withData:_data];
         return;
       }
@@ -121,15 +121,12 @@ static const char kPresenterKey = 0;
             }
             current = current.parentViewController;
           }
-          dispatch_async(dispatch_get_main_queue(), ^{
-              self.refresh(NO);
-          });
+          self.refresh(NO);
       };
       if (controller.presentedViewController) {
-        [controller dismissViewControllerAnimated:YES completion:bringFoundToFront];
-      } else {
-        bringFoundToFront();
+        [controller dismissViewControllerAnimated:YES completion:nil];
       }
+      bringFoundToFront();
   };
 }
 
@@ -158,13 +155,13 @@ static const char kPresenterKey = 0;
 
   if (shouldPush) {
     [top.navigationController pushViewController:controller animated:YES];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self config:NO];
+    [self config:NO];
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
         if (!controller.isViewLoaded) {
           [controller view]; // force viewDidLoad to be called
         }
         [presenter update:controller withData:_data];
-    });
+    }];
     return;
   }
 
@@ -336,7 +333,8 @@ static const char kPresenterKey = 0;
   NSString *const renderSuffix = @"ViewController";
   if ([viewControllerClassName hasSuffix:renderSuffix]) {
     presenterClassName = [viewControllerClassName substringToIndex:viewControllerClassName.length - renderSuffix.length];
-    presenterClass = NSClassFromString([NSString stringWithFormat:@"%@Presenter", presenterClassName]);
+    presenterClassName = [NSString stringWithFormat:@"%@Presenter", presenterClassName];
+    presenterClass = NSClassFromString(presenterClassName);
   }
   if (!presenterClass) {
     [NSException raise:NSInvalidArgumentException format:@"Could not find a presenter class named '%@' for %@", presenterClassName, viewControllerClassName];
