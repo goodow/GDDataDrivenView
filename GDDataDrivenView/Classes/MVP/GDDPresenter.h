@@ -9,7 +9,7 @@
 
 /**
  * @param viewController viewDidLoad 这时已被调用
- * @param data
+ * @param data 数据来源未知, 无法保证数据类型, 应先判断类型再使用
  */
 - (void)update:(UIViewController<GDDView> *)viewController withData:(id)data;
 

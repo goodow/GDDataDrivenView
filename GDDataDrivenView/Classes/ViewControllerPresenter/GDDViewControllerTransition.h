@@ -3,9 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GoodowBool.pbobjc.h"
-#import "GoodowExtrasOption.pbobjc.h"
-#import "UIViewController+GDDataDrivenView.h"
+#import "GDDPBExtrasOption+FluentInterface.h"
 #import "GDDView.h"
 
 @protocol GDDTransitionBuilder

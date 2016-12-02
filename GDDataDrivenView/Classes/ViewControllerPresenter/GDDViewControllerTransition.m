@@ -4,9 +4,7 @@
 
 #import "GDDViewControllerTransition.h"
 #import <objc/runtime.h>
-
-// The address of this variable is used as a key for obj_getAssociatedObject.
-static const char kPresenterKey = 0;
+#import "UIViewController+GDDataDrivenView.h"
 
 @interface GDDViewControllerTransition () <GDDTransitionBuilder>
 @end
@@ -319,33 +317,7 @@ static const char kPresenterKey = 0;
   if (![controller conformsToProtocol:@protocol(GDDView)]) {
     return nil;
   }
-  if ([controller respondsToSelector:@selector(presenter)]) {
-    return [(UIViewController <GDDView> *) controller presenter];
-  }
-  id <GDDPresenter> presenter = objc_getAssociatedObject(controller, &kPresenterKey);
-  if (presenter) {
-    return presenter;
-  }
-  // 使用命名约定: XyzViewController -> XyzPresenter
-  Class presenterClass;
-  NSString *viewControllerClassName = NSStringFromClass(controller.class);
-  NSString *presenterClassName;
-  NSString *const renderSuffix = @"ViewController";
-  if ([viewControllerClassName hasSuffix:renderSuffix]) {
-    presenterClassName = [viewControllerClassName substringToIndex:viewControllerClassName.length - renderSuffix.length];
-    presenterClassName = [NSString stringWithFormat:@"%@Presenter", presenterClassName];
-    presenterClass = NSClassFromString(presenterClassName);
-  }
-  if (!presenterClass) {
-    [NSException raise:NSInvalidArgumentException format:@"Could not find a presenter class named '%@' for %@", presenterClassName, viewControllerClassName];
-  }
-  if ([presenterClass instancesRespondToSelector:@selector(initWithOwner:)]) {
-    presenter = [(id <GDDPresenter>) [presenterClass alloc] initWithOwner:controller];
-  } else {
-    presenter = [[presenterClass alloc] init];
-  }
-  objc_setAssociatedObject(controller, &kPresenterKey, presenter, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-  return presenter;
+  return [(UIViewController <GDDView> *) controller presenter];
 }
 
 @end
