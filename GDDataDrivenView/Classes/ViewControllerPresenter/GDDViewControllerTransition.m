@@ -15,6 +15,7 @@
   UIViewController *_viewController;
   enum GDDViewControllerTransitionStackMode _stackMode;
   BOOL _alreadyInStack; // 是否已经显示过了
+  Class _viewControllerClass;
 }
 
 - (GDDViewControllerTransition *(^)(id data))data {
@@ -33,7 +34,7 @@
 
 - (id <GDDTransitionBuilder> (^)(Class viewControllerClass))to {
   return ^id <GDDTransitionBuilder>(Class viewControllerClass) {
-      _viewController = [[viewControllerClass alloc] init];
+      _viewControllerClass = viewControllerClass;
       return self;
   };
 }
@@ -44,10 +45,10 @@
       if (found) {
         _viewController = found;
         _alreadyInStack = YES;
-        return self;
       } else {
-        return self.to(viewControllerClass);
+        _viewControllerClass = viewControllerClass;
       }
+      return self;
   };
 }
 
@@ -73,7 +74,7 @@
 - (void (^)())toCurrent {
   return ^{
       _viewController = GDDViewControllerTransition.topViewController;
-      self.refresh(NO);
+      [self updateData];
   };
 }
 
@@ -86,45 +87,37 @@
 
 - (void (^)())asRoot {
   return ^{
-      UIViewController *controller = _viewController;
+      UIViewController *controller = self.viewController;
       if (![controller isKindOfClass:UITabBarController.class] && ![controller isKindOfClass:UINavigationController.class]) {
         _viewController = controller = [[UINavigationController alloc] initWithRootViewController:controller];
       }
       [GDDViewControllerTransition replaceRootViewController:controller];
-      if (!controller.isViewLoaded) {
-        [controller view]; // force viewDidLoad to be called
-      }
-      self.refresh(NO);
+      [self updateData];
   };
 }
 
 - (void (^)(BOOL bringToFront))refresh {
   return ^(BOOL bringToFront) {
-      UIViewController *controller = _viewController;
       if (!bringToFront) {
-        [self config:NO];
-        id <GDDPresenter> presenter = [self.class findOrCreatePresenterForViewController:controller];
-        [presenter update:controller withData:_data];
+        [self updateData];
         return;
       }
 
       // bring viewController to front
-      void (^bringFoundToFront)() = ^{
-          UIViewController *current = controller;
-          while (current.parentViewController) {
-            if ([current.parentViewController isKindOfClass:UITabBarController.class]) {
-              ((UITabBarController *) current.parentViewController).selectedViewController = current;
-            } else if ([current.parentViewController isKindOfClass:UINavigationController.class]) {
-              [((UINavigationController *) current.parentViewController) popToViewController:current animated:YES];
-            }
-            current = current.parentViewController;
-          }
-          self.refresh(NO);
-      };
+      UIViewController *controller = self.viewController;
       if (controller.presentedViewController) {
         [controller dismissViewControllerAnimated:YES completion:nil];
       }
-      bringFoundToFront();
+      UIViewController *current = controller;
+      while (current.parentViewController) {
+        if ([current.parentViewController isKindOfClass:UITabBarController.class]) {
+          ((UITabBarController *) current.parentViewController).selectedViewController = current;
+        } else if ([current.parentViewController isKindOfClass:UINavigationController.class]) {
+          [((UINavigationController *) current.parentViewController) popToViewController:current animated:YES];
+        }
+        current = current.parentViewController;
+      }
+      [self updateData];
   };
 }
 
@@ -134,9 +127,7 @@
     return;
   }
 
-  UIViewController *controller = _viewController;
-  id <GDDPresenter> presenter = [self.class findOrCreatePresenterForViewController:controller];
-
+  UIViewController *controller = self.viewController;
   UIViewController *top = self.class.topViewController;
   BOOL shouldPush = _stackMode == PUSH && top.navigationController;
   /* config new controller */
@@ -153,25 +144,31 @@
 
   if (shouldPush) {
     [top.navigationController pushViewController:controller animated:YES];
-    [self config:NO];
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
-        if (!controller.isViewLoaded) {
-          [controller view]; // force viewDidLoad to be called
-        }
-        [presenter update:controller withData:_data];
+        [self updateData];
     }];
     return;
   }
 
   [self config:YES]; // 某些 ViewOption 需要在 present 之前设置才会生效
-  [top presentViewController:_stackMode == PRESENT ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:^{
-      [presenter update:controller withData:_data];
-  }];
+  [top presentViewController:_stackMode == PRESENT ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+  [self updateData];
+}
+
+- (void)updateData {
   [self config:NO];
+  UIViewController *controller = self.viewController;
+  if (![controller conformsToProtocol:@protocol(GDDView)]) {
+    return;
+  }
+  if (!controller.isViewLoaded) {
+    [controller view]; // force viewDidLoad to be called
+  }
+  [[(UIViewController <GDDView> *) controller presenter] update:controller withData:_data];
 }
 
 - (void)config:(BOOL)eagerly {
-  UIViewController *controller = _viewController;
+  UIViewController *controller = self.viewController;
   GDDPBViewOption *viewOption = controller.viewOption;
   if (_viewOption) {
     [viewOption mergeFrom:_viewOption];
@@ -207,6 +204,13 @@
     viewOption.attemptRotationToDeviceOrientation = NO;
     [UIViewController attemptRotationToDeviceOrientation];
   }
+}
+
+- (UIViewController *)viewController {
+  if (!_viewController) {
+    _viewController = [[_viewControllerClass alloc] init];
+  }
+  return _viewController;
 }
 
 + (UIViewController *)topViewController {
@@ -295,7 +299,6 @@
   return [self isSame:controllerOrClass with:parent instanceOrClass:isInstance] ? parent : nil;
 }
 
-
 + (BOOL)isSame:(id)controllerOrClass with:(UIViewController *)otherController instanceOrClass:(BOOL)isInstance {
   return isInstance ? controllerOrClass == otherController : [otherController isKindOfClass:controllerOrClass];
 }
@@ -312,12 +315,4 @@
     return nil;
   }
 }
-
-+ (id <GDDPresenter>)findOrCreatePresenterForViewController:(UIViewController *)controller {
-  if (![controller conformsToProtocol:@protocol(GDDView)]) {
-    return nil;
-  }
-  return [(UIViewController <GDDView> *) controller presenter];
-}
-
 @end
