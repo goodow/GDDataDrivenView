@@ -30,18 +30,8 @@
 
 @implementation GDDPBGoodowExtrasOptionRoot
 
-+ (GPBExtensionRegistry*)extensionRegistry {
-  // This is called by +initialize so there is no need to worry
-  // about thread safety and initialization of registry.
-  static GPBExtensionRegistry* registry = nil;
-  if (!registry) {
-    GPBDebugCheckRuntimeVersion();
-    registry = [[GPBExtensionRegistry alloc] init];
-    [registry addExtensions:[GPBFieldMaskRoot extensionRegistry]];
-    [registry addExtensions:[GDPBGoodowBoolRoot extensionRegistry]];
-  }
-  return registry;
-}
+// No extensions in the file and none of the imports (direct or indirect)
+// defined extensions, so no need to generate +extensionRegistry.
 
 @end
 
@@ -52,8 +42,9 @@ static GPBFileDescriptor *GDDPBGoodowExtrasOptionRoot_FileDescriptor(void) {
   // about thread safety of the singleton.
   static GPBFileDescriptor *descriptor = NULL;
   if (!descriptor) {
-    GPBDebugCheckRuntimeVersion();
-    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@""
+    GPB_DEBUG_CHECK_RUNTIME_VERSIONS();
+    descriptor = [[GPBFileDescriptor alloc] initWithPackage:@"goodow.protobuf"
+                                                 objcPrefix:@"GDDPB"
                                                      syntax:GPBFileSyntaxProto3];
   }
   return descriptor;
@@ -189,7 +180,7 @@ typedef struct GDDPBExtrasOption__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GDDPBExtrasOption__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -232,7 +223,8 @@ typedef struct GDDPBExtrasOption_RequestOption__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GDDPBExtrasOption_RequestOption__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
+    [localDescriptor setupContainingMessageClassName:GPBStringifySymbol(GDDPBExtrasOption)];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -263,6 +255,7 @@ typedef struct GDDPBExtrasOption_RequestOption__storage_ {
 @dynamic modalPresentationStyle;
 @dynamic modalTransitionStyle;
 @dynamic edgesForExtendedLayout;
+@dynamic animated;
 
 typedef struct GDDPBViewOption__storage_ {
   uint32_t _has_storage_[1];
@@ -281,6 +274,7 @@ typedef struct GDDPBViewOption__storage_ {
   uint32_t modalPresentationStyle;
   uint32_t modalTransitionStyle;
   uint32_t edgesForExtendedLayout;
+  GDPBBool animated;
 } GDDPBViewOption__storage_;
 
 // This method is threadsafe because it is initially called
@@ -295,7 +289,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_LaunchMode,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, launchMode),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -304,7 +298,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_StackMode,
         .hasIndex = 1,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, stackMode),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -313,7 +307,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_StatusBar,
         .hasIndex = 2,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, statusBar),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -322,7 +316,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_NavBar,
         .hasIndex = 3,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, navBar),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -358,7 +352,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_TabBar,
         .hasIndex = 8,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, tabBar),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -376,7 +370,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_Autorotate,
         .hasIndex = 10,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, autorotate),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -385,7 +379,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_NeedsRefresh,
         .hasIndex = 11,
         .offset = 12,  // Stored in _has_storage_ to save space.
-        .flags = GPBFieldOptional | GPBFieldTextFormatNameCustom,
+        .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
       {
@@ -412,7 +406,7 @@ typedef struct GDDPBViewOption__storage_ {
         .number = GDDPBViewOption_FieldNumber_ToolBar,
         .hasIndex = 16,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, toolBar),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -451,6 +445,15 @@ typedef struct GDDPBViewOption__storage_ {
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeUInt32,
       },
+      {
+        .name = "animated",
+        .dataTypeSpecific.enumDescFunc = GDPBBool_EnumDescriptor,
+        .number = GDDPBViewOption_FieldNumber_Animated,
+        .hasIndex = 21,
+        .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, animated),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
     };
     GPBDescriptor *localDescriptor =
         [GPBDescriptor allocDescriptorForClass:[GDDPBViewOption class]
@@ -459,12 +462,7 @@ typedef struct GDDPBViewOption__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GDDPBViewOption__storage_)
-                                         flags:0];
-#if !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
-    static const char *extraTextFormatInfo =
-        "\001\025\014\000";
-    [localDescriptor setupExtraTextInfo:extraTextFormatInfo];
-#endif  // !GPBOBJC_SKIP_MESSAGE_TEXTFORMAT_EXTRAS
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }
@@ -557,6 +555,18 @@ void SetGDDPBViewOption_ToolBar_RawValue(GDDPBViewOption *message, int32_t value
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 
+int32_t GDDPBViewOption_Animated_RawValue(GDDPBViewOption *message) {
+  GPBDescriptor *descriptor = [GDDPBViewOption descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GDDPBViewOption_FieldNumber_Animated];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGDDPBViewOption_Animated_RawValue(GDDPBViewOption *message, int32_t value) {
+  GPBDescriptor *descriptor = [GDDPBViewOption descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GDDPBViewOption_FieldNumber_Animated];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
 #pragma mark - GDDPBCacheControl
 
 @implementation GDDPBCacheControl
@@ -590,7 +600,7 @@ typedef struct GDDPBCacheControl__storage_ {
         .number = GDDPBCacheControl_FieldNumber_Status,
         .hasIndex = 0,
         .offset = (uint32_t)offsetof(GDDPBCacheControl__storage_, status),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
       {
@@ -635,7 +645,7 @@ typedef struct GDDPBCacheControl__storage_ {
         .number = GDDPBCacheControl_FieldNumber_RequestPolicy,
         .hasIndex = 5,
         .offset = (uint32_t)offsetof(GDDPBCacheControl__storage_, requestPolicy),
-        .flags = GPBFieldOptional | GPBFieldHasEnumDescriptor,
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
       },
     };
@@ -646,7 +656,7 @@ typedef struct GDDPBCacheControl__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(GDDPBCacheControl__storage_)
-                                         flags:0];
+                                         flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
   }

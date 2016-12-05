@@ -91,7 +91,11 @@
       if (![controller isKindOfClass:UITabBarController.class] && ![controller isKindOfClass:UINavigationController.class]) {
         _viewController = controller = [[UINavigationController alloc] initWithRootViewController:controller];
       }
-      [GDDViewControllerTransition replaceRootViewController:controller];
+      UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
+      if (rootViewController.presentedViewController) { // 避免内存泄漏, 以释放 rootViewController 和 rootViewController.presentedViewController
+        [rootViewController dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:nil];
+      }
+      UIApplication.sharedApplication.delegate.window.rootViewController = controller; // 不能使用 keyWindow, 其在 makeKeyAndVisible 执行前为 nil
       [self updateData];
   };
 }
@@ -106,14 +110,14 @@
       // bring viewController to front
       UIViewController *controller = self.viewController;
       if (controller.presentedViewController) {
-        [controller dismissViewControllerAnimated:YES completion:nil];
+        [controller dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:nil];
       }
       UIViewController *current = controller;
       while (current.parentViewController) {
         if ([current.parentViewController isKindOfClass:UITabBarController.class]) {
           ((UITabBarController *) current.parentViewController).selectedViewController = current;
         } else if ([current.parentViewController isKindOfClass:UINavigationController.class]) {
-          [((UINavigationController *) current.parentViewController) popToViewController:current animated:YES];
+          [((UINavigationController *) current.parentViewController) popToViewController:current animated:_viewOption.animated != GDPBBool_False];
         }
         current = current.parentViewController;
       }
@@ -143,7 +147,7 @@
   }
 
   if (shouldPush) {
-    [top.navigationController pushViewController:controller animated:YES];
+    [top.navigationController pushViewController:controller animated:_viewOption.animated != GDPBBool_False];
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         [self updateData];
     }];
@@ -151,7 +155,7 @@
   }
 
   [self config:YES]; // 某些 ViewOption 需要在 present 之前设置才会生效
-  [top presentViewController:_stackMode == PRESENT ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:YES completion:nil];
+  [top presentViewController:_stackMode == PRESENT ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:_viewOption.animated != GDPBBool_False completion:nil];
   [self updateData];
 }
 
@@ -184,7 +188,7 @@
   enum GDPBBool navBar = viewOption.navBar;
   if (navBar != GDPBBool_Default && GDPBBool_IsValidValue(navBar)) {
     BOOL shouldHidden = navBar == GDPBBool_False;
-    [controller.navigationController setNavigationBarHidden:shouldHidden animated:NO];
+    [controller.navigationController setNavigationBarHidden:shouldHidden animated:viewOption.animated != GDPBBool_False];
     controller.navigationController.navigationBar.hidden = shouldHidden;
     controller.navigationController.navigationBar.barStyle = viewOption.navBarStyle;
   }
@@ -194,7 +198,7 @@
   }
   enum GDPBBool toolBar = viewOption.toolBar;
   if (toolBar != GDPBBool_Default && GDPBBool_IsValidValue(toolBar)) {
-    [controller.navigationController setToolbarHidden:toolBar == GDPBBool_False animated:NO];
+    [controller.navigationController setToolbarHidden:toolBar == GDPBBool_False animated:viewOption.animated != GDPBBool_False];
   }
   if (viewOption.deviceOrientation) {
     viewOption.deviceOrientation = UIDeviceOrientationUnknown;
@@ -235,14 +239,6 @@
     return child ?: top.presentingViewController;
   }
   return nil;
-}
-
-+ (void)replaceRootViewController:(UIViewController *)controller {
-  UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
-  if (rootViewController.presentedViewController) { // 避免内存泄漏, 以释放 rootViewController 和 rootViewController.presentedViewController
-    [rootViewController dismissViewControllerAnimated:YES completion:nil];
-  }
-  UIApplication.sharedApplication.delegate.window.rootViewController = controller; // keyWindow 在 makeKeyAndVisible 执行前为nil
 }
 
 + (UIViewController *)findViewController:(Class)viewControllerClass {
