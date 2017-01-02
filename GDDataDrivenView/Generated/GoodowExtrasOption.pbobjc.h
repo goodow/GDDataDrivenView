@@ -267,6 +267,7 @@ typedef GPB_ENUM(GDDPBViewOption_FieldNumber) {
 /** 是否应该自动旋转 */
 @property(nonatomic, readwrite) enum GDPBBool autorotate;
 
+/** 是否需要刷新数据 */
 @property(nonatomic, readwrite) BOOL needsRefresh;
 
 @property(nonatomic, readwrite) BOOL attemptRotationToDeviceOrientation;
@@ -285,7 +286,7 @@ typedef GPB_ENUM(GDDPBViewOption_FieldNumber) {
 /** 仅初始化时有效 UIModalTransitionStyle */
 @property(nonatomic, readwrite) uint32_t modalTransitionStyle;
 
-/** 仅初始化时有效 UIRectEdge */
+/** 仅初始化时有效 UIRectEdge (不支持设为值UIRectEdgeNone) */
 @property(nonatomic, readwrite) uint32_t edgesForExtendedLayout;
 
 /** 是否需要动画, 默认为 YES */

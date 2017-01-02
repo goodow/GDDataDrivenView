@@ -95,7 +95,15 @@
       if (rootViewController.presentedViewController) { // 避免内存泄漏, 以释放 rootViewController 和 rootViewController.presentedViewController
         [rootViewController dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:nil];
       }
-      UIApplication.sharedApplication.delegate.window.rootViewController = controller; // 不能使用 keyWindow, 其在 makeKeyAndVisible 执行前为 nil
+      UIWindow *window = UIApplication.sharedApplication.delegate.window;
+      if (!window) {
+        window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+        window.rootViewController = controller;
+        [window makeKeyAndVisible];
+        UIApplication.sharedApplication.delegate.window = window;
+      } else {
+        window.rootViewController = controller; // 不能使用 keyWindow, 其在 makeKeyAndVisible 执行前为 nil
+      }
       [self updateData];
   };
 }
@@ -136,7 +144,9 @@
   BOOL shouldPush = _stackMode == PUSH && top.navigationController;
   /* config new controller */
   if (_viewOption) {
-    controller.edgesForExtendedLayout = _viewOption.edgesForExtendedLayout;
+    if (_viewOption.edgesForExtendedLayout) { // 没法支持默认值UIRectEdgeNone
+      controller.edgesForExtendedLayout = _viewOption.edgesForExtendedLayout;
+    }
     controller.hidesBottomBarWhenPushed = _viewOption.hidesBottomBarWhenPushed;
 
     if (!shouldPush) {

@@ -37,7 +37,7 @@ message ViewOption {
   uint32 preferred_interface_orientation_for_presentation = 30; // UIInterfaceOrientation
   uint32 modal_presentation_style = 31; // 仅初始化时有效 UIModalPresentationStyle
   uint32 modal_transition_style = 32; // 仅初始化时有效 UIModalTransitionStyle
-  uint32 edges_for_extended_layout = 33; // 仅初始化时有效 UIRectEdge
+  uint32 edges_for_extended_layout = 33; // 仅初始化时有效 UIRectEdge (不支持设为值UIRectEdgeNone)
   goodow.protobuf.Bool animated = 34; // 是否需要动画, 默认为 YES
 };
 

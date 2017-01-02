@@ -28,5 +28,5 @@
 - (GDDPBViewOption *(^)(UIInterfaceOrientation preferredInterfaceOrientationForPresentation))setPreferredInterfaceOrientationForPresentation;
 - (GDDPBViewOption *(^)(UIModalPresentationStyle modalPresentationStyle))setModalPresentationStyle;
 - (GDDPBViewOption *(^)(UIModalTransitionStyle modalTransitionStyle))setModalTransitionStyle;
-- (GDDPBViewOption *(^)(UIRectEdge edgesForExtendedLayout))setEedgesForExtendedLayout;
+- (GDDPBViewOption *(^)(UIRectEdge edgesForExtendedLayout))setEdgesForExtendedLayout;
 @end
