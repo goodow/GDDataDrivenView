@@ -84,7 +84,7 @@ static const char kPresenterKey = 0;
   [UIViewController aspect_hookSelector:@selector(shouldAutorotate) withOptions:AspectPositionInstead usingBlock:^(id <AspectInfo> info) {
       NSInvocation *invocation = info.originalInvocation;
       UIViewController *instance = info.instance;
-      UIViewController *child = [GDDViewControllerTransition getVisibleOrChildViewController:instance forceChild:YES];
+      UIViewController *child = [GDDViewControllerTransition getVisibleChildViewController:instance];
       BOOL toRtn;
       if (child) {
         toRtn = [child shouldAutorotate];
@@ -102,7 +102,7 @@ static const char kPresenterKey = 0;
   [UIViewController aspect_hookSelector:@selector(supportedInterfaceOrientations) withOptions:AspectPositionInstead usingBlock:^(id <AspectInfo> info) {
       NSInvocation *invocation = info.originalInvocation;
       UIViewController *instance = info.instance;
-      UIViewController *child = [GDDViewControllerTransition getVisibleOrChildViewController:instance forceChild:YES];
+      UIViewController *child = [GDDViewControllerTransition getVisibleChildViewController:instance];
       UIInterfaceOrientationMask toRtn;
       if (child) {
         toRtn = [child supportedInterfaceOrientations];
@@ -120,7 +120,7 @@ static const char kPresenterKey = 0;
   [UIViewController aspect_hookSelector:@selector(preferredInterfaceOrientationForPresentation) withOptions:AspectPositionInstead usingBlock:^(id <AspectInfo> info) {
       NSInvocation *invocation = info.originalInvocation;
       UIViewController *instance = info.instance;
-      UIViewController *child = [GDDViewControllerTransition getVisibleOrChildViewController:instance forceChild:YES];
+      UIViewController *child = [GDDViewControllerTransition getVisibleChildViewController:instance];
       UIInterfaceOrientation toRtn;
       if (child) {
         toRtn = [child preferredInterfaceOrientationForPresentation];

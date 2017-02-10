@@ -16,6 +16,6 @@
 
 + (void)aspect_hookSelector;
 
-+ (UIViewController *)getVisibleOrChildViewController:(UIViewController *)parent forceChild:(BOOL)forceChild;
++ (UIViewController *)getVisibleChildViewController:(UIViewController *)parent;
 
 @end

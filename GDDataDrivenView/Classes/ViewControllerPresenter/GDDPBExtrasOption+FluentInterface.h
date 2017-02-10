@@ -29,4 +29,6 @@
 - (GDDPBViewOption *(^)(UIModalPresentationStyle modalPresentationStyle))setModalPresentationStyle;
 - (GDDPBViewOption *(^)(UIModalTransitionStyle modalTransitionStyle))setModalTransitionStyle;
 - (GDDPBViewOption *(^)(UIRectEdge edgesForExtendedLayout))setEdgesForExtendedLayout;
+
+- (GDDPBViewOption *(^)(enum GDPBBool animated))setAnimated;
 @end

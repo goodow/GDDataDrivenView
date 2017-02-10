@@ -36,4 +36,5 @@ kImplementMethodChaining(ModalPresentationStyle);
 kImplementMethodChaining(ModalTransitionStyle);
 kImplementMethodChaining(EdgesForExtendedLayout);
 
+kImplementMethodChaining(Animated);
 @end

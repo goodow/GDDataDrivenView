@@ -232,10 +232,10 @@
 }
 
 + (UIViewController *)findTopViewController:(UIViewController *)parent {
-  if (parent.presentedViewController) {
+  if (parent.presentedViewController && !parent.presentedViewController.isBeingDismissed) {
     return [self findTopViewController:parent.presentedViewController];
   }
-  UIViewController *child = [self getVisibleOrChildViewController:parent forceChild:NO];
+  UIViewController *child = [self getVisibleChildViewController:parent];
   return child ? [self findTopViewController:child] : parent;
 }
 
@@ -245,7 +245,7 @@
   if (navViewControllers.count > 1) {
     return navViewControllers[navViewControllers.count - 2];
   } else if (top.presentingViewController) {
-    UIViewController *child = [self getVisibleOrChildViewController:top.presentingViewController forceChild:YES];
+    UIViewController *child = [self getVisibleChildViewController:top.presentingViewController];
     return child ?: top.presentingViewController;
   }
   return nil;
@@ -309,10 +309,9 @@
   return isInstance ? controllerOrClass == otherController : [otherController isKindOfClass:controllerOrClass];
 }
 
-+ (UIViewController *)getVisibleOrChildViewController:(UIViewController *)parent forceChild:(BOOL)forceChild {
++ (UIViewController *)getVisibleChildViewController:(UIViewController *)parent {
   if ([parent isKindOfClass:UINavigationController.class]) {
-    UINavigationController *navigationController = (UINavigationController *) parent;
-    return forceChild ? navigationController.topViewController : navigationController.visibleViewController;
+    return ((UINavigationController *) parent).topViewController;
   } else if ([parent isKindOfClass:UITabBarController.class]) {
     return ((UITabBarController *) parent).selectedViewController;
   } else if ([parent isKindOfClass:UIPageViewController.class]) {
