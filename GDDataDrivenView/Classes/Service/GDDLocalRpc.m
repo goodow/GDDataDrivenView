@@ -36,14 +36,15 @@
   };
 }
 
-- (void (^)(id query))load {
-  return ^(id query) {
+- (nullable id<GDDTask>  (^)(id query))load {
+  return ^ _Nullable id<GDDTask> (id query) {
       if (_error) {
         _failure ? _failure(_error) : nil;
-        return;
+        return nil;
       }
 
       _success ? _success(_result) : nil;
+      return nil;
   };
 }
 

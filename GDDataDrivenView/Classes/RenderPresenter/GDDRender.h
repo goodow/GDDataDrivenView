@@ -3,10 +3,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GDDView.h"
 #import "GDDRenderPresenter.h"
 
-@protocol GDDRender <GDDView>
+@protocol GDDRender
 
 @optional
 /**

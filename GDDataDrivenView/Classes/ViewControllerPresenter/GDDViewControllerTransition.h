@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * 总是创建新的 ViewController 实例, 并显示
  */
-- (id<GDDTransitionBuilder> (^)(Class viewControllerClass))to;
+- (id<GDDTransitionBuilder> (^)(Class viewControllerClass))toClass;
 /**
  * 先检查历史堆栈中是否存在该类型的 ViewController, 若存在则回退至可见; 若不存在则先创建再显示
  */

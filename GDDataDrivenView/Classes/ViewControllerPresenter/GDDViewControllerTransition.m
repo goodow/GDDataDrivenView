@@ -32,7 +32,7 @@
   };
 }
 
-- (id <GDDTransitionBuilder> (^)(Class viewControllerClass))to {
+- (id <GDDTransitionBuilder> (^)(Class viewControllerClass))toClass {
   return ^id <GDDTransitionBuilder>(Class viewControllerClass) {
       _viewControllerClass = viewControllerClass;
       return self;
@@ -45,6 +45,7 @@
       if (found) {
         _viewController = found;
         _alreadyInStack = YES;
+        [self mergeViewOption];
       } else {
         _viewControllerClass = viewControllerClass;
       }
@@ -55,6 +56,8 @@
 - (id <GDDTransitionBuilder> (^)(UIViewController *viewController))toInstance {
   return ^id <GDDTransitionBuilder>(UIViewController *viewController) {
       _viewController = viewController;
+      _viewControllerClass = nil;
+      [self mergeViewOption];
       UIViewController *found = [self.class find:viewController in:UIApplication.sharedApplication.keyWindow.rootViewController instanceOrClass:YES];
       if (found) {
         _alreadyInStack = YES;
@@ -89,7 +92,7 @@
   return ^{
       UIViewController *controller = self.viewController;
       if (![controller isKindOfClass:UITabBarController.class] && ![controller isKindOfClass:UINavigationController.class]) {
-        _viewController = controller = [[UINavigationController alloc] initWithRootViewController:controller];
+        controller = [[UINavigationController alloc] initWithRootViewController:controller];
       }
       UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
       if (rootViewController.presentedViewController) { // 避免内存泄漏, 以释放 rootViewController 和 rootViewController.presentedViewController
@@ -183,10 +186,7 @@
 
 - (void)config:(BOOL)eagerly {
   UIViewController *controller = self.viewController;
-  GDDPBViewOption *viewOption = controller.viewOption;
-  if (_viewOption) {
-    [viewOption mergeFrom:_viewOption];
-  }
+  GDDPBViewOption *viewOption = self.viewController.viewOption;
 
   enum GDPBBool statusBar = viewOption.statusBar;
   if (statusBar != GDPBBool_Default && GDPBBool_IsValidValue(statusBar)) {
@@ -223,8 +223,20 @@
 - (UIViewController *)viewController {
   if (!_viewController) {
     _viewController = [[_viewControllerClass alloc] init];
+    [self mergeViewOption];
   }
   return _viewController;
+}
+
+- (void)mergeViewOption {
+//  if (![_viewController conformsToProtocol:@protocol(GDDView)]) {
+//    return;
+//  }
+  GDDPBViewOption *viewOption = _viewController.viewOption;
+  if (_viewOption) {
+    [viewOption mergeFrom:_viewOption];
+  }
+  _viewOption = viewOption;
 }
 
 + (UIViewController *)topViewController {

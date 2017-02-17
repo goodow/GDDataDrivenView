@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GDDPresenter.h"
+#import "GDDPBExtrasOption+FluentInterface.h"
 
 @protocol GDDView
 

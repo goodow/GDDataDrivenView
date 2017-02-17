@@ -1,4 +1,6 @@
-// Firebase 上报事件
+// Firebase Events and properties
+// https://support.google.com/firebase/topic/6317484
+
 syntax = "proto3";
 option objc_class_prefix = "FIR";
 package google.firebase;
