@@ -2,7 +2,7 @@
 // https://support.google.com/firebase/topic/6317484
 
 syntax = "proto3";
-option objc_class_prefix = "FIR";
+option objc_class_prefix = "FIRPB";
 package google.firebase;
 
 enum LogEvents {
@@ -31,6 +31,10 @@ enum LogEvents {
   level_up = 20; // when a player levels-up in the game.
   post_score = 21; // when a player posts his or her score.
   unlock_achievement = 22; // when a player unlocks an achievement.
+
+  app_open = 23; // 无参数 when an App is moved to the foreground
+  earn_virtual_currency = 24; // tracks the awarding of virtual currency in your app
+  login = 25; // report this event to signify that a user has logged in
 }
 
 message SelectContentEvent {
@@ -46,7 +50,7 @@ message ShareEvent {
 message SpendVirtualCurrencyEvent {
   string item_name = 1;
   string virtual_currency_name = 2;
-  int32 value = 3;
+  double value = 3;
 }
 
 message SignUpEvent {
@@ -65,6 +69,11 @@ message PresentOfferEvent {
   string item_id = 1;
   string item_name = 2;
   string item_category = 3;
+  string item_location_id = 4;
+  int64 quantity = 5;
+  double price = 6;
+  string currency = 7;
+  double value = 8;
 }
 
 message JoinGroupEvent {
@@ -78,7 +87,7 @@ message ViewItemEvent {
   string item_name = 4;
   string item_category = 5;
   string currency = 6;
-  string value = 7;
+  double value = 7;
   string search_term = 8;
   string start_date = 9;
   string end_date = 10;
@@ -95,11 +104,11 @@ message ViewSearchResultsEvent {
 message EcommercePurchaseEvent {
   string coupon = 1;
   string currency = 2;
-  int32 value = 3;
-  string tax = 4;
-  string shipping = 5;
+  double value = 3;
+  double tax = 4;
+  double shipping = 5;
   string transaction_id = 6;
-  int32 quantity = 7;
+  int64 quantity = 7;
   string location = 8;
   string start_date = 9;
   string end_date = 10;
@@ -107,50 +116,55 @@ message EcommercePurchaseEvent {
   string destination = 12;
 }
 message PurchaseRefundEvent {
-  int32 quantity = 1;
-  int32 value = 2;
+  int64 quantity = 1;
+  double value = 2;
   string currency = 3;
   string transaction_id = 4;
 }
 message AddToCartEvent {
-  int32 quantity = 1;
+  int64 quantity = 1;
   string item_category = 2;
   string item_name = 3;
   string item_id = 4;
   string item_location_id = 5;
-  int32 value = 6;
-  int32 price = 7;
+  double value = 6;
+  double price = 7;
   string currency = 8;
 }
 message BeginCheckoutEvent {
   string coupon = 1;
   string currency = 2;
-  int32 value = 3;
+  double value = 3;
+  string transaction_id = 4;
 }
 message AddToWishlistEvent {
-  int32 quantity = 1;
+  int64 quantity = 1;
   string item_category = 2;
   string item_name = 3;
   string item_id = 4;
   string item_location_id = 5;
-  int32 value = 6;
-  int32 price = 7;
+  double value = 6;
+  double price = 7;
   string currency = 8;
 }
 message GenerateLeadEvent {
-  int32 value = 1;
+  double value = 1;
   string currency = 2;
 }
-
 message LevelUpEvent {
   string character = 1;
-  int32 level = 2;
+  int64 level = 2;
 }
 message PostScoreEvent {
   string character = 1;
-  int32 level = 2;
-  int32 score = 3;
+  int64 level = 2;
+  int64 score = 3;
 }
 message UnlockAchievementEvent {
   string achievement_id = 1;
+}
+
+message EarnVirtualCurrencyEvent {
+  double value = 1;
+  string virtual_currency_name = 2;
 }
