@@ -228,6 +228,7 @@ typedef GPB_ENUM(GDDPBViewOption_FieldNumber) {
   GDDPBViewOption_FieldNumber_TabBar = 11,
   GDDPBViewOption_FieldNumber_SupportedInterfaceOrientations = 12,
   GDDPBViewOption_FieldNumber_Autorotate = 13,
+  GDDPBViewOption_FieldNumber_NavBarTranslucent = 14,
   GDDPBViewOption_FieldNumber_NeedsRefresh = 21,
   GDDPBViewOption_FieldNumber_AttemptRotationToDeviceOrientation = 22,
   GDDPBViewOption_FieldNumber_DeviceOrientation = 23,
@@ -266,6 +267,8 @@ typedef GPB_ENUM(GDDPBViewOption_FieldNumber) {
 
 /** 是否应该自动旋转 */
 @property(nonatomic, readwrite) enum GDPBBool autorotate;
+
+@property(nonatomic, readwrite) enum GDPBBool navBarTranslucent;
 
 /** 是否需要刷新数据 */
 @property(nonatomic, readwrite) BOOL needsRefresh;
@@ -365,6 +368,18 @@ int32_t GDDPBViewOption_Autorotate_RawValue(GDDPBViewOption *message);
  * was generated.
  **/
 void SetGDDPBViewOption_Autorotate_RawValue(GDDPBViewOption *message, int32_t value);
+
+/**
+ * Fetches the raw value of a @c GDDPBViewOption's @c navBarTranslucent property, even
+ * if the value was not defined by the enum at the time the code was generated.
+ **/
+int32_t GDDPBViewOption_NavBarTranslucent_RawValue(GDDPBViewOption *message);
+/**
+ * Sets the raw value of an @c GDDPBViewOption's @c navBarTranslucent property, allowing
+ * it to be set to a value that was not defined by the enum at the time the code
+ * was generated.
+ **/
+void SetGDDPBViewOption_NavBarTranslucent_RawValue(GDDPBViewOption *message, int32_t value);
 
 /**
  * Fetches the raw value of a @c GDDPBViewOption's @c toolBar property, even

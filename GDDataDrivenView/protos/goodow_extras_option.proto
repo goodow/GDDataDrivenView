@@ -28,6 +28,7 @@ message ViewOption {
   goodow.protobuf.Bool tab_bar = 11;
   uint32 supported_interface_orientations = 12; // UIInterfaceOrientationMask
   goodow.protobuf.Bool autorotate = 13; // 是否应该自动旋转
+  goodow.protobuf.Bool nav_bar_translucent = 14;
 
   bool needs_refresh = 21; // 是否需要刷新数据
   bool attempt_rotation_to_device_orientation = 22;

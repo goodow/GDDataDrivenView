@@ -19,6 +19,7 @@
 - (GDDPBViewOption *(^)(enum GDPBBool tabBar))setTabBar;
 - (GDDPBViewOption *(^)(UIInterfaceOrientationMask supportedInterfaceOrientations))setSupportedInterfaceOrientations;
 - (GDDPBViewOption *(^)(enum GDPBBool autorotate))setAutorotate;
+- (GDDPBViewOption *(^)(enum GDPBBool navBarTranslucent))setNavBarTranslucent;
 
 - (GDDPBViewOption *(^)(BOOL needsRefresh))setNeedsRefresh;
 - (GDDPBViewOption *(^)(BOOL attemptRotationToDeviceOrientation))setAttemptRotationToDeviceOrientation;

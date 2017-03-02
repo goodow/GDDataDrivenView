@@ -25,6 +25,7 @@ kImplementMethodChaining(HidesBottomBarWhenPushed);
 kImplementMethodChaining(TabBar);
 kImplementMethodChaining(SupportedInterfaceOrientations);
 kImplementMethodChaining(Autorotate);
+kImplementMethodChaining(NavBarTranslucent);
 
 kImplementMethodChaining(NeedsRefresh);
 kImplementMethodChaining(AttemptRotationToDeviceOrientation);

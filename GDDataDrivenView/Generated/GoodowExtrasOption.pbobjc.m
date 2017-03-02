@@ -247,6 +247,7 @@ typedef struct GDDPBExtrasOption_RequestOption__storage_ {
 @dynamic tabBar;
 @dynamic supportedInterfaceOrientations;
 @dynamic autorotate;
+@dynamic navBarTranslucent;
 @dynamic needsRefresh;
 @dynamic attemptRotationToDeviceOrientation;
 @dynamic deviceOrientation;
@@ -268,6 +269,7 @@ typedef struct GDDPBViewOption__storage_ {
   GDPBBool tabBar;
   uint32_t supportedInterfaceOrientations;
   GDPBBool autorotate;
+  GDPBBool navBarTranslucent;
   uint32_t deviceOrientation;
   GDPBBool toolBar;
   uint32_t preferredInterfaceOrientationForPresentation;
@@ -374,11 +376,20 @@ typedef struct GDDPBViewOption__storage_ {
         .dataType = GPBDataTypeEnum,
       },
       {
+        .name = "navBarTranslucent",
+        .dataTypeSpecific.enumDescFunc = GDPBBool_EnumDescriptor,
+        .number = GDDPBViewOption_FieldNumber_NavBarTranslucent,
+        .hasIndex = 11,
+        .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, navBarTranslucent),
+        .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
+        .dataType = GPBDataTypeEnum,
+      },
+      {
         .name = "needsRefresh",
         .dataTypeSpecific.className = NULL,
         .number = GDDPBViewOption_FieldNumber_NeedsRefresh,
-        .hasIndex = 11,
-        .offset = 12,  // Stored in _has_storage_ to save space.
+        .hasIndex = 12,
+        .offset = 13,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -386,8 +397,8 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "attemptRotationToDeviceOrientation",
         .dataTypeSpecific.className = NULL,
         .number = GDDPBViewOption_FieldNumber_AttemptRotationToDeviceOrientation,
-        .hasIndex = 13,
-        .offset = 14,  // Stored in _has_storage_ to save space.
+        .hasIndex = 14,
+        .offset = 15,  // Stored in _has_storage_ to save space.
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeBool,
       },
@@ -395,7 +406,7 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "deviceOrientation",
         .dataTypeSpecific.className = NULL,
         .number = GDDPBViewOption_FieldNumber_DeviceOrientation,
-        .hasIndex = 15,
+        .hasIndex = 16,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, deviceOrientation),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeUInt32,
@@ -404,7 +415,7 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "toolBar",
         .dataTypeSpecific.enumDescFunc = GDPBBool_EnumDescriptor,
         .number = GDDPBViewOption_FieldNumber_ToolBar,
-        .hasIndex = 16,
+        .hasIndex = 17,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, toolBar),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -413,7 +424,7 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "preferredInterfaceOrientationForPresentation",
         .dataTypeSpecific.className = NULL,
         .number = GDDPBViewOption_FieldNumber_PreferredInterfaceOrientationForPresentation,
-        .hasIndex = 17,
+        .hasIndex = 18,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, preferredInterfaceOrientationForPresentation),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeUInt32,
@@ -422,7 +433,7 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "modalPresentationStyle",
         .dataTypeSpecific.className = NULL,
         .number = GDDPBViewOption_FieldNumber_ModalPresentationStyle,
-        .hasIndex = 18,
+        .hasIndex = 19,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, modalPresentationStyle),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeUInt32,
@@ -431,7 +442,7 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "modalTransitionStyle",
         .dataTypeSpecific.className = NULL,
         .number = GDDPBViewOption_FieldNumber_ModalTransitionStyle,
-        .hasIndex = 19,
+        .hasIndex = 20,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, modalTransitionStyle),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeUInt32,
@@ -440,7 +451,7 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "edgesForExtendedLayout",
         .dataTypeSpecific.className = NULL,
         .number = GDDPBViewOption_FieldNumber_EdgesForExtendedLayout,
-        .hasIndex = 20,
+        .hasIndex = 21,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, edgesForExtendedLayout),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeUInt32,
@@ -449,7 +460,7 @@ typedef struct GDDPBViewOption__storage_ {
         .name = "animated",
         .dataTypeSpecific.enumDescFunc = GDPBBool_EnumDescriptor,
         .number = GDDPBViewOption_FieldNumber_Animated,
-        .hasIndex = 21,
+        .hasIndex = 22,
         .offset = (uint32_t)offsetof(GDDPBViewOption__storage_, animated),
         .flags = (GPBFieldFlags)(GPBFieldOptional | GPBFieldHasEnumDescriptor),
         .dataType = GPBDataTypeEnum,
@@ -540,6 +551,18 @@ int32_t GDDPBViewOption_Autorotate_RawValue(GDDPBViewOption *message) {
 void SetGDDPBViewOption_Autorotate_RawValue(GDDPBViewOption *message, int32_t value) {
   GPBDescriptor *descriptor = [GDDPBViewOption descriptor];
   GPBFieldDescriptor *field = [descriptor fieldWithNumber:GDDPBViewOption_FieldNumber_Autorotate];
+  GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
+}
+
+int32_t GDDPBViewOption_NavBarTranslucent_RawValue(GDDPBViewOption *message) {
+  GPBDescriptor *descriptor = [GDDPBViewOption descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GDDPBViewOption_FieldNumber_NavBarTranslucent];
+  return GPBGetMessageInt32Field(message, field);
+}
+
+void SetGDDPBViewOption_NavBarTranslucent_RawValue(GDDPBViewOption *message, int32_t value) {
+  GPBDescriptor *descriptor = [GDDPBViewOption descriptor];
+  GPBFieldDescriptor *field = [descriptor fieldWithNumber:GDDPBViewOption_FieldNumber_NavBarTranslucent];
   GPBSetInt32IvarWithFieldInternal(message, field, value, descriptor.file.syntax);
 }
 
