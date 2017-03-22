@@ -168,3 +168,10 @@ message EarnVirtualCurrencyEvent {
   double value = 1;
   string virtual_currency_name = 2;
 }
+message LoginEvent {
+  string id = 1; // 用户 id
+  bool failed = 2; // 是否登录失败
+  string method = 3; // 登录方式
+  string desc = 4; // 描述
+  string token = 5;
+}

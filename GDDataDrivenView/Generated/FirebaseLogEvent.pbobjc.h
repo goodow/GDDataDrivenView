@@ -563,6 +563,34 @@ typedef GPB_ENUM(FIRPBEarnVirtualCurrencyEvent_FieldNumber) {
 
 @end
 
+#pragma mark - FIRPBLoginEvent
+
+typedef GPB_ENUM(FIRPBLoginEvent_FieldNumber) {
+  FIRPBLoginEvent_FieldNumber_Id_p = 1,
+  FIRPBLoginEvent_FieldNumber_Failed = 2,
+  FIRPBLoginEvent_FieldNumber_Method = 3,
+  FIRPBLoginEvent_FieldNumber_Desc = 4,
+  FIRPBLoginEvent_FieldNumber_Token = 5,
+};
+
+@interface FIRPBLoginEvent : GPBMessage
+
+/** 用户 id */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *id_p;
+
+/** 是否登录失败 */
+@property(nonatomic, readwrite) BOOL failed;
+
+/** 登录方式 */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *method;
+
+/** 描述 */
+@property(nonatomic, readwrite, copy, null_resettable) NSString *desc;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *token;
+
+@end
+
 NS_ASSUME_NONNULL_END
 
 CF_EXTERN_C_END

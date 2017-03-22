@@ -1677,6 +1677,92 @@ typedef struct FIRPBEarnVirtualCurrencyEvent__storage_ {
 
 @end
 
+#pragma mark - FIRPBLoginEvent
+
+@implementation FIRPBLoginEvent
+
+@dynamic id_p;
+@dynamic failed;
+@dynamic method;
+@dynamic desc;
+@dynamic token;
+
+typedef struct FIRPBLoginEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *id_p;
+  NSString *method;
+  NSString *desc;
+  NSString *token;
+} FIRPBLoginEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "failed",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Failed,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "method",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Method,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, method),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "desc",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Desc,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, desc),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "token",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Token,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, token),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBLoginEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBLoginEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
 
 #pragma clang diagnostic pop
 
