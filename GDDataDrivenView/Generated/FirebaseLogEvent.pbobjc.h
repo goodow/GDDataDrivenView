@@ -571,6 +571,7 @@ typedef GPB_ENUM(FIRPBLoginEvent_FieldNumber) {
   FIRPBLoginEvent_FieldNumber_Method = 3,
   FIRPBLoginEvent_FieldNumber_Desc = 4,
   FIRPBLoginEvent_FieldNumber_Token = 5,
+  FIRPBLoginEvent_FieldNumber_AutomaticLogin = 6,
 };
 
 @interface FIRPBLoginEvent : GPBMessage
@@ -588,6 +589,8 @@ typedef GPB_ENUM(FIRPBLoginEvent_FieldNumber) {
 @property(nonatomic, readwrite, copy, null_resettable) NSString *desc;
 
 @property(nonatomic, readwrite, copy, null_resettable) NSString *token;
+
+@property(nonatomic, readwrite) BOOL automaticLogin;
 
 @end
 

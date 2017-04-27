@@ -1686,6 +1686,7 @@ typedef struct FIRPBEarnVirtualCurrencyEvent__storage_ {
 @dynamic method;
 @dynamic desc;
 @dynamic token;
+@dynamic automaticLogin;
 
 typedef struct FIRPBLoginEvent__storage_ {
   uint32_t _has_storage_[1];
@@ -1745,6 +1746,15 @@ typedef struct FIRPBLoginEvent__storage_ {
         .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, token),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "automaticLogin",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_AutomaticLogin,
+        .hasIndex = 6,
+        .offset = 7,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
       },
     };
     GPBDescriptor *localDescriptor =

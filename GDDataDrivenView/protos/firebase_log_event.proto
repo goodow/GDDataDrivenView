@@ -174,4 +174,5 @@ message LoginEvent {
   string method = 3; // 登录方式
   string desc = 4; // 描述
   string token = 5;
+  bool automatic_login = 6;
 }
