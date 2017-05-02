@@ -70,6 +70,7 @@
   return ^{
       _alreadyInStack = YES;
       _viewController = GDDViewControllerTransition.backViewController ?: GDDViewControllerTransition.topViewController;
+      [self mergeViewOption];
       [self displayAndRefresh];
   };
 }
@@ -77,6 +78,7 @@
 - (void (^)())toCurrent {
   return ^{
       _viewController = GDDViewControllerTransition.topViewController;
+      [self mergeViewOption];
       [self updateData];
   };
 }
@@ -209,6 +211,10 @@
   enum GDPBBool toolBar = viewOption.toolBar;
   if (toolBar != GDPBBool_Default && GDPBBool_IsValidValue(toolBar)) {
     [controller.navigationController setToolbarHidden:toolBar == GDPBBool_False animated:viewOption.animated != GDPBBool_False];
+  }
+  enum GDPBBool navBarTranslucent = viewOption.navBarTranslucent;
+  if (navBarTranslucent != GDPBBool_Default && GDPBBool_IsValidValue(navBarTranslucent)) {
+    controller.navigationController.navigationBar.translucent = navBarTranslucent != GDPBBool_False;
   }
   if (viewOption.deviceOrientation) {
     viewOption.deviceOrientation = UIDeviceOrientationUnknown;
