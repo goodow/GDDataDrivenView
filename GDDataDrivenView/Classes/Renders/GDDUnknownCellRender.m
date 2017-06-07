@@ -24,7 +24,7 @@ static const char kExpandHeightKey = 0;
     _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     [self.contentView addSubview:_descriptionLabel];
 
-    [_descriptionLabel setNumberOfLines:0];
+    _descriptionLabel.numberOfLines = 0;
     _descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
 
     _descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;

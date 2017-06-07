@@ -44,17 +44,19 @@ message ViewOption {
 
 // 是否创建新对象
 enum LaunchMode {
-  STANDARD = 0; // 总是创建一个新的实例
-  SINGLE_INSTANCE = 1; // 单例模式. 先寻找是否已存在该类型的实例, 若存在则回退历史栈直至可见, 不存在则新创建
-  NONE = 2; // 不创建对象, 也不改变是否可见, 只转发消息
+  LAUNCH_MODE_UNSET = 0;
+  standard = 1; // 总是创建一个新的实例
+  singleInstance = 2; // 单例模式. 先寻找是否已存在该类型的实例, 若存在则回退历史栈直至可见, 不存在则新创建
+  none = 3; // 不创建对象, 也不改变是否可见, 只转发消息
 }
 
 // 放入哪个历史回退栈里
 enum StackMode {
-  PUSH = 0; // push 到当前的 UINavigationController
-  PRESENT_PUSH = 1; // 使用 top presentViewController:[[UINavigationController alloc] initWithRootViewController:controller]
-  PRESENT = 2; // 使用 top presentViewController:controller
-  REPLACE_ROOT = 3; // 替换当前 window 的 rootViewController
+  STACK_MODE_UNSET = 0;
+  push = 1; // push 到当前的 UINavigationController
+  present = 2; // 使用 top presentViewController:controller
+  present_push = 3; // 使用 top presentViewController:[[UINavigationController alloc] initWithRootViewController:controller]
+  root = 4; // 替换当前 window 的 rootViewController
 };
 
 // https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn

@@ -56,18 +56,22 @@ GPBEnumDescriptor *GDDPBLaunchMode_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Standard\000SingleInstance\000None\000";
+        "LaunchModeUnset\000Standard\000SingleInstance\000"
+        "None\000";
     static const int32_t values[] = {
+        GDDPBLaunchMode_LaunchModeUnset,
         GDDPBLaunchMode_Standard,
         GDDPBLaunchMode_SingleInstance,
         GDDPBLaunchMode_None,
     };
+    static const char *extraTextFormatInfo = "\003\001(\000\002.\000\003$\000";
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GDDPBLaunchMode)
                                        valueNames:valueNames
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:GDDPBLaunchMode_IsValidValue];
+                                     enumVerifier:GDDPBLaunchMode_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
     if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
       [worker release];
     }
@@ -77,6 +81,7 @@ GPBEnumDescriptor *GDDPBLaunchMode_EnumDescriptor(void) {
 
 BOOL GDDPBLaunchMode_IsValidValue(int32_t value__) {
   switch (value__) {
+    case GDDPBLaunchMode_LaunchModeUnset:
     case GDDPBLaunchMode_Standard:
     case GDDPBLaunchMode_SingleInstance:
     case GDDPBLaunchMode_None:
@@ -92,19 +97,23 @@ GPBEnumDescriptor *GDDPBStackMode_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Push\000PresentPush\000Present\000ReplaceRoot\000";
+        "StackModeUnset\000Push\000Present\000PresentPush\000"
+        "Root\000";
     static const int32_t values[] = {
+        GDDPBStackMode_StackModeUnset,
         GDDPBStackMode_Push,
-        GDDPBStackMode_PresentPush,
         GDDPBStackMode_Present,
-        GDDPBStackMode_ReplaceRoot,
+        GDDPBStackMode_PresentPush,
+        GDDPBStackMode_Root,
     };
+    static const char *extraTextFormatInfo = "\004\001$\000\002\'\000\003\'\244\000\004$\000";
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GDDPBStackMode)
                                        valueNames:valueNames
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:GDDPBStackMode_IsValidValue];
+                                     enumVerifier:GDDPBStackMode_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
     if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
       [worker release];
     }
@@ -114,10 +123,11 @@ GPBEnumDescriptor *GDDPBStackMode_EnumDescriptor(void) {
 
 BOOL GDDPBStackMode_IsValidValue(int32_t value__) {
   switch (value__) {
+    case GDDPBStackMode_StackModeUnset:
     case GDDPBStackMode_Push:
-    case GDDPBStackMode_PresentPush:
     case GDDPBStackMode_Present:
-    case GDDPBStackMode_ReplaceRoot:
+    case GDDPBStackMode_PresentPush:
+    case GDDPBStackMode_Root:
       return YES;
     default:
       return NO;

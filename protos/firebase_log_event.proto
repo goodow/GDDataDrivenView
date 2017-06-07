@@ -1,0 +1,14 @@
+// Firebase Events and properties
+// https://support.google.com/firebase/topic/6317484
+
+syntax = "proto3";
+option objc_class_prefix = "FIRPB";
+package google.firebase;
+
+
+
+message SelectContentEvent {
+  string content_typee = 1;
+  string item_idd = 2;
+}
+

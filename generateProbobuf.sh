@@ -1,5 +1,4 @@
-# protoc --objc_out=. goodow_extras_option.proto
-protoc --objc_out=GDDataDrivenView/Generated -IGDDataDrivenView/protos \
- GDDataDrivenView/protos/goodow_bool.proto \
- GDDataDrivenView/protos/goodow_extras_option.proto \
- GDDataDrivenView/protos/firebase_log_event.proto
+# --js_out=import_style=commonjs,binary:.
+protoc --objc_out=GDDataDrivenView/Generated/goodow/data-driven -Iprotos -IExample/Pods/GDChannel/protos \
+ protos/goodow_extras_option.proto \
+ protos/firebase_log_event.proto

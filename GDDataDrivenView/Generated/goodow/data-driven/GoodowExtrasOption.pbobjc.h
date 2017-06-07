@@ -45,14 +45,16 @@ typedef GPB_ENUM(GDDPBLaunchMode) {
    * of the field.
    **/
   GDDPBLaunchMode_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
+  GDDPBLaunchMode_LaunchModeUnset = 0,
+
   /** 总是创建一个新的实例 */
-  GDDPBLaunchMode_Standard = 0,
+  GDDPBLaunchMode_Standard = 1,
 
   /** 单例模式. 先寻找是否已存在该类型的实例, 若存在则回退历史栈直至可见, 不存在则新创建 */
-  GDDPBLaunchMode_SingleInstance = 1,
+  GDDPBLaunchMode_SingleInstance = 2,
 
   /** 不创建对象, 也不改变是否可见, 只转发消息 */
-  GDDPBLaunchMode_None = 2,
+  GDDPBLaunchMode_None = 3,
 };
 
 GPBEnumDescriptor *GDDPBLaunchMode_EnumDescriptor(void);
@@ -73,17 +75,19 @@ typedef GPB_ENUM(GDDPBStackMode) {
    * of the field.
    **/
   GDDPBStackMode_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  /** push 到当前的 UINavigationController */
-  GDDPBStackMode_Push = 0,
+  GDDPBStackMode_StackModeUnset = 0,
 
-  /** 使用 top presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] */
-  GDDPBStackMode_PresentPush = 1,
+  /** push 到当前的 UINavigationController */
+  GDDPBStackMode_Push = 1,
 
   /** 使用 top presentViewController:controller */
   GDDPBStackMode_Present = 2,
 
+  /** 使用 top presentViewController:[[UINavigationController alloc] initWithRootViewController:controller] */
+  GDDPBStackMode_PresentPush = 3,
+
   /** 替换当前 window 的 rootViewController */
-  GDDPBStackMode_ReplaceRoot = 3,
+  GDDPBStackMode_Root = 4,
 };
 
 GPBEnumDescriptor *GDDPBStackMode_EnumDescriptor(void);
