@@ -69,7 +69,7 @@
 - (void (^)())toUp {
   return ^{
       _alreadyInStack = YES;
-      _viewController = GDDViewControllerTransition.backViewController ?: GDDViewControllerTransition.topViewController;
+      _viewController = GDDViewControllerTransition.upViewController;
       [self mergeViewOption];
       [self displayAndRefresh];
   };
@@ -253,20 +253,29 @@
   if (parent.presentedViewController && !parent.presentedViewController.isBeingDismissed) {
     return [self findTopViewController:parent.presentedViewController];
   }
-  UIViewController *child = [self getVisibleChildViewController:parent];
-  return child ? [self findTopViewController:child] : parent;
+  return [self findVisibleChildViewController:parent];
 }
 
-+ (UIViewController *)backViewController {
-  UIViewController *top = GDDViewControllerTransition.topViewController;
-  NSArray *navViewControllers = top.navigationController.viewControllers;
++ (UIViewController *)upViewController {
+  UIViewController *current = self.topViewController;
+  NSArray *navViewControllers = current.navigationController.viewControllers;
   if (navViewControllers.count > 1) {
     return navViewControllers[navViewControllers.count - 2];
-  } else if (top.presentingViewController) {
-    UIViewController *child = [self getVisibleChildViewController:top.presentingViewController];
-    return child ?: top.presentingViewController;
   }
-  return nil;
+  if (current.presentingViewController) {
+    return [self findVisibleChildViewController:current.presentingViewController];
+  }
+
+  while (current.parentViewController) {
+    UIViewController *parent = current.parentViewController;
+    if ([parent isMemberOfClass:UIPageViewController.class] || [parent isMemberOfClass:UINavigationController.class] ||
+        [parent isMemberOfClass:UITabBarController.class]) { // skip system's view controllers
+      current = parent;
+      continue;
+    }
+    return parent;
+  }
+  return current;
 }
 
 + (UIViewController *)findViewController:(Class)viewControllerClass {
@@ -325,6 +334,11 @@
 
 + (BOOL)isSame:(id)controllerOrClass with:(UIViewController *)otherController instanceOrClass:(BOOL)isInstance {
   return isInstance ? controllerOrClass == otherController : [otherController isKindOfClass:controllerOrClass];
+}
+
++ (UIViewController *)findVisibleChildViewController:(UIViewController *)parent {
+  UIViewController *child = [self getVisibleChildViewController:parent];
+  return child ? [self findVisibleChildViewController:child] : parent;
 }
 
 + (UIViewController *)getVisibleChildViewController:(UIViewController *)parent {
