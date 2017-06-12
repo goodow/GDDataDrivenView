@@ -55,7 +55,7 @@ enum StackMode {
   STACK_MODE_UNSET = 0;
   push = 1; // push 到当前的 UINavigationController
   present = 2; // 使用 top presentViewController:controller
-  present_push = 3; // 使用 top presentViewController:[[UINavigationController alloc] initWithRootViewController:controller]
+  presentPush = 3; // 使用 top presentViewController:[[UINavigationController alloc] initWithRootViewController:controller]
   root = 4; // 替换当前 window 的 rootViewController
 };
 
@@ -69,12 +69,12 @@ message CacheControl {
   RequestCachePolicy request_policy = 6;
 
   enum Status {
-    UNSET = 0;
-    PRIVATE = 1; // 只为单个用户缓存
-    PUBLIC = 2; // 即使有关联的用户认证, 甚至响应状态码无法正常缓存, 响应也可以被缓存. 大多数情况下, public不是必须的, 因为明确的缓存信息(例如max_age)已表示响应可以被缓存.
-    NO_CACHE = 3; // 必须先与服务器确认是否有更新
-    NO_STORE = 4; // 禁止缓存
-    NOT_MODIFIED = 5; // 服务器没有更新; 同时复用这个字段表示数据来自缓存
+    STATUS_UNSET = 0;
+    private = 1; // 只为单个用户缓存
+    public = 2; // 即使有关联的用户认证, 甚至响应状态码无法正常缓存, 响应也可以被缓存. 大多数情况下, public不是必须的, 因为明确的缓存信息(例如max_age)已表示响应可以被缓存.
+    no_cache = 3; // 必须先与服务器确认是否有更新
+    no_store = 4; // 禁止缓存
+    unmodified = 5; // 服务器没有更新; 同时复用这个字段表示数据来自缓存
   }
 
   // 含义和 NSURLRequestCachePolicy 保持一致

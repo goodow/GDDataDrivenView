@@ -5,10 +5,174 @@ syntax = "proto3";
 option objc_class_prefix = "FIRPB";
 package google.firebase;
 
+enum LogEvents {
+  LOG_EVENT_NAME_UNSET = 0;
+  select_content = 1; // when a user has selected content in an app.
+  share = 2; // when a user has shared content in an app.
+  spend_virtual_currency = 3; // when a user has spent virtual currency (coins, gems, tokens, etc.) in the app.
+  sign_up = 4; // when a user has signed up. Allows you to see which methods of sign-up (e.g., Google account, email address, etc.) are most popular.
+  search = 5; // when a user searches in the app.
+  present_offer = 6; // when a user is presented with an offer.
+  join_group = 7; // when a user joins a group. Allows you to track the popularity of various clans or user groups.
+  tutorial_begin = 8; // 无参数 when a user begins a tutorial.
+  tutorial_complete = 9; // 无参数 When a user completes a tutorial.
 
+  add_payment_info = 10; // 无参数 when a user adds billing information
+  view_item = 11; // when a user sees one specific item/offering
+  view_item_list = 12; // when a user sees a list of items/offerings
+  view_search_results = 13; // when a user sees search results
+  ecommerce_purchase = 14; // when a user completes a purchase
+  purchase_refund = 15; // when a refund is issued
+  add_to_cart = 16; // when a user adds items to cart
+  begin_checkout = 17; // when a user begins checkout
+  add_to_wishlist = 18; // when a user adds an item to wishlist
+  generate_lead = 19;
 
-message SelectContentEvent {
-  string content_typee = 1;
-  string item_idd = 2;
+  level_up = 20; // when a player levels-up in the game.
+  post_score = 21; // when a player posts his or her score.
+  unlock_achievement = 22; // when a player unlocks an achievement.
+
+  app_open = 23; // 无参数 when an App is moved to the foreground
+  earn_virtual_currency = 24; // tracks the awarding of virtual currency in your app
+  login = 25; // report this event to signify that a user has logged in
 }
 
+message SelectContentEvent {
+  string content_type = 1;
+  string item_id = 2;
+}
+
+message ShareEvent {
+  string content_type = 1;
+  string item_id = 2;
+}
+
+message SpendVirtualCurrencyEvent {
+  string item_name = 1;
+  string virtual_currency_name = 2;
+  double value = 3;
+}
+
+message SignUpEvent {
+  string method = 1;
+}
+
+message SearchEvent {
+  string search_term = 1;
+  string start_date = 2;
+  string end_date = 3;
+  string origin = 4;
+  string destination = 5;
+}
+
+message PresentOfferEvent {
+  string item_id = 1;
+  string item_name = 2;
+  string item_category = 3;
+  string item_location_id = 4;
+  int64 quantity = 5;
+  double price = 6;
+  string currency = 7;
+  double value = 8;
+}
+
+message JoinGroupEvent {
+  string group_id = 1;
+}
+
+message ViewItemEvent {
+  string item_id = 1;
+  string item_location_id = 2;
+  string content_type = 3;
+  string item_name = 4;
+  string item_category = 5;
+  string currency = 6;
+  double value = 7;
+  string search_term = 8;
+  string start_date = 9;
+  string end_date = 10;
+}
+
+message ViewItemListEvent {
+  string item_category = 1;
+  string start_date = 2;
+  string end_date = 3;
+}
+message ViewSearchResultsEvent {
+  string search_term = 1;
+}
+message EcommercePurchaseEvent {
+  string coupon = 1;
+  string currency = 2;
+  double value = 3;
+  double tax = 4;
+  double shipping = 5;
+  string transaction_id = 6;
+  int64 quantity = 7;
+  string location = 8;
+  string start_date = 9;
+  string end_date = 10;
+  string origin = 11;
+  string destination = 12;
+}
+message PurchaseRefundEvent {
+  int64 quantity = 1;
+  double value = 2;
+  string currency = 3;
+  string transaction_id = 4;
+}
+message AddToCartEvent {
+  int64 quantity = 1;
+  string item_category = 2;
+  string item_name = 3;
+  string item_id = 4;
+  string item_location_id = 5;
+  double value = 6;
+  double price = 7;
+  string currency = 8;
+}
+message BeginCheckoutEvent {
+  string coupon = 1;
+  string currency = 2;
+  double value = 3;
+  string transaction_id = 4;
+}
+message AddToWishlistEvent {
+  int64 quantity = 1;
+  string item_category = 2;
+  string item_name = 3;
+  string item_id = 4;
+  string item_location_id = 5;
+  double value = 6;
+  double price = 7;
+  string currency = 8;
+}
+message GenerateLeadEvent {
+  double value = 1;
+  string currency = 2;
+}
+message LevelUpEvent {
+  string character = 1;
+  int64 level = 2;
+}
+message PostScoreEvent {
+  string character = 1;
+  int64 level = 2;
+  int64 score = 3;
+}
+message UnlockAchievementEvent {
+  string achievement_id = 1;
+}
+
+message EarnVirtualCurrencyEvent {
+  double value = 1;
+  string virtual_currency_name = 2;
+}
+message LoginEvent {
+  string id = 1; // 用户 id
+  bool failed = 2; // 是否登录失败
+  string method = 3; // 登录方式
+  string desc = 4; // 描述
+  string token = 5;
+  bool automatic_login = 6;
+}

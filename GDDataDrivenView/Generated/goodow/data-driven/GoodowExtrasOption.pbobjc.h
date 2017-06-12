@@ -107,7 +107,7 @@ typedef GPB_ENUM(GDDPBCacheControl_Status) {
    * of the field.
    **/
   GDDPBCacheControl_Status_GPBUnrecognizedEnumeratorValue = kGPBUnrecognizedEnumeratorValue,
-  GDDPBCacheControl_Status_Unset = 0,
+  GDDPBCacheControl_Status_StatusUnset = 0,
 
   /** 只为单个用户缓存 */
   GDDPBCacheControl_Status_Private = 1,
@@ -122,7 +122,7 @@ typedef GPB_ENUM(GDDPBCacheControl_Status) {
   GDDPBCacheControl_Status_NoStore = 4,
 
   /** 服务器没有更新; 同时复用这个字段表示数据来自缓存 */
-  GDDPBCacheControl_Status_NotModified = 5,
+  GDDPBCacheControl_Status_Unmodified = 5,
 };
 
 GPBEnumDescriptor *GDDPBCacheControl_Status_EnumDescriptor(void);

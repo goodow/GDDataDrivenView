@@ -106,7 +106,7 @@ GPBEnumDescriptor *GDDPBStackMode_EnumDescriptor(void) {
         GDDPBStackMode_PresentPush,
         GDDPBStackMode_Root,
     };
-    static const char *extraTextFormatInfo = "\004\001$\000\002\'\000\003\'\244\000\004$\000";
+    static const char *extraTextFormatInfo = "\004\001$\000\002\'\000\003+\000\004$\000";
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GDDPBStackMode)
                                        valueNames:valueNames
@@ -728,22 +728,24 @@ GPBEnumDescriptor *GDDPBCacheControl_Status_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "Unset\000Private\000Public\000NoCache\000NoStore\000Not"
-        "Modified\000";
+        "StatusUnset\000Private\000Public\000NoCache\000NoSto"
+        "re\000Unmodified\000";
     static const int32_t values[] = {
-        GDDPBCacheControl_Status_Unset,
+        GDDPBCacheControl_Status_StatusUnset,
         GDDPBCacheControl_Status_Private,
         GDDPBCacheControl_Status_Public,
         GDDPBCacheControl_Status_NoCache,
         GDDPBCacheControl_Status_NoStore,
-        GDDPBCacheControl_Status_NotModified,
+        GDDPBCacheControl_Status_Unmodified,
     };
+    static const char *extraTextFormatInfo = "\005\001\'\000\002&\000\003\"\245\000\004\"\245\000\005*\000";
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GDDPBCacheControl_Status)
                                        valueNames:valueNames
                                            values:values
                                             count:(uint32_t)(sizeof(values) / sizeof(int32_t))
-                                     enumVerifier:GDDPBCacheControl_Status_IsValidValue];
+                                     enumVerifier:GDDPBCacheControl_Status_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
     if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
       [worker release];
     }
@@ -753,12 +755,12 @@ GPBEnumDescriptor *GDDPBCacheControl_Status_EnumDescriptor(void) {
 
 BOOL GDDPBCacheControl_Status_IsValidValue(int32_t value__) {
   switch (value__) {
-    case GDDPBCacheControl_Status_Unset:
+    case GDDPBCacheControl_Status_StatusUnset:
     case GDDPBCacheControl_Status_Private:
     case GDDPBCacheControl_Status_Public:
     case GDDPBCacheControl_Status_NoCache:
     case GDDPBCacheControl_Status_NoStore:
-    case GDDPBCacheControl_Status_NotModified:
+    case GDDPBCacheControl_Status_Unmodified:
       return YES;
     default:
       return NO;

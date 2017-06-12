@@ -43,17 +43,109 @@ static GPBFileDescriptor *FIRPBFirebaseLogEventRoot_FileDescriptor(void) {
   return descriptor;
 }
 
+#pragma mark - Enum FIRPBLogEvents
+
+GPBEnumDescriptor *FIRPBLogEvents_EnumDescriptor(void) {
+  static GPBEnumDescriptor *descriptor = NULL;
+  if (!descriptor) {
+    static const char *valueNames =
+        "LogEventNameUnset\000SelectContent\000Share\000Sp"
+        "endVirtualCurrency\000SignUp\000Search\000Present"
+        "Offer\000JoinGroup\000TutorialBegin\000TutorialCo"
+        "mplete\000AddPaymentInfo\000ViewItem\000ViewItemL"
+        "ist\000ViewSearchResults\000EcommercePurchase\000"
+        "PurchaseRefund\000AddToCart\000BeginCheckout\000A"
+        "ddToWishlist\000GenerateLead\000LevelUp\000PostSc"
+        "ore\000UnlockAchievement\000AppOpen\000EarnVirtua"
+        "lCurrency\000Login\000";
+    static const int32_t values[] = {
+        FIRPBLogEvents_LogEventNameUnset,
+        FIRPBLogEvents_SelectContent,
+        FIRPBLogEvents_Share,
+        FIRPBLogEvents_SpendVirtualCurrency,
+        FIRPBLogEvents_SignUp,
+        FIRPBLogEvents_Search,
+        FIRPBLogEvents_PresentOffer,
+        FIRPBLogEvents_JoinGroup,
+        FIRPBLogEvents_TutorialBegin,
+        FIRPBLogEvents_TutorialComplete,
+        FIRPBLogEvents_AddPaymentInfo,
+        FIRPBLogEvents_ViewItem,
+        FIRPBLogEvents_ViewItemList,
+        FIRPBLogEvents_ViewSearchResults,
+        FIRPBLogEvents_EcommercePurchase,
+        FIRPBLogEvents_PurchaseRefund,
+        FIRPBLogEvents_AddToCart,
+        FIRPBLogEvents_BeginCheckout,
+        FIRPBLogEvents_AddToWishlist,
+        FIRPBLogEvents_GenerateLead,
+        FIRPBLogEvents_LevelUp,
+        FIRPBLogEvents_PostScore,
+        FIRPBLogEvents_UnlockAchievement,
+        FIRPBLogEvents_AppOpen,
+        FIRPBLogEvents_EarnVirtualCurrency,
+        FIRPBLogEvents_Login,
+    };
+    static const char *extraTextFormatInfo = "\031\001&\247\000\002%\000\003%\247\250\000\004$\242\000\005&\000\006\'\245\000\007$\245\000\010(\245\000\t(\250\000\n#\247\244\000\013$\244\000\014$\244\244\000\r$\246\247\000\016)\250\000\017(\246\000\020#\242\244\000\021%\250\000\022#\242\250\000\023(\244\000\024%\242\000\025$\245\000\026&\253\000\027#\244\000\030$\247\250\000\031%\000";
+    GPBEnumDescriptor *worker =
+        [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(FIRPBLogEvents)
+                                       valueNames:valueNames
+                                           values:values
+                                            count:(uint32_t)(sizeof(values) / sizeof(int32_t))
+                                     enumVerifier:FIRPBLogEvents_IsValidValue
+                              extraTextFormatInfo:extraTextFormatInfo];
+    if (!OSAtomicCompareAndSwapPtrBarrier(nil, worker, (void * volatile *)&descriptor)) {
+      [worker release];
+    }
+  }
+  return descriptor;
+}
+
+BOOL FIRPBLogEvents_IsValidValue(int32_t value__) {
+  switch (value__) {
+    case FIRPBLogEvents_LogEventNameUnset:
+    case FIRPBLogEvents_SelectContent:
+    case FIRPBLogEvents_Share:
+    case FIRPBLogEvents_SpendVirtualCurrency:
+    case FIRPBLogEvents_SignUp:
+    case FIRPBLogEvents_Search:
+    case FIRPBLogEvents_PresentOffer:
+    case FIRPBLogEvents_JoinGroup:
+    case FIRPBLogEvents_TutorialBegin:
+    case FIRPBLogEvents_TutorialComplete:
+    case FIRPBLogEvents_AddPaymentInfo:
+    case FIRPBLogEvents_ViewItem:
+    case FIRPBLogEvents_ViewItemList:
+    case FIRPBLogEvents_ViewSearchResults:
+    case FIRPBLogEvents_EcommercePurchase:
+    case FIRPBLogEvents_PurchaseRefund:
+    case FIRPBLogEvents_AddToCart:
+    case FIRPBLogEvents_BeginCheckout:
+    case FIRPBLogEvents_AddToWishlist:
+    case FIRPBLogEvents_GenerateLead:
+    case FIRPBLogEvents_LevelUp:
+    case FIRPBLogEvents_PostScore:
+    case FIRPBLogEvents_UnlockAchievement:
+    case FIRPBLogEvents_AppOpen:
+    case FIRPBLogEvents_EarnVirtualCurrency:
+    case FIRPBLogEvents_Login:
+      return YES;
+    default:
+      return NO;
+  }
+}
+
 #pragma mark - FIRPBSelectContentEvent
 
 @implementation FIRPBSelectContentEvent
 
-@dynamic contentTypee;
-@dynamic itemIdd;
+@dynamic contentType;
+@dynamic itemId;
 
 typedef struct FIRPBSelectContentEvent__storage_ {
   uint32_t _has_storage_[1];
-  NSString *contentTypee;
-  NSString *itemIdd;
+  NSString *contentType;
+  NSString *itemId;
 } FIRPBSelectContentEvent__storage_;
 
 // This method is threadsafe because it is initially called
@@ -63,20 +155,20 @@ typedef struct FIRPBSelectContentEvent__storage_ {
   if (!descriptor) {
     static GPBMessageFieldDescription fields[] = {
       {
-        .name = "contentTypee",
+        .name = "contentType",
         .dataTypeSpecific.className = NULL,
-        .number = FIRPBSelectContentEvent_FieldNumber_ContentTypee,
+        .number = FIRPBSelectContentEvent_FieldNumber_ContentType,
         .hasIndex = 0,
-        .offset = (uint32_t)offsetof(FIRPBSelectContentEvent__storage_, contentTypee),
+        .offset = (uint32_t)offsetof(FIRPBSelectContentEvent__storage_, contentType),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
       {
-        .name = "itemIdd",
+        .name = "itemId",
         .dataTypeSpecific.className = NULL,
-        .number = FIRPBSelectContentEvent_FieldNumber_ItemIdd,
+        .number = FIRPBSelectContentEvent_FieldNumber_ItemId,
         .hasIndex = 1,
-        .offset = (uint32_t)offsetof(FIRPBSelectContentEvent__storage_, itemIdd),
+        .offset = (uint32_t)offsetof(FIRPBSelectContentEvent__storage_, itemId),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeString,
       },
@@ -88,6 +180,1590 @@ typedef struct FIRPBSelectContentEvent__storage_ {
                                         fields:fields
                                     fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
                                    storageSize:sizeof(FIRPBSelectContentEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBShareEvent
+
+@implementation FIRPBShareEvent
+
+@dynamic contentType;
+@dynamic itemId;
+
+typedef struct FIRPBShareEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *contentType;
+  NSString *itemId;
+} FIRPBShareEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "contentType",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBShareEvent_FieldNumber_ContentType,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBShareEvent__storage_, contentType),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBShareEvent_FieldNumber_ItemId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBShareEvent__storage_, itemId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBShareEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBShareEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBSpendVirtualCurrencyEvent
+
+@implementation FIRPBSpendVirtualCurrencyEvent
+
+@dynamic itemName;
+@dynamic virtualCurrencyName;
+@dynamic value;
+
+typedef struct FIRPBSpendVirtualCurrencyEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *itemName;
+  NSString *virtualCurrencyName;
+  double value;
+} FIRPBSpendVirtualCurrencyEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "itemName",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSpendVirtualCurrencyEvent_FieldNumber_ItemName,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBSpendVirtualCurrencyEvent__storage_, itemName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "virtualCurrencyName",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSpendVirtualCurrencyEvent_FieldNumber_VirtualCurrencyName,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBSpendVirtualCurrencyEvent__storage_, virtualCurrencyName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSpendVirtualCurrencyEvent_FieldNumber_Value,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBSpendVirtualCurrencyEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBSpendVirtualCurrencyEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBSpendVirtualCurrencyEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBSignUpEvent
+
+@implementation FIRPBSignUpEvent
+
+@dynamic method;
+
+typedef struct FIRPBSignUpEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *method;
+} FIRPBSignUpEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "method",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSignUpEvent_FieldNumber_Method,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBSignUpEvent__storage_, method),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBSignUpEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBSignUpEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBSearchEvent
+
+@implementation FIRPBSearchEvent
+
+@dynamic searchTerm;
+@dynamic startDate;
+@dynamic endDate;
+@dynamic origin;
+@dynamic destination;
+
+typedef struct FIRPBSearchEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *searchTerm;
+  NSString *startDate;
+  NSString *endDate;
+  NSString *origin;
+  NSString *destination;
+} FIRPBSearchEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "searchTerm",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSearchEvent_FieldNumber_SearchTerm,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBSearchEvent__storage_, searchTerm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "startDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSearchEvent_FieldNumber_StartDate,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBSearchEvent__storage_, startDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "endDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSearchEvent_FieldNumber_EndDate,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBSearchEvent__storage_, endDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "origin",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSearchEvent_FieldNumber_Origin,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBSearchEvent__storage_, origin),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "destination",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBSearchEvent_FieldNumber_Destination,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBSearchEvent__storage_, destination),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBSearchEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBSearchEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBPresentOfferEvent
+
+@implementation FIRPBPresentOfferEvent
+
+@dynamic itemId;
+@dynamic itemName;
+@dynamic itemCategory;
+@dynamic itemLocationId;
+@dynamic quantity;
+@dynamic price;
+@dynamic currency;
+@dynamic value;
+
+typedef struct FIRPBPresentOfferEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *itemId;
+  NSString *itemName;
+  NSString *itemCategory;
+  NSString *itemLocationId;
+  NSString *currency;
+  int64_t quantity;
+  double price;
+  double value;
+} FIRPBPresentOfferEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "itemId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_ItemId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, itemId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemName",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_ItemName,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, itemName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemCategory",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_ItemCategory,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, itemCategory),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemLocationId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_ItemLocationId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, itemLocationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "quantity",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_Quantity,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, quantity),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "price",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_Price,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, price),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_Currency,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPresentOfferEvent_FieldNumber_Value,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(FIRPBPresentOfferEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBPresentOfferEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBPresentOfferEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBJoinGroupEvent
+
+@implementation FIRPBJoinGroupEvent
+
+@dynamic groupId;
+
+typedef struct FIRPBJoinGroupEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *groupId;
+} FIRPBJoinGroupEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "groupId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBJoinGroupEvent_FieldNumber_GroupId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBJoinGroupEvent__storage_, groupId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBJoinGroupEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBJoinGroupEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBViewItemEvent
+
+@implementation FIRPBViewItemEvent
+
+@dynamic itemId;
+@dynamic itemLocationId;
+@dynamic contentType;
+@dynamic itemName;
+@dynamic itemCategory;
+@dynamic currency;
+@dynamic value;
+@dynamic searchTerm;
+@dynamic startDate;
+@dynamic endDate;
+
+typedef struct FIRPBViewItemEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *itemId;
+  NSString *itemLocationId;
+  NSString *contentType;
+  NSString *itemName;
+  NSString *itemCategory;
+  NSString *currency;
+  NSString *searchTerm;
+  NSString *startDate;
+  NSString *endDate;
+  double value;
+} FIRPBViewItemEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "itemId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_ItemId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, itemId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemLocationId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_ItemLocationId,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, itemLocationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "contentType",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_ContentType,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, contentType),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemName",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_ItemName,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, itemName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemCategory",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_ItemCategory,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, itemCategory),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_Currency,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_Value,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "searchTerm",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_SearchTerm,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, searchTerm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "startDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_StartDate,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, startDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "endDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemEvent_FieldNumber_EndDate,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(FIRPBViewItemEvent__storage_, endDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBViewItemEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBViewItemEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBViewItemListEvent
+
+@implementation FIRPBViewItemListEvent
+
+@dynamic itemCategory;
+@dynamic startDate;
+@dynamic endDate;
+
+typedef struct FIRPBViewItemListEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *itemCategory;
+  NSString *startDate;
+  NSString *endDate;
+} FIRPBViewItemListEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "itemCategory",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemListEvent_FieldNumber_ItemCategory,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBViewItemListEvent__storage_, itemCategory),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "startDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemListEvent_FieldNumber_StartDate,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBViewItemListEvent__storage_, startDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "endDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewItemListEvent_FieldNumber_EndDate,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBViewItemListEvent__storage_, endDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBViewItemListEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBViewItemListEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBViewSearchResultsEvent
+
+@implementation FIRPBViewSearchResultsEvent
+
+@dynamic searchTerm;
+
+typedef struct FIRPBViewSearchResultsEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *searchTerm;
+} FIRPBViewSearchResultsEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "searchTerm",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBViewSearchResultsEvent_FieldNumber_SearchTerm,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBViewSearchResultsEvent__storage_, searchTerm),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBViewSearchResultsEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBViewSearchResultsEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBEcommercePurchaseEvent
+
+@implementation FIRPBEcommercePurchaseEvent
+
+@dynamic coupon;
+@dynamic currency;
+@dynamic value;
+@dynamic tax;
+@dynamic shipping;
+@dynamic transactionId;
+@dynamic quantity;
+@dynamic location;
+@dynamic startDate;
+@dynamic endDate;
+@dynamic origin;
+@dynamic destination;
+
+typedef struct FIRPBEcommercePurchaseEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *coupon;
+  NSString *currency;
+  NSString *transactionId;
+  NSString *location;
+  NSString *startDate;
+  NSString *endDate;
+  NSString *origin;
+  NSString *destination;
+  double value;
+  double tax;
+  double shipping;
+  int64_t quantity;
+} FIRPBEcommercePurchaseEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "coupon",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Coupon,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, coupon),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Currency,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Value,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "tax",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Tax,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, tax),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "shipping",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Shipping,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, shipping),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "transactionId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_TransactionId,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, transactionId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "quantity",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Quantity,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, quantity),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "location",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Location,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, location),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "startDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_StartDate,
+        .hasIndex = 8,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, startDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "endDate",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_EndDate,
+        .hasIndex = 9,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, endDate),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "origin",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Origin,
+        .hasIndex = 10,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, origin),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "destination",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEcommercePurchaseEvent_FieldNumber_Destination,
+        .hasIndex = 11,
+        .offset = (uint32_t)offsetof(FIRPBEcommercePurchaseEvent__storage_, destination),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBEcommercePurchaseEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBEcommercePurchaseEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBPurchaseRefundEvent
+
+@implementation FIRPBPurchaseRefundEvent
+
+@dynamic quantity;
+@dynamic value;
+@dynamic currency;
+@dynamic transactionId;
+
+typedef struct FIRPBPurchaseRefundEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *currency;
+  NSString *transactionId;
+  int64_t quantity;
+  double value;
+} FIRPBPurchaseRefundEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "quantity",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPurchaseRefundEvent_FieldNumber_Quantity,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBPurchaseRefundEvent__storage_, quantity),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPurchaseRefundEvent_FieldNumber_Value,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBPurchaseRefundEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPurchaseRefundEvent_FieldNumber_Currency,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBPurchaseRefundEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "transactionId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPurchaseRefundEvent_FieldNumber_TransactionId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBPurchaseRefundEvent__storage_, transactionId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBPurchaseRefundEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBPurchaseRefundEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBAddToCartEvent
+
+@implementation FIRPBAddToCartEvent
+
+@dynamic quantity;
+@dynamic itemCategory;
+@dynamic itemName;
+@dynamic itemId;
+@dynamic itemLocationId;
+@dynamic value;
+@dynamic price;
+@dynamic currency;
+
+typedef struct FIRPBAddToCartEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *itemCategory;
+  NSString *itemName;
+  NSString *itemId;
+  NSString *itemLocationId;
+  NSString *currency;
+  int64_t quantity;
+  double value;
+  double price;
+} FIRPBAddToCartEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "quantity",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_Quantity,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, quantity),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "itemCategory",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_ItemCategory,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, itemCategory),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemName",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_ItemName,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, itemName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_ItemId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, itemId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemLocationId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_ItemLocationId,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, itemLocationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_Value,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "price",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_Price,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, price),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToCartEvent_FieldNumber_Currency,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(FIRPBAddToCartEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBAddToCartEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBAddToCartEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBBeginCheckoutEvent
+
+@implementation FIRPBBeginCheckoutEvent
+
+@dynamic coupon;
+@dynamic currency;
+@dynamic value;
+@dynamic transactionId;
+
+typedef struct FIRPBBeginCheckoutEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *coupon;
+  NSString *currency;
+  NSString *transactionId;
+  double value;
+} FIRPBBeginCheckoutEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "coupon",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBBeginCheckoutEvent_FieldNumber_Coupon,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBBeginCheckoutEvent__storage_, coupon),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBBeginCheckoutEvent_FieldNumber_Currency,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBBeginCheckoutEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBBeginCheckoutEvent_FieldNumber_Value,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBBeginCheckoutEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "transactionId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBBeginCheckoutEvent_FieldNumber_TransactionId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBBeginCheckoutEvent__storage_, transactionId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBBeginCheckoutEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBBeginCheckoutEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBAddToWishlistEvent
+
+@implementation FIRPBAddToWishlistEvent
+
+@dynamic quantity;
+@dynamic itemCategory;
+@dynamic itemName;
+@dynamic itemId;
+@dynamic itemLocationId;
+@dynamic value;
+@dynamic price;
+@dynamic currency;
+
+typedef struct FIRPBAddToWishlistEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *itemCategory;
+  NSString *itemName;
+  NSString *itemId;
+  NSString *itemLocationId;
+  NSString *currency;
+  int64_t quantity;
+  double value;
+  double price;
+} FIRPBAddToWishlistEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "quantity",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_Quantity,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, quantity),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "itemCategory",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_ItemCategory,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, itemCategory),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemName",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_ItemName,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, itemName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_ItemId,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, itemId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "itemLocationId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_ItemLocationId,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, itemLocationId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_Value,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "price",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_Price,
+        .hasIndex = 6,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, price),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBAddToWishlistEvent_FieldNumber_Currency,
+        .hasIndex = 7,
+        .offset = (uint32_t)offsetof(FIRPBAddToWishlistEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBAddToWishlistEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBAddToWishlistEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBGenerateLeadEvent
+
+@implementation FIRPBGenerateLeadEvent
+
+@dynamic value;
+@dynamic currency;
+
+typedef struct FIRPBGenerateLeadEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *currency;
+  double value;
+} FIRPBGenerateLeadEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBGenerateLeadEvent_FieldNumber_Value,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBGenerateLeadEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "currency",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBGenerateLeadEvent_FieldNumber_Currency,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBGenerateLeadEvent__storage_, currency),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBGenerateLeadEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBGenerateLeadEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBLevelUpEvent
+
+@implementation FIRPBLevelUpEvent
+
+@dynamic character;
+@dynamic level;
+
+typedef struct FIRPBLevelUpEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *character;
+  int64_t level;
+} FIRPBLevelUpEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "character",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLevelUpEvent_FieldNumber_Character,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBLevelUpEvent__storage_, character),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "level",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLevelUpEvent_FieldNumber_Level,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBLevelUpEvent__storage_, level),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBLevelUpEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBLevelUpEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBPostScoreEvent
+
+@implementation FIRPBPostScoreEvent
+
+@dynamic character;
+@dynamic level;
+@dynamic score;
+
+typedef struct FIRPBPostScoreEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *character;
+  int64_t level;
+  int64_t score;
+} FIRPBPostScoreEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "character",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPostScoreEvent_FieldNumber_Character,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBPostScoreEvent__storage_, character),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "level",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPostScoreEvent_FieldNumber_Level,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBPostScoreEvent__storage_, level),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+      {
+        .name = "score",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBPostScoreEvent_FieldNumber_Score,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(FIRPBPostScoreEvent__storage_, score),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeInt64,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBPostScoreEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBPostScoreEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBUnlockAchievementEvent
+
+@implementation FIRPBUnlockAchievementEvent
+
+@dynamic achievementId;
+
+typedef struct FIRPBUnlockAchievementEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *achievementId;
+} FIRPBUnlockAchievementEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "achievementId",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBUnlockAchievementEvent_FieldNumber_AchievementId,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBUnlockAchievementEvent__storage_, achievementId),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBUnlockAchievementEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBUnlockAchievementEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBEarnVirtualCurrencyEvent
+
+@implementation FIRPBEarnVirtualCurrencyEvent
+
+@dynamic value;
+@dynamic virtualCurrencyName;
+
+typedef struct FIRPBEarnVirtualCurrencyEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *virtualCurrencyName;
+  double value;
+} FIRPBEarnVirtualCurrencyEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "value",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEarnVirtualCurrencyEvent_FieldNumber_Value,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBEarnVirtualCurrencyEvent__storage_, value),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeDouble,
+      },
+      {
+        .name = "virtualCurrencyName",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBEarnVirtualCurrencyEvent_FieldNumber_VirtualCurrencyName,
+        .hasIndex = 1,
+        .offset = (uint32_t)offsetof(FIRPBEarnVirtualCurrencyEvent__storage_, virtualCurrencyName),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBEarnVirtualCurrencyEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBEarnVirtualCurrencyEvent__storage_)
+                                         flags:GPBDescriptorInitializationFlag_None];
+    NSAssert(descriptor == nil, @"Startup recursed!");
+    descriptor = localDescriptor;
+  }
+  return descriptor;
+}
+
+@end
+
+#pragma mark - FIRPBLoginEvent
+
+@implementation FIRPBLoginEvent
+
+@dynamic id_p;
+@dynamic failed;
+@dynamic method;
+@dynamic desc;
+@dynamic token;
+@dynamic automaticLogin;
+
+typedef struct FIRPBLoginEvent__storage_ {
+  uint32_t _has_storage_[1];
+  NSString *id_p;
+  NSString *method;
+  NSString *desc;
+  NSString *token;
+} FIRPBLoginEvent__storage_;
+
+// This method is threadsafe because it is initially called
+// in +initialize for each subclass.
++ (GPBDescriptor *)descriptor {
+  static GPBDescriptor *descriptor = nil;
+  if (!descriptor) {
+    static GPBMessageFieldDescription fields[] = {
+      {
+        .name = "id_p",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Id_p,
+        .hasIndex = 0,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, id_p),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "failed",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Failed,
+        .hasIndex = 1,
+        .offset = 2,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+      {
+        .name = "method",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Method,
+        .hasIndex = 3,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, method),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "desc",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Desc,
+        .hasIndex = 4,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, desc),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "token",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_Token,
+        .hasIndex = 5,
+        .offset = (uint32_t)offsetof(FIRPBLoginEvent__storage_, token),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
+        .name = "automaticLogin",
+        .dataTypeSpecific.className = NULL,
+        .number = FIRPBLoginEvent_FieldNumber_AutomaticLogin,
+        .hasIndex = 6,
+        .offset = 7,  // Stored in _has_storage_ to save space.
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeBool,
+      },
+    };
+    GPBDescriptor *localDescriptor =
+        [GPBDescriptor allocDescriptorForClass:[FIRPBLoginEvent class]
+                                     rootClass:[FIRPBFirebaseLogEventRoot class]
+                                          file:FIRPBFirebaseLogEventRoot_FileDescriptor()
+                                        fields:fields
+                                    fieldCount:(uint32_t)(sizeof(fields) / sizeof(GPBMessageFieldDescription))
+                                   storageSize:sizeof(FIRPBLoginEvent__storage_)
                                          flags:GPBDescriptorInitializationFlag_None];
     NSAssert(descriptor == nil, @"Startup recursed!");
     descriptor = localDescriptor;
