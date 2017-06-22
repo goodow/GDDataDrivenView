@@ -8,7 +8,7 @@
 
 @protocol GDDTransitionBuilder
 enum GDDViewControllerTransitionStackMode {
-  PUSH, PRESENT, PRESENT_THEN_PUSH
+  PUSH = 1, PRESENT, PRESENT_THEN_PUSH
 };
 
 /**

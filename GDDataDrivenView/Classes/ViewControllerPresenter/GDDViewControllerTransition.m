@@ -145,6 +145,10 @@
   }
 
   UIViewController *controller = self.viewController;
+  if (!controller) {
+    NSLog(@"%s: missing viewController", __PRETTY_FUNCTION__);
+    return;
+  }
   UIViewController *top = self.class.topViewController;
   BOOL shouldPush = _stackMode == PUSH && top.navigationController;
   /* config new controller */
