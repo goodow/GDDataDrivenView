@@ -257,7 +257,8 @@
   if (parent.presentedViewController && !parent.presentedViewController.isBeingDismissed) {
     return [self findTopViewController:parent.presentedViewController];
   }
-  return [self findVisibleChildViewController:parent];
+  UIViewController *child = [self getVisibleChildViewController:parent];
+  return child ? [self findTopViewController:child] : parent;
 }
 
 + (UIViewController *)upViewController {
