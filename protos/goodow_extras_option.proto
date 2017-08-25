@@ -9,6 +9,7 @@ import "goodow_bool.proto";
 message ExtrasOption {
   ViewOption view_opt = 1;
   CacheControl caching = 2;
+  string reply_topic = 3;
 
   RequestOption request_opt = 100;
   message RequestOption {
@@ -46,8 +47,12 @@ message ViewOption {
 enum LaunchMode {
   LAUNCH_MODE_UNSET = 0;
   standard = 1; // 总是创建一个新的实例
-  singleInstance = 2; // 单例模式. 先寻找是否已存在该类型的实例, 若存在则回退历史栈直至可见, 不存在则新创建
-  none = 3; // 不创建对象, 也不改变是否可见, 只转发消息
+  singleTop = 2; // 如果在堆栈顶部已有一个同类型的ViewController实例, 则复用该实例; 否则, 创建新实例
+
+  singleTask = 3;
+  singleInstance = 4; // 单例模式. 先寻找是否已存在该类型的实例, 若存在则回退历史栈直至可见, 不存在则新创建
+
+  none = 5; // 不创建对象, 也不改变是否可见, 只转发消息
 }
 
 // 放入哪个历史回退栈里

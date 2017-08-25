@@ -56,15 +56,17 @@ GPBEnumDescriptor *GDDPBLaunchMode_EnumDescriptor(void) {
   static GPBEnumDescriptor *descriptor = NULL;
   if (!descriptor) {
     static const char *valueNames =
-        "LaunchModeUnset\000Standard\000SingleInstance\000"
-        "None\000";
+        "LaunchModeUnset\000Standard\000SingleTop\000Singl"
+        "eTask\000SingleInstance\000None\000";
     static const int32_t values[] = {
         GDDPBLaunchMode_LaunchModeUnset,
         GDDPBLaunchMode_Standard,
+        GDDPBLaunchMode_SingleTop,
+        GDDPBLaunchMode_SingleTask,
         GDDPBLaunchMode_SingleInstance,
         GDDPBLaunchMode_None,
     };
-    static const char *extraTextFormatInfo = "\003\001(\000\002.\000\003$\000";
+    static const char *extraTextFormatInfo = "\005\001(\000\002)\000\003*\000\004.\000\005$\000";
     GPBEnumDescriptor *worker =
         [GPBEnumDescriptor allocDescriptorForName:GPBNSStringifySymbol(GDDPBLaunchMode)
                                        valueNames:valueNames
@@ -83,6 +85,8 @@ BOOL GDDPBLaunchMode_IsValidValue(int32_t value__) {
   switch (value__) {
     case GDDPBLaunchMode_LaunchModeUnset:
     case GDDPBLaunchMode_Standard:
+    case GDDPBLaunchMode_SingleTop:
+    case GDDPBLaunchMode_SingleTask:
     case GDDPBLaunchMode_SingleInstance:
     case GDDPBLaunchMode_None:
       return YES;
@@ -140,12 +144,14 @@ BOOL GDDPBStackMode_IsValidValue(int32_t value__) {
 
 @dynamic hasViewOpt, viewOpt;
 @dynamic hasCaching, caching;
+@dynamic replyTopic;
 @dynamic hasRequestOpt, requestOpt;
 
 typedef struct GDDPBExtrasOption__storage_ {
   uint32_t _has_storage_[1];
   GDDPBViewOption *viewOpt;
   GDDPBCacheControl *caching;
+  NSString *replyTopic;
   GDDPBExtrasOption_RequestOption *requestOpt;
 } GDDPBExtrasOption__storage_;
 
@@ -174,10 +180,19 @@ typedef struct GDDPBExtrasOption__storage_ {
         .dataType = GPBDataTypeMessage,
       },
       {
+        .name = "replyTopic",
+        .dataTypeSpecific.className = NULL,
+        .number = GDDPBExtrasOption_FieldNumber_ReplyTopic,
+        .hasIndex = 2,
+        .offset = (uint32_t)offsetof(GDDPBExtrasOption__storage_, replyTopic),
+        .flags = GPBFieldOptional,
+        .dataType = GPBDataTypeString,
+      },
+      {
         .name = "requestOpt",
         .dataTypeSpecific.className = GPBStringifySymbol(GDDPBExtrasOption_RequestOption),
         .number = GDDPBExtrasOption_FieldNumber_RequestOpt,
-        .hasIndex = 2,
+        .hasIndex = 3,
         .offset = (uint32_t)offsetof(GDDPBExtrasOption__storage_, requestOpt),
         .flags = GPBFieldOptional,
         .dataType = GPBDataTypeMessage,

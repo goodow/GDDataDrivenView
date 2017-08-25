@@ -34,18 +34,44 @@
 
 - (id <GDDTransitionBuilder> (^)(Class viewControllerClass))toClass {
   return ^id <GDDTransitionBuilder>(Class viewControllerClass) {
+      if (_viewOption.launchMode) {
+        switch (_viewOption.launchMode) {
+          case GDDPBLaunchMode_SingleTop: {
+            UIViewController *topViewController = self.class.topViewController;
+            if ([topViewController isKindOfClass:viewControllerClass]) {
+              return [self foundAndMergeViewOption:topViewController];
+            }
+            break;
+          }
+          case GDDPBLaunchMode_SingleInstance: {
+            UIViewController *found = [self.class findViewController:viewControllerClass];
+            if (found) {
+              return [self foundAndMergeViewOption:found];
+            }
+            break;
+          }
+          default:
+            break;
+        }
+      }
+
       _viewControllerClass = viewControllerClass;
       return self;
   };
+}
+
+- (instancetype)foundAndMergeViewOption:(UIViewController *)found {
+  _viewController = found;
+  _alreadyInStack = YES;
+  [self mergeViewOption];
+  return self;
 }
 
 - (id <GDDTransitionBuilder> (^)(Class viewControllerClass))toSingleton {
   return ^id <GDDTransitionBuilder>(Class viewControllerClass) {
       UIViewController *found = [self.class findViewController:viewControllerClass];
       if (found) {
-        _viewController = found;
-        _alreadyInStack = YES;
-        [self mergeViewOption];
+        [self foundAndMergeViewOption:found];
       } else {
         _viewControllerClass = viewControllerClass;
       }
@@ -85,7 +111,7 @@
 
 - (void (^)(enum GDDViewControllerTransitionStackMode stackMode))by {
   return ^(enum GDDViewControllerTransitionStackMode stackMode) {
-      _stackMode = stackMode;
+      _stackMode = stackMode ?: (_viewOption.stackMode ?: PUSH);
       [self displayAndRefresh];
   };
 }

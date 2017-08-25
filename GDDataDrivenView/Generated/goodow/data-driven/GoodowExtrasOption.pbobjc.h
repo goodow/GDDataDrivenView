@@ -50,11 +50,15 @@ typedef GPB_ENUM(GDDPBLaunchMode) {
   /** 总是创建一个新的实例 */
   GDDPBLaunchMode_Standard = 1,
 
+  /** 如果在堆栈顶部已有一个同类型的ViewController实例, 则复用该实例; 否则, 创建新实例 */
+  GDDPBLaunchMode_SingleTop = 2,
+  GDDPBLaunchMode_SingleTask = 3,
+
   /** 单例模式. 先寻找是否已存在该类型的实例, 若存在则回退历史栈直至可见, 不存在则新创建 */
-  GDDPBLaunchMode_SingleInstance = 2,
+  GDDPBLaunchMode_SingleInstance = 4,
 
   /** 不创建对象, 也不改变是否可见, 只转发消息 */
-  GDDPBLaunchMode_None = 3,
+  GDDPBLaunchMode_None = 5,
 };
 
 GPBEnumDescriptor *GDDPBLaunchMode_EnumDescriptor(void);
@@ -187,6 +191,7 @@ BOOL GDDPBCacheControl_RequestCachePolicy_IsValidValue(int32_t value);
 typedef GPB_ENUM(GDDPBExtrasOption_FieldNumber) {
   GDDPBExtrasOption_FieldNumber_ViewOpt = 1,
   GDDPBExtrasOption_FieldNumber_Caching = 2,
+  GDDPBExtrasOption_FieldNumber_ReplyTopic = 3,
   GDDPBExtrasOption_FieldNumber_RequestOpt = 100,
 };
 
@@ -199,6 +204,8 @@ typedef GPB_ENUM(GDDPBExtrasOption_FieldNumber) {
 @property(nonatomic, readwrite, strong, null_resettable) GDDPBCacheControl *caching;
 /** Test to see if @c caching has been set. */
 @property(nonatomic, readwrite) BOOL hasCaching;
+
+@property(nonatomic, readwrite, copy, null_resettable) NSString *replyTopic;
 
 @property(nonatomic, readwrite, strong, null_resettable) GDDPBExtrasOption_RequestOption *requestOpt;
 /** Test to see if @c requestOpt has been set. */
