@@ -16,6 +16,7 @@
   enum GDDViewControllerTransitionStackMode _stackMode;
   BOOL _alreadyInStack; // 是否已经显示过了
   Class _viewControllerClass;
+  void (^_completion)(void);
 }
 
 - (GDDViewControllerTransition *(^)(id data))data {
@@ -28,6 +29,13 @@
 - (GDDViewControllerTransition *(^)(GDDPBViewOption *viewOption))viewOption {
   return ^GDDViewControllerTransition *(GDDPBViewOption *viewOption) {
       _viewOption = viewOption;
+      return self;
+  };
+}
+
+- (GDDViewControllerTransition *(^)(void (^completion)()))completion {
+    return ^GDDViewControllerTransition *(void (^completion)()) {
+      _completion = completion;
       return self;
   };
 }
@@ -124,7 +132,7 @@
       }
       UIViewController *rootViewController = UIApplication.sharedApplication.keyWindow.rootViewController;
       if (rootViewController.presentedViewController) { // 避免内存泄漏, 以释放 rootViewController 和 rootViewController.presentedViewController
-        [rootViewController dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:nil];
+        [rootViewController dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:_completion];
       }
       UIWindow *window = UIApplication.sharedApplication.delegate.window;
       if (!window) {
@@ -149,7 +157,7 @@
       // bring viewController to front
       UIViewController *controller = self.viewController;
       if (controller.presentedViewController) {
-        [controller dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:nil];
+        [controller dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:_completion];
       }
       UIViewController *current = controller;
       while (current.parentViewController) {
@@ -200,7 +208,7 @@
   }
 
   [self config:YES]; // 某些 ViewOption 需要在 present 之前设置才会生效
-  [top presentViewController:_stackMode == PRESENT ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:_viewOption.animated != GDPBBool_False completion:nil];
+  [top presentViewController:_stackMode == PRESENT ? controller : [[UINavigationController alloc] initWithRootViewController:controller] animated:_viewOption.animated != GDPBBool_False completion:_completion];
   [self updateData];
 }
 

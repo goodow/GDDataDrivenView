@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (GDDViewControllerTransition *(^)(id data))data;
 - (GDDViewControllerTransition *(^)(GDDPBViewOption *viewOption))viewOption;
+- (GDDViewControllerTransition *(^)(void (^completion)()))completion;
 
 /**
  * 总是创建新的 ViewController 实例, 并显示
