@@ -148,7 +148,7 @@
 
       // bring viewController to front
       UIViewController *controller = self.viewController;
-      if (controller.presentedViewController) {
+      if (controller.presentedViewController && !controller.presentedViewController.isBeingDismissed) {
         [controller dismissViewControllerAnimated:_viewOption.animated != GDPBBool_False completion:nil];
       }
       UIViewController *current = controller;
