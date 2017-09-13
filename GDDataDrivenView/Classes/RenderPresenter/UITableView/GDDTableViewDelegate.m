@@ -10,12 +10,14 @@
 
 @implementation GDDTableViewDelegate {
   __weak GDDTableViewDataSource *_dataSource;
+  __weak id <UITableViewDelegate> _delegate;
 }
 
-- (instancetype)initWithDataSource:(GDDTableViewDataSource *)dataSource{
+- (instancetype)initWithDataSource:(GDDTableViewDataSource *)dataSource withOriginalDelegate:(id <UITableViewDelegate>)delegate {
   self = [super init];
   if (self) {
     _dataSource = dataSource;
+    _delegate = delegate;
   }
   return self;
 }
@@ -104,5 +106,19 @@
   }
 
   return fittingHeight;
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector {
+  if ([super respondsToSelector:aSelector]) {
+    return YES;
+  }
+  return [_delegate respondsToSelector:aSelector];
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector {
+  if ([_delegate respondsToSelector:aSelector]) {
+    return _delegate;
+  }
+  return [super forwardingTargetForSelector:aSelector];
 }
 @end

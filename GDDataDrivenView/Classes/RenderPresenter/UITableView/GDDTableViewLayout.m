@@ -29,7 +29,7 @@
     tableView.rowHeight = UITableViewAutomaticDimension;
 #else
     // 配置tableView代理
-    _delegate = [[GDDTableViewDelegate alloc] initWithDataSource:super.dataSource];
+    _delegate = [[GDDTableViewDelegate alloc] initWithDataSource:super.dataSource withOriginalDelegate:tableView.delegate];
     tableView.delegate = _delegate;
 #endif
 

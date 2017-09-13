@@ -9,5 +9,5 @@
 
 @interface GDDTableViewDelegate : NSObject <UITableViewDelegate>
 
-- (instancetype)initWithDataSource:(GDDTableViewDataSource *)dataSource;
+- (instancetype)initWithDataSource:(GDDTableViewDataSource *)dataSource withOriginalDelegate:(id <UITableViewDelegate>)delegate;
 @end
