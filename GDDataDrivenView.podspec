@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GDDataDrivenView'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of GDDataDrivenView.'
+  s.version          = '0.8.0'
+  s.summary          = '????????? iOS ?????.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,14 +18,14 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+????????? iOS ?????, ??????: Model?View?Presenter ??????; ??????; ???????????
                        DESC
 
-  s.homepage         = 'https://github.com/<GITHUB_USERNAME>/GDDataDrivenView'
+  s.homepage         = 'https://github.com/goodow/GDDataDrivenView'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Larry Tin' => 'dev@goodow.com' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/GDDataDrivenView.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/goodow/GDDataDrivenView.git', :tag => "v#{s.version.to_s}" }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
@@ -45,7 +45,7 @@ TODO: Add long description of the pod here.
 
   s.subspec 'RenderPresenter' do |sp|
     sp.dependency 'GDDataDrivenView/MVP'
-    sp.dependency 'GDChannel', '~> 0.6'
+    sp.dependency 'GDChannel', '~> 0.8'
     sp.source_files = 'GDDataDrivenView/Classes/RenderPresenter/**/*', 'GDDataDrivenView/Classes/Renders/**/*'
   end
 

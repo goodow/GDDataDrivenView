@@ -1,9 +1,9 @@
 # GDDataDrivenView
 
-[![CI Status](http://img.shields.io/travis/Larry Tin/GDDataDrivenView.svg?style=flat)](https://travis-ci.org/Larry Tin/GDDataDrivenView)
-[![Version](https://img.shields.io/cocoapods/v/GDDataDrivenView.svg?style=flat)](http://cocoapods.org/pods/GDDataDrivenView)
-[![License](https://img.shields.io/cocoapods/l/GDDataDrivenView.svg?style=flat)](http://cocoapods.org/pods/GDDataDrivenView)
-[![Platform](https://img.shields.io/cocoapods/p/GDDataDrivenView.svg?style=flat)](http://cocoapods.org/pods/GDDataDrivenView)
+模块|[MVP](https://github.com/goodow/GDDataDrivenView/tree/master/GDDataDrivenView/Classes/MVP)|[ViewController Router](https://github.com/goodow/GDDataDrivenView/tree/master/GDDataDrivenView/Classes/ViewControllerPresenter)|[TableView/CollectionView Cell Template](https://github.com/goodow/GDDataDrivenView/tree/master/GDDataDrivenView/Classes/RenderPresenter)
+---|---|---|---
+说明|Model–View–Presenter 分层设计接口|页面路由功能|数据驱动的列表视图模板
+Pod 依赖|GDDataDrivenView/MVP|GDDataDrivenView/ViewControllerPresenter|GDDataDrivenView/RenderPresenter
 
 ## Example
 
