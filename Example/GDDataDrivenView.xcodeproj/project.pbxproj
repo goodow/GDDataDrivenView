@@ -23,7 +23,9 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		61FBC00A46E2117B6AC5C27C /* GDDMyExamplePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBC6AC3FF3B95E90AF102D /* GDDMyExamplePresenter.m */; };
 		61FBC01F617B5004D55FC52E /* GDDSampleCellPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBC772965FCE547C73F336 /* GDDSampleCellPresenter.m */; };
+		61FBC2B32514CC4B09B837B1 /* GDDMyExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBCD9795DB07787A4EEEC0 /* GDDMyExampleViewController.m */; };
 		61FBC4B9CACF218A52623DD2 /* GDDSampleCollectionViewCellPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBC3C2413FED786CDA470A /* GDDSampleCollectionViewCellPresenter.m */; };
 		61FBC65B94033B1EBB452073 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FBCF5A70B64B4262BE3799 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m */; };
 		61FBCA5AED5F2B29978B9653 /* test_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 61FBC87E2BA28B9D962635CE /* test_data.json */; };
@@ -74,14 +76,18 @@
 		61FBC2CDCB9609C1FB005738 /* GDDSampleCellPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDSampleCellPresenter.h; sourceTree = "<group>"; };
 		61FBC3AEE2259CCB7532DAB1 /* GDDCollectionViewEmbeddedInTableViewCellRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDCollectionViewEmbeddedInTableViewCellRender.h; sourceTree = "<group>"; };
 		61FBC3C2413FED786CDA470A /* GDDSampleCollectionViewCellPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDSampleCollectionViewCellPresenter.m; sourceTree = "<group>"; };
+		61FBC4C2FCB7ACD32A9BC839 /* GDDMyExamplePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDMyExamplePresenter.h; sourceTree = "<group>"; };
 		61FBC53B56759D5421F5404E /* GDDSampleCollectionViewCellRender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDSampleCollectionViewCellRender.m; sourceTree = "<group>"; };
+		61FBC6AC3FF3B95E90AF102D /* GDDMyExamplePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDMyExamplePresenter.m; sourceTree = "<group>"; };
 		61FBC772965FCE547C73F336 /* GDDSampleCellPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDSampleCellPresenter.m; sourceTree = "<group>"; };
 		61FBC87E2BA28B9D962635CE /* test_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_data.json; sourceTree = "<group>"; };
 		61FBC9077CB4A5E9BA20CC98 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDCollectionViewEmbeddedInTableViewCellPresenter.h; sourceTree = "<group>"; };
 		61FBC94C720D2FF1B4D449E6 /* GDDSampleCollectionViewCellRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDSampleCollectionViewCellRender.h; sourceTree = "<group>"; };
 		61FBCC6D528001DE1CEB4ABB /* GDDSampleCollectionViewCellPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDSampleCollectionViewCellPresenter.h; sourceTree = "<group>"; };
+		61FBCD9795DB07787A4EEEC0 /* GDDMyExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDMyExampleViewController.m; sourceTree = "<group>"; };
 		61FBCF5A70B64B4262BE3799 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDCollectionViewEmbeddedInTableViewCellPresenter.m; sourceTree = "<group>"; };
 		61FBCF7AFE5EB0DD1905AEA5 /* GDDCollectionViewEmbeddedInTableViewCellRender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDCollectionViewEmbeddedInTableViewCellRender.m; sourceTree = "<group>"; };
+		61FBCFB8E056FACE01F0E8C2 /* GDDMyExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDMyExampleViewController.h; sourceTree = "<group>"; };
 		664CAFEA054EFF8889C6B45B /* Pods-GDDataDrivenView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDDataDrivenView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-GDDataDrivenView_Example/Pods-GDDataDrivenView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BB40A2142DD937158E07F5B1 /* libPods-GDDataDrivenView_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GDDataDrivenView_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,6 +181,7 @@
 				61FBC94C720D2FF1B4D449E6 /* GDDSampleCollectionViewCellRender.h */,
 				61FBC3C2413FED786CDA470A /* GDDSampleCollectionViewCellPresenter.m */,
 				61FBCC6D528001DE1CEB4ABB /* GDDSampleCollectionViewCellPresenter.h */,
+				61FBC5D24698FFFC8163C5A3 /* Router */,
 			);
 			name = "Example for GDDataDrivenView";
 			path = GDDataDrivenView;
@@ -217,6 +224,17 @@
 				44D768ACBB7BB0E43E587D85 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		61FBC5D24698FFFC8163C5A3 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				61FBCFB8E056FACE01F0E8C2 /* GDDMyExampleViewController.h */,
+				61FBCD9795DB07787A4EEEC0 /* GDDMyExampleViewController.m */,
+				61FBC6AC3FF3B95E90AF102D /* GDDMyExamplePresenter.m */,
+				61FBC4C2FCB7ACD32A9BC839 /* GDDMyExamplePresenter.h */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		72F1EA74B4FB396B206919C5 /* Pods */ = {
@@ -342,13 +360,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GDDataDrivenView_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3CA872BAB155D7046AAEA98A /* [CP] Check Pods Manifest.lock */ = {
@@ -357,13 +378,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GDDataDrivenView_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6DE4DC247489DE34E30E189A /* [CP] Copy Pods Resources */ = {
@@ -372,9 +396,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-GDDataDrivenView_Example/Pods-GDDataDrivenView_Example-resources.sh",
+				"$PODS_CONFIGURATION_BUILD_DIR/GDChannel/GDChannel.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -442,6 +469,8 @@
 				61FBC65B94033B1EBB452073 /* GDDCollectionViewEmbeddedInTableViewCellPresenter.m in Sources */,
 				61FBCBB85FB28D816D8FA20A /* GDDSampleCollectionViewCellRender.m in Sources */,
 				61FBC4B9CACF218A52623DD2 /* GDDSampleCollectionViewCellPresenter.m in Sources */,
+				61FBC2B32514CC4B09B837B1 /* GDDMyExampleViewController.m in Sources */,
+				61FBC00A46E2117B6AC5C27C /* GDDMyExamplePresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

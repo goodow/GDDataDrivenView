@@ -1,0 +1,11 @@
+syntax = "proto3";
+option objc_class_prefix = "GDD";
+package goodow.protobuf;
+
+// GDDMyExampleViewController 对应的数据模型默认为 GDDMyExampleViewModel, 使用命名约定以避免额外配置.
+// 假设 GDDMyExampleViewController 的 URL 拉起格式为 "forkSchema://views/MyExample?itemId=101&title=forkTitle",
+// 解析参数得到数据 @{@"itemId": @"101", @"title": @"forkTitle"}, 该字典将被转换为强类型后传递给接收者.
+message MyExampleViewModel {
+  int32 item_id = 1; // 数据类型转换时自动将字符串类型的参数值转换为这里声明的数字类型
+  string title = 2; // 标题
+}
