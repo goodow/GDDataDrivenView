@@ -25,6 +25,8 @@ CocoaPods 模块 | 说明 | 适用视图类
 			- [跳转发起方和目标页面的解耦](#跳转发起方和目标页面的解耦)
 		- [发起跳转时携带参数](#发起跳转时携带参数)
 		- [目标 View Controller 参数接收与类型转换](#目标-view-controller-参数接收与类型转换)
+			- [遵循 Model-view-presenter 设计以接收数据](#遵循-model-view-presenter-设计以接收数据)
+			- [数据模型与类型转换](#数据模型与类型转换)
 		- [发起跳转时指定视图配置](#发起跳转时指定视图配置)
 	- [列表单元格视图模板](#列表单元格视图模板)
 		- [功能特性](#功能特性)
@@ -44,7 +46,7 @@ CocoaPods 模块 | 说明 | 适用视图类
 GDDViewControllerTransition.new.toClass(MyViewController.class).by(PUSH);
 ```
 类名使用约定优于配置的思想, MyViewController 对应的 Presenter 类为 MyPresenter, 对应的数据模型为 MyViewModel.
-默认情况下, 只需指定 View Controller 的类名, ViewController/Presenter/ViewModel 都交由框架来创建, 关联和管理.
+默认情况下, 只需指定 View Controller 的类名, ViewController/Presenter/ViewModel 都交由GDD来创建, 关联和管理.
 
 #### 三种转场模式
 上述调用将根据类名创建一个 UIViewController 的实例 `UIViewController *controller = [MyViewController new];`  
@@ -85,7 +87,7 @@ GDDViewControllerTransition.new.toClass(MyViewController.class).by(PUSH);
 
 应用内同一模块间跳转时, 因为能依赖到目标页面及其数据模型, 一般显示指定 View Controller 类型或者页面枚举常量, 且构造强类型数据模型进行参数传递, 这种调用方式更简单和清晰.
 
-不管以哪种方式发起跳转, 目标页面总是以统一的方式来接收和处理数据, 此模块会尽可能的将弱类型数据转换为强类型后传递给接收方.
+不管以哪种方式发起跳转, 目标页面总是以统一的方式来接收和处理数据, GDD会尽可能的将弱类型数据转换为强类型后传递给接收方.
 
 ### 发起跳转时携带参数
 使用`.data`传递数据:
@@ -97,9 +99,22 @@ GDDViewControllerTransition.new.data(viewModel).toClass(MyViewController.class).
 - 弱类型, 如 NSDictionary 实例, 常用于需要解耦跳转发起方和目标页面的场合, 如跨应用 URL 拉起, 互不依赖的模块间调用等.
 
 ### 目标 View Controller 参数接收与类型转换
-- 实现 `-[GDDPresenter update:withData:]` 以接收数据, 参考示例: [GDDMyExamplePresenter](Example/GDDataDrivenView/Router/GDDMyExamplePresenter.m#L48-L56).
-- 若希望在 View Controller 中直接接收数据, 而不创建额外的 Presenter 类, 实现可选的`-[GDDView presenter]`方法即可, 参考示例: [GDDMyExampleViewController](Example/GDDataDrivenView/Router/GDDMyExampleViewController.m#L29-L39).
-- 即使在跳转时使用弱类型参数, 只要存在符合类名约定的强类型类, 框架将自动将弱类型转换为强类型后传递给接收者.
+#### 遵循 Model-view-presenter 设计以接收数据
+要接收参数, 需遵循 Model-view-presenter (MVP) 设计模式:
+1. 目标 View Controller 声明实现 [GDDView](GDDataDrivenView/Classes/MVP/GDDView.h) 协议, 但通常不需要实现 GDDView 协议的任何方法, 而是使用命名约定: GDDMyExampleViewController 对应的 Presenter 类名默认为 GDDMyExamplePresenter.
+
+2. 新建相应的 Presenter 类并声明实现 [GDDPresenter](GDDataDrivenView/Classes/MVP/GDDPresenter.h) 协议. 实现方法 `-[GDDPresenter update:withData:]` 以接收数据, 参考示例: [GDDMyExamplePresenter](Example/GDDataDrivenView/Router/GDDMyExamplePresenter.m#L48-L56).
+  - 若想直接在 View Controller 中接收数据, 而不创建额外的 Presenter 类, 实现可选的`-[GDDView presenter]`方法即可, 参考示例: [GDDMyExampleViewController](Example/GDDataDrivenView/Router/GDDMyExampleViewController.m#L29-L39).
+
+View Controller 和 Presenter 类的对象一般由GDD创建和初始化, 并自动建立关联关系.
+
+#### 数据模型与类型转换
+数据模型不需要实现任何协议或继承某个基类, 但是为了方便序列化, 最好实现 [GDCSerializable](https://github.com/goodow/GDChannel/blob/master/Pod/Classes/Data/GDCSerializable.h) 协议. GDD 内置对 Protobuf 代码生成的基类 [GPBMessage](https://github.com/goodow/GDChannel/blob/master/Pod/Classes/Data/GPBMessage%2BJsonFormat.h) 的支持.
+- 不同于一般的 MVP 里 Model 包含着相关的业务逻辑, 这里的 Model 更接近于 ViewModel 的概念, 通常是瘦 Model 类型.
+
+- 即使发起跳转时使用弱类型参数, 只要存在符合类名约定的强类型类, GDD将尽可能的将弱类型转换为强类型后再传递给 Presenter.
+  - 根据类名约定查找是否存在名为 GDDMyExampleViewModel 的类.
+  - 如果存在, 使用反序列化机制将 JSON 等弱类型数据转换为 GDDMyExampleViewModel 对象.
 
 ### 发起跳转时指定视图配置
 使用`.viewOption`可覆盖[默认的视图配置](Example/GDDataDrivenView/Router/GDDMyExampleViewController.m#L22-L24):
