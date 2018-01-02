@@ -101,10 +101,10 @@ GDDViewControllerTransition.new.data(viewModel).toClass(MyViewController.class).
 ### 目标 View Controller 参数接收与类型转换
 #### 遵循 Model-view-presenter 设计以接收数据
 要接收参数, 需遵循 Model-view-presenter (MVP) 设计模式:
-1. 目标 View Controller 声明实现 [GDDView](GDDataDrivenView/Classes/MVP/GDDView.h) 协议, 但通常不需要实现 GDDView 协议的任何方法, 而是使用命名约定: GDDMyExampleViewController 对应的 Presenter 类名默认为 GDDMyExamplePresenter.
+1.  目标 View Controller 声明实现 [GDDView](GDDataDrivenView/Classes/MVP/GDDView.h) 协议, 但通常不需要实现 GDDView 协议的任何方法, 而是使用命名约定: GDDMyExampleViewController 对应的 Presenter 类名默认为 GDDMyExamplePresenter.
 
-2. 新建相应的 Presenter 类并声明实现 [GDDPresenter](GDDataDrivenView/Classes/MVP/GDDPresenter.h) 协议. 实现方法 `-[GDDPresenter update:withData:]` 以接收数据, 参考示例: [GDDMyExamplePresenter](Example/GDDataDrivenView/Router/GDDMyExamplePresenter.m#L48-L56).
-  - 若想直接在 View Controller 中接收数据, 而不创建额外的 Presenter 类, 实现可选的`-[GDDView presenter]`方法即可, 参考示例: [GDDMyExampleViewController](Example/GDDataDrivenView/Router/GDDMyExampleViewController.m#L29-L39).
+2.  新建相应的 Presenter 类并声明实现 [GDDPresenter](GDDataDrivenView/Classes/MVP/GDDPresenter.h) 协议. 实现方法 `-[GDDPresenter update:withData:]` 以接收数据, 参考示例: [GDDMyExamplePresenter](Example/GDDataDrivenView/Router/GDDMyExamplePresenter.m#L48-L56).
+    - 若想直接在 View Controller 中接收数据, 而不创建额外的 Presenter 类, 实现可选的`-[GDDView presenter]`方法即可, 参考示例: [GDDMyExampleViewController](Example/GDDataDrivenView/Router/GDDMyExampleViewController.m#L29-L39).
 
 View Controller 和 Presenter 类的对象一般由GDD创建和初始化, 并自动建立关联关系.
 
