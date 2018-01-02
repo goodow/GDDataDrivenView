@@ -71,9 +71,12 @@ GDDViewControllerTransition.new.toClass(MyViewController.class).by(PUSH);
   [topViewController]:  GDDataDrivenView/Classes/ViewControllerPresenter/GDDViewControllerTransition.h#L61
 
 #### 跳转的其它用法
-- 手动创建和管理 View Controller, 将已存在的 View Controller 实例传给`.toInstance`:   
+- 手动创建和管理 View Controller, 将已存在的 View Controller 实例传给`.toInstance`:
+
   `GDDViewControllerTransition.new.toInstance(existingController).by(PUSH);`
-- 返回前一个 View Controller:  
+
+- 返回前一个 View Controller:
+
   `GDDViewControllerTransition.new.toUp();`
 
 ### View Controller 跳转时携带参数
