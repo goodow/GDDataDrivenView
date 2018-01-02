@@ -23,9 +23,9 @@ CocoaPods 模块 | 说明 | 适用视图类
 			- [三种转场模式](#三种转场模式)
 			- [跳转的其它用法](#跳转的其它用法)
 			- [跳转发起方和目标页面的解耦](#跳转发起方和目标页面的解耦)
-		- [View Controller 跳转时携带参数](#view-controller-跳转时携带参数)
-		- [View Controller 参数接收和类型转换](#view-controller-参数接收和类型转换)
-		- [View Controller 跳转时指定视图配置](#view-controller-跳转时指定视图配置)
+		- [发起跳转时携带参数](#发起跳转时携带参数)
+		- [目标 View Controller 参数接收与类型转换](#目标-view-controller-参数接收与类型转换)
+		- [发起跳转时指定视图配置](#发起跳转时指定视图配置)
 	- [列表单元格视图模板](#列表单元格视图模板)
 		- [功能特性](#功能特性)
 		- [Example](#example)
@@ -39,7 +39,7 @@ CocoaPods 模块 | 说明 | 适用视图类
 ## 页面路由, 跳转和参数传递
 该模块开箱即用, 不需要执行初始化配置, 也没有常驻内存开销.
 ### View Controller 简单跳转
-跳转的标准调用示例:
+发起跳转的简单调用示例:
 ```objc
 GDDViewControllerTransition.new.toClass(MyViewController.class).by(PUSH);
 ```
@@ -87,7 +87,7 @@ GDDViewControllerTransition.new.toClass(MyViewController.class).by(PUSH);
 
 不管以哪种方式发起跳转, 目标页面总是以统一的方式来接收和处理数据, 此模块会尽可能的将弱类型数据转换为强类型后传递给接收方.
 
-### View Controller 跳转时携带参数
+### 发起跳转时携带参数
 使用`.data`传递数据:
 ```objc
 GDDViewControllerTransition.new.data(viewModel).toClass(MyViewController.class).by(PUSH);
@@ -96,12 +96,12 @@ GDDViewControllerTransition.new.data(viewModel).toClass(MyViewController.class).
 - 强类型, 即用户自定义类的实例, 常用于应用内跳转. 例如由 [Protobuf 协议文件](Example/GDDataDrivenView/Router/view_model.proto) 生成的类 [GDDMyExampleViewModel](Example/GDDataDrivenView/Router/ViewModel.pbobjc.h#L54-L67).
 - 弱类型, 如 NSDictionary 实例, 常用于需要解耦跳转发起方和目标页面的场合, 如跨应用 URL 拉起, 互不依赖的模块间调用等.
 
-### View Controller 参数接收和类型转换
+### 目标 View Controller 参数接收与类型转换
 - 实现 `-[GDDPresenter update:withData:]` 以接收数据, 参考示例: [GDDMyExamplePresenter](Example/GDDataDrivenView/Router/GDDMyExamplePresenter.m#L48-L56).
 - 若希望在 View Controller 中直接接收数据, 而不创建额外的 Presenter 类, 实现可选的`-[GDDView presenter]`方法即可, 参考示例: [GDDMyExampleViewController](Example/GDDataDrivenView/Router/GDDMyExampleViewController.m#L29-L39).
 - 即使在跳转时使用弱类型参数, 只要存在符合类名约定的强类型类, 框架将自动将弱类型转换为强类型后传递给接收者.
 
-### View Controller 跳转时指定视图配置
+### 发起跳转时指定视图配置
 使用`.viewOption`可覆盖[默认的视图配置](Example/GDDataDrivenView/Router/GDDMyExampleViewController.m#L22-L24):
   ```objc
   #import "UIViewController+GDDataDrivenView.h"
