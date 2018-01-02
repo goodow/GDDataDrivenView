@@ -19,9 +19,10 @@ CocoaPods 模块 | 说明 | 适用视图类
 
 - [GDDataDrivenView](#gddatadrivenview)
 	- [页面路由, 跳转和参数传递](#页面路由-跳转和参数传递)
-		- [View Controller 跳转](#view-controller-跳转)
+		- [View Controller 简单跳转](#view-controller-简单跳转)
 			- [三种转场模式](#三种转场模式)
 			- [跳转的其它用法](#跳转的其它用法)
+			- [跳转发起方和目标页面的解耦](#跳转发起方和目标页面的解耦)
 		- [View Controller 跳转时携带参数](#view-controller-跳转时携带参数)
 		- [View Controller 参数接收和类型转换](#view-controller-参数接收和类型转换)
 		- [View Controller 跳转时指定视图配置](#view-controller-跳转时指定视图配置)
@@ -37,7 +38,7 @@ CocoaPods 模块 | 说明 | 适用视图类
 
 ## 页面路由, 跳转和参数传递
 该模块开箱即用, 不需要执行初始化配置, 也没有常驻内存开销.
-### View Controller 跳转
+### View Controller 简单跳转
 跳转的标准调用示例:
 ```objc
 GDDViewControllerTransition.new.toClass(MyViewController.class).by(PUSH);
@@ -79,6 +80,13 @@ GDDViewControllerTransition.new.toClass(MyViewController.class).by(PUSH);
 
   `GDDViewControllerTransition.new.toUp();`
 
+#### 跳转发起方和目标页面的解耦
+当跳转发起方依赖不到目标页面的 View Controller 类时, 可以通过页面枚举常量的映射或 View Controller 类名字符串来标识目标页面; 在构造传递参数方面, 根据是否能依赖到目标页的数据模型类, 可自由选择强类型或弱类型数据模型.
+
+应用内同一模块间跳转时, 因为能依赖到目标页面及其数据模型, 一般显示指定 View Controller 类型或者页面枚举常量, 且构造强类型数据模型进行参数传递, 这种调用方式更简单和清晰.
+
+不管以哪种方式发起跳转, 目标页面总是以统一的方式来接收和处理数据, 此模块会尽可能的将弱类型数据转换为强类型后传递给接收方.
+
 ### View Controller 跳转时携带参数
 使用`.data`传递数据:
 ```objc
@@ -86,7 +94,7 @@ GDDViewControllerTransition.new.data(viewModel).toClass(MyViewController.class).
 ```
 `viewModel` 可以是任意数据类型:
 - 强类型, 即用户自定义类的实例, 常用于应用内跳转. 例如由 [Protobuf 协议文件](Example/GDDataDrivenView/Router/view_model.proto) 生成的类 [GDDMyExampleViewModel](Example/GDDataDrivenView/Router/ViewModel.pbobjc.h#L54-L67).
-- 弱类型, 如 NSDictionary 实例, 常用于需要解耦跳转调用方和目标页面的场合, 如跨应用 URL 拉起, 互不依赖的模块间调用等.
+- 弱类型, 如 NSDictionary 实例, 常用于需要解耦跳转发起方和目标页面的场合, 如跨应用 URL 拉起, 互不依赖的模块间调用等.
 
 ### View Controller 参数接收和类型转换
 - 实现 `-[GDDPresenter update:withData:]` 以接收数据, 参考示例: [GDDMyExamplePresenter](Example/GDDataDrivenView/Router/GDDMyExamplePresenter.m#L48-L56).
